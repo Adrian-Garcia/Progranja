@@ -8,6 +8,7 @@ package pkgfinal;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.util.LinkedList;
 
 /**
  *
@@ -15,14 +16,16 @@ import java.awt.image.BufferStrategy;
  */
 public class Game implements Runnable{
 
-    private BufferStrategy bs;  // to have several buffers when displaying
-    private Graphics g;         // to paint objects
-    private Display display;    // to display in the game
-    String title;               // title of the window
-    private int width;          // width of the window
-    private int height;         // height of the window
-    private Thread thread;      // thread to create the game
-    private boolean running;    // to set the game
+    private BufferStrategy bs;          // to have several buffers when displaying
+    private Graphics g;                 // to paint objects
+    private Display display;            // to display in the game
+    String title;                       // title of the window
+    private int width;                  // width of the window
+    private int height;                 // height of the window
+    private Thread thread;              // thread to create the game
+    private boolean running;            // to set the game
+    private LinkedList<Button> buttons; // to use buttons
+    private MouseManager mouseManager;  // to manage the mouse
     
     /**
      * to create title, width and height and set the game is still not running
@@ -35,51 +38,128 @@ public class Game implements Runnable{
         this.width = width;
         this.height = height;
         running = false;
+        mouseManager = new MouseManager();
+        buttons = new LinkedList<Button>();
+    }
+    
+    /**
+     * To get the width of the game window
+     *
+     * @return an <code>int</code> value with the width
+     */
+    public int getWidth() {
+        return width;
+    }
+    
+    /**
+     * To get the height of the game window
+     *
+     * @return an <code>int</code> value with the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
+     * Set title of the game
+     * @param title 
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
     
     /**
      * initializing the display window of the game
      */
     private void init() {
+        
         display = new Display(title, width, height);
+        Assets.init();
+        
+        for (int i=0; i<4; i++) {
+            buttons.add(new Button(i*500+50, 500, 300, 75, this));
+        }
+        
+        display.getJframe().addMouseListener(mouseManager);
+        display.getJframe().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
     }
     
     @Override
     public void run() {
         init();
+        // frames per second
+        int fps = 50;
+        // time for each tick in nano segs
+        double timeTick = 1000000000 / fps;
+        // initializing delta
+        double delta = 0;
+        // define now to use inside the loop
+        long now;
+        // initializing last time to the computer time in nanosecs
+        long lastTime = System.nanoTime();
         while (running) {
-            tick();
-            render();
+            // setting the time now to the actual time
+            now = System.nanoTime();
+            // acumulating to delta the difference between times in timeTick units
+            delta += (now - lastTime) / timeTick;
+            // updating the last time
+            lastTime = now;
+
+            // if delta is positive we tick the game
+            if (delta >= 1) {
+                tick();
+                render();
+                delta--;
+            }
         }
         stop();
     }
     
+    /**
+     * Used to control mouse
+     * @return 
+     */
+    public MouseManager getMouseManager() {
+        return mouseManager;
+    }
+    
     private void tick() {
         
+        for (int i=0; i<buttons.size(); i++) {
+            
+            Button button = buttons.get(i);
+            
+            button.tick();
+        }
     }
     
     private void render() {
         
         // get the buffer strategy from the display
         bs = display.getCanvas().getBufferStrategy();
-        
         /* if it is null, we define one with 3 buffers to display images of
         the game, if not null, then we display every image of the game but
-        after clearing the Rectangle, getting the graphic object from the 
-        buffer strategy element.
+        after clearing the Rectanlge, getting the graphic object from the 
+        buffer strategy element. 
         show the graphic and dispose it to the trash system
-        */
+         */
         if (bs == null) {
             display.getCanvas().createBufferStrategy(3);
-        }
-        else {
+        } else {
+            
             g = bs.getDrawGraphics();
-            g.clearRect(0, 0, width, height);
-            g.setColor(Color.red);
-            g.drawRect(10,10,40,40);
+            g.drawImage(Assets.background, 0, 0, width, height, null);
+
+            for (int i = 0; i < buttons.size(); i++) {
+                Button button = buttons.get(i);
+                button.render(g);
+            }
+
             bs.show();
             g.dispose();
-        } 
+        }
     }
     
     /**

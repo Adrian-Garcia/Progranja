@@ -21,6 +21,5 @@ public class Final {
         
         // initializing the game
         g.start();
-    }
-    
+    }   
 }
