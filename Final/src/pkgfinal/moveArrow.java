@@ -6,17 +6,20 @@
 package pkgfinal;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
  * @author adria
  */
-public class Arrow extends Item{
+public class moveArrow extends Item{
 
     private int width;
     private int height;
     private Game game;
     private int val;
+    private int speedX;
+    private int speedY;
     
     /**
      * Box constructor
@@ -26,12 +29,14 @@ public class Arrow extends Item{
      * @param height
      * @param game 
      */
-    public Arrow(int x, int y, int width, int height, int val, Game game) {
+    public moveArrow(int x, int y, int width, int height, int val, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
         this.val = val;
+        this.speedX = 0;
+        this.speedY = 0;
     }
 
     /**
@@ -57,6 +62,22 @@ public class Arrow extends Item{
     public int getVal() {
         return val;
     }
+    
+    /**
+     * Get the value of speed in X 
+     * @return 
+     */
+    public int getSpeedX() {
+        return speedX;
+    }
+    
+    /**
+     * Get the value of speed in Y
+     * @return 
+     */
+    public int getSpeedY() {
+        return speedY;
+    }
 
     /**
      * Set the Width
@@ -73,6 +94,14 @@ public class Arrow extends Item{
     public void setHeight(int height) {
         this.height = height;
     }
+    
+    /**
+     * To get the a rectangle with the position in x and y, the width, and the height of the player
+     * @return an <code>Rectangle</code> value with the rectangle 
+     */
+    public Rectangle getPerimetro() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    }
 
     /**
      * Control the player movement 
@@ -80,7 +109,17 @@ public class Arrow extends Item{
     @Override
     public void tick() {
         
-    }
+        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
+//        if (game.getMouseManager().isIzquierdo()) {
+            this.setX(game.getMouseManager().getX() - (getHeight() / 2));
+            this.setY(game.getMouseManager().getY() - (getHeight() / 2));
+            game.getMouseManager().setIzquierdo(false);                  
+        }
+        
+        setX(getX() + getSpeedX());
+        setY(getY() + getSpeedY());
+        
+    }   
 
     /**
      * render the image of the player 

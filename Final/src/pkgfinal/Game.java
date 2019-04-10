@@ -15,7 +15,7 @@ import java.util.LinkedList;
  */
 public class Game implements Runnable{
 
-    private BufferStrategy bs;          // to have several buffers when displaying
+    private BufferStrategy bs;          // to have several buffers displaying
     private Graphics g;                 // to paint objects
     private Display display;            // to display in the game
     String title;                       // title of the window
@@ -38,6 +38,14 @@ public class Game implements Runnable{
     private Arrow fireball;             // to use fireball to atack
     private Arrow shield;               // to use shield to defend
     private Arrow play;                 // to play the secuence
+    private moveArrow mArrowUp;         // to use arrowUp
+    private moveArrow mArrowDown;       // to use arrowDown
+    private moveArrow mArrowLeft;       // to use arrowLeft
+    private moveArrow mArrowRight;      // to use arrowRight
+    private moveArrow mFireball;        // to use fireball to atack
+    private moveArrow mShield;          // to use shield to defend
+
+    
     private MouseManager mouseManager;  // to manage the mouse
     
     /**
@@ -120,6 +128,16 @@ public class Game implements Runnable{
         shield = new Arrow(1540, 730, 150, 150, 5, this);
         play = new Arrow(1550, 890, 130, 130, 6, this);
         
+        // move Arrows
+        mArrowUp = new moveArrow(1540, 10, 150, 150, 0, this);
+        mArrowDown = new moveArrow(1540, 160, 150, 150, 1, this);
+        mArrowLeft = new moveArrow(1540, 300, 150, 150, 2, this);
+        mArrowRight = new moveArrow(1540, 430, 150, 150, 3, this);
+        
+        // move Powers
+        mFireball = new moveArrow(1540, 570, 150, 150, 4, this);
+        mShield = new moveArrow(1540, 730, 150, 150, 5, this);
+        
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
@@ -168,6 +186,16 @@ public class Game implements Runnable{
     
     private void tick() {
         
+        // move Arrows
+        mArrowUp.tick();
+        mArrowDown.tick();
+        mArrowLeft.tick();
+        mArrowRight.tick();
+        
+        // move Powers
+        mFireball.tick();
+        mShield.tick();
+        
         for (int i=0; i<buttons.size(); i++) {
             
             Button button = buttons.get(i);
@@ -212,6 +240,14 @@ public class Game implements Runnable{
                 fireball.render(g);
                 shield.render(g);
                 play.render(g);
+                
+                mArrowUp.render(g);
+                mArrowDown.render(g);
+                mArrowLeft.render(g);
+                mArrowRight.render(g);
+                
+                mFireball.render(g);
+                mShield.render(g);
                 
                 bs.show();
                 g.dispose();
