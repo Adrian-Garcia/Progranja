@@ -6,47 +6,32 @@
 package pkgfinal;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 /**
  *
  * @author adria
  */
-public class Bar extends Item{
+public class Arrow extends Item{
 
-    private int direction;
     private int width;
     private int height;
     private Game game;
-    public int speed;
-    public int score = 0;
-    public boolean color;
+    private int val;
     
     /**
      * Box constructor
      * @param x
      * @param y
-     * @param direction
      * @param width
      * @param height
      * @param game 
      */
-    public Bar(int x, int y, int width, int height, boolean color, Game game) {
+    public Arrow(int x, int y, int width, int height, int val, Game game) {
         super(x, y);
-        this.direction = direction;
         this.width = width;
         this.height = height;
         this.game = game;
-        this.speed = 1;
-        this.color = color;
-    }
-
-    /**
-     * Get the direction 
-     * @return an <code>integer</code> with the direction value
-     */
-    public int getDirection() {
-        return direction;
+        this.val = val;
     }
 
     /**
@@ -64,13 +49,13 @@ public class Bar extends Item{
     public int getHeight() {
         return height;
     }
-
+    
     /**
-     * Set the Direction
-     * @param direction 
+     * Get the value of the arrow
+     * @return 
      */
-    public void setDirection(int direction) {
-        this.direction = direction;
+    public int getVal() {
+        return val;
     }
 
     /**
@@ -94,16 +79,6 @@ public class Bar extends Item{
      */
     @Override
     public void tick() {
-        
-    }
-    
-    /**
-     * Calculates the perimeter of the player according to the Width and
-     * Height of it. 
-     * @return Rectangle perimeter
-     */
-    public Rectangle getPerimetro() {
-        return new Rectangle (getX(), getY(), getWidth(), getHeight());
     }
 
     /**
@@ -112,9 +87,36 @@ public class Bar extends Item{
      */
     @Override
     public void render(Graphics g) {
-        if (color) 
-            g.drawImage(Assets.background, getX(), getY(), getWidth(), getHeight(), null);
-        else
-            g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+        
+        switch (val) {
+            
+            case 0:
+                g.drawImage(Assets.arrowUp, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 1:
+                g.drawImage(Assets.arrowDown, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 2:
+                g.drawImage(Assets.arrowLeft, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 3:
+                g.drawImage(Assets.arrowRight, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 4:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 5:
+                g.drawImage(Assets.shield, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 6:
+                g.drawImage(Assets.play, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+        }
     }
 }

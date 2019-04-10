@@ -6,47 +6,30 @@
 package pkgfinal;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 /**
  *
  * @author adria
  */
-public class Bar extends Item{
+public class Block extends Item{
 
-    private int direction;
     private int width;
     private int height;
     private Game game;
-    public int speed;
-    public int score = 0;
-    public boolean color;
     
     /**
      * Box constructor
      * @param x
      * @param y
-     * @param direction
      * @param width
      * @param height
      * @param game 
      */
-    public Bar(int x, int y, int width, int height, boolean color, Game game) {
+    public Block(int x, int y, int width, int height, Game game) {
         super(x, y);
-        this.direction = direction;
         this.width = width;
         this.height = height;
         this.game = game;
-        this.speed = 1;
-        this.color = color;
-    }
-
-    /**
-     * Get the direction 
-     * @return an <code>integer</code> with the direction value
-     */
-    public int getDirection() {
-        return direction;
     }
 
     /**
@@ -63,14 +46,6 @@ public class Bar extends Item{
      */
     public int getHeight() {
         return height;
-    }
-
-    /**
-     * Set the Direction
-     * @param direction 
-     */
-    public void setDirection(int direction) {
-        this.direction = direction;
     }
 
     /**
@@ -94,16 +69,6 @@ public class Bar extends Item{
      */
     @Override
     public void tick() {
-        
-    }
-    
-    /**
-     * Calculates the perimeter of the player according to the Width and
-     * Height of it. 
-     * @return Rectangle perimeter
-     */
-    public Rectangle getPerimetro() {
-        return new Rectangle (getX(), getY(), getWidth(), getHeight());
     }
 
     /**
@@ -112,9 +77,6 @@ public class Bar extends Item{
      */
     @Override
     public void render(Graphics g) {
-        if (color) 
-            g.drawImage(Assets.background, getX(), getY(), getWidth(), getHeight(), null);
-        else
-            g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.block, getX(), getY(), getWidth(), getHeight(), null);
     }
 }
