@@ -20,7 +20,7 @@ public class Bar extends Item{
     private Game game;
     public int speed;
     public int score = 0;
-    public boolean color;
+    public int color;
     
     /**
      * Box constructor
@@ -31,7 +31,7 @@ public class Bar extends Item{
      * @param height
      * @param game 
      */
-    public Bar(int x, int y, int width, int height, boolean color, Game game) {
+    public Bar(int x, int y, int width, int height, int color, Game game) {
         super(x, y);
         this.direction = direction;
         this.width = width;
@@ -112,9 +112,19 @@ public class Bar extends Item{
      */
     @Override
     public void render(Graphics g) {
-        if (color) 
-            g.drawImage(Assets.background, getX(), getY(), getWidth(), getHeight(), null);
-        else
-            g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+        switch (color) {
+            
+            case 1:
+                g.drawImage(Assets.background, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+                
+            case 2:
+                g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 3:
+                g.drawImage(Assets.green, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+        }
     }
 }

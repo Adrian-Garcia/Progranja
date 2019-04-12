@@ -13,14 +13,15 @@ import java.awt.image.BufferedImage;
  */
 public class Assets {
 
-    public static BufferedImage player1;     // to store background image
-    public static BufferedImage player2;     // to store background image
+    public static BufferedImage player1;        // to store background image
+    public static BufferedImage player2;        // to store background image
     public static BufferedImage background;     // to store background image
-    public static BufferedImage cian;           // to store wood image
-    public static BufferedImage clearGray;      // to store wood image
+    public static BufferedImage cian;           // to store cian color
+    public static BufferedImage green;          // to store green color
+    public static BufferedImage clearGray;      // to store gray color
     public static BufferedImage bar;            // to store bar image
     public static BufferedImage button;         // to store button image
-    public static BufferedImage block;         // to store button image
+    public static BufferedImage block;          // to store button image
     public static BufferedImage arrowUp;        // to store arrow up button
     public static BufferedImage arrowDown;      // to store arrow down button
     public static BufferedImage arrowLeft;      // to store arrow left button
@@ -40,6 +41,7 @@ public class Assets {
         
         background = ImageLoader.loadImage("/images/gray.jpg");
         clearGray = ImageLoader.loadImage("/images/clearGray.jpg");
+        green = ImageLoader.loadImage("/images/green.jpg");
         cian = ImageLoader.loadImage("/images/cian.jpg");
         bar = ImageLoader.loadImage("/images/cian.jpg");
         block = ImageLoader.loadImage("/images/line.png");

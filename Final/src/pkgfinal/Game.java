@@ -31,6 +31,7 @@ public class Game implements Runnable{
     private LinkedList<Button> buttons; // to use buttons
     private Bar bar;                    // to use bar
     private Bar Bar;                    // to use bar
+    private Bar barUp;                    // to use bar
     private Arrow arrowUp;              // to use arrowUp
     private Arrow arrowDown;            // to use arrowDown
     private Arrow arrowLeft;            // to use arrowLeft
@@ -98,35 +99,34 @@ public class Game implements Runnable{
         
         Assets.init();
         
-        bar = new Bar(1717, 0, 200, 1050, true, this);
-        Bar = new Bar(1517, 0, 200, 1050, false, this);
+        // Bar
+        bar = new Bar(1100, 0, 150, 700, 1, this);
+        Bar = new Bar(950, 0, 150, 700, 2, this);
+        barUp = new Bar(0, 0, 950, 30, 3, this);
         
         //Block lines
-        block1 = new Block(0, 180, 1000, 100, this);
-        block2 = new Block(520, 800, 1000, 100, this);
-        block3 = new Block(260, 490, 1000, 100, this);
+        block1 = new Block(0, 140, 500, 50, this);
+        block2 = new Block(450, 500, 500, 50, this);
+        block3 = new Block(260, 320, 500, 50, this);
         
-        // First level, always available
-        buttons.add(new Button(50, 500, 300, 75, 1, true, this));
-        
-        // The rest of the levels, not availables at the moment
-        for (int i=1; i<4; i++) {
-            buttons.add(new Button(i*500+50, 500, 300, 75, i+1, false, this));
+        // Generate buttons
+        for (int i=0; i<4; i++) {
+            buttons.add(new Button(i*300+60, 320, 200, 60, i+1, false, this));
         }
         
-        player1 = new Player(1400, 910, 100, 100, 1, this);
-        player2 = new Player(10, 10, 110, 150, 2, this);
+        player1 = new Player(850, 600, 90, 90, 1, this);
+        player2 = new Player(10, 40, 80, 90, 2, this);
         
         // Arrows
-        arrowUp = new Arrow(1540, 10, 150, 150, 0, this);
-        arrowDown = new Arrow(1540, 160, 150, 150, 1, this);
-        arrowLeft = new Arrow(1540, 300, 150, 150, 2, this);
-        arrowRight = new Arrow(1540, 430, 150, 150, 3, this);
+        arrowUp = new Arrow(975, 10, 100, 100, 0, this);
+        arrowDown = new Arrow(975, 100, 100, 100, 1, this);
+        arrowLeft = new Arrow(975, 190, 100, 100, 2, this);
+        arrowRight = new Arrow(975, 270, 100, 100, 3, this);
         
         // Powers
-        fireball = new Arrow(1540, 570, 150, 150, 4, this);
-        shield = new Arrow(1540, 730, 150, 150, 5, this);
-        play = new Arrow(1550, 890, 130, 130, 6, this);
+        fireball = new Arrow(975, 360, 100, 100, 4, this);
+        shield = new Arrow(975, 460, 100, 100, 5, this);
+        play = new Arrow(975, 570, 100, 100, 6, this);
         
         // move Arrows
         mArrowUp = new moveArrow(1540, 10, 150, 150, 0, this);
@@ -219,6 +219,8 @@ public class Game implements Runnable{
             
             if (buttons.get(0).getPressed()) {
                 
+                
+                
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);
                 
@@ -231,6 +233,7 @@ public class Game implements Runnable{
                 
                 bar.render(g);
                 Bar.render(g);
+                barUp.render(g);
 
                 arrowUp.render(g);
                 arrowDown.render(g);
@@ -248,6 +251,9 @@ public class Game implements Runnable{
                 
                 mFireball.render(g);
                 mShield.render(g);
+                
+                String a = "Health: 100             Mana: 100";
+                g.drawString(a, 10, 20);
                 
                 bs.show();
                 g.dispose();
