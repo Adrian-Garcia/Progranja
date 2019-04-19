@@ -11,12 +11,12 @@ import java.awt.Graphics;
  *
  * @author adria
  */
-public class Player extends Item{
+public class Power extends Item{
 
     private int width;
     private int height;
     private Game game;
-    private int playerNo;
+    private int powerType;
     private int index;
     
     /**
@@ -27,12 +27,12 @@ public class Player extends Item{
      * @param height
      * @param game 
      */
-    public Player(int x, int y, int width, int height, int playerNo, Game game) {
+    public Power(int x, int y, int width, int height, /*int powerType,*/ Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
-        this.playerNo = playerNo;
+        this.powerType = powerType;
         this.index = 0;
     }
 
@@ -56,8 +56,8 @@ public class Player extends Item{
      * Get the value of the arrow
      * @return 
      */
-    public int getPlayerNo() {
-        return playerNo;
+    public int getPowerType() {
+        return powerType;
     }
 
     /**
@@ -105,6 +105,26 @@ public class Player extends Item{
                     setX(getX() + 50);
                     index++;
                 break;
+                
+                case 6: // Up
+                    setY(getY() - 50);
+                    index++;
+                break;
+                
+                case 7: // Down
+                    setY(getY() + 50);
+                    index++;
+                break;
+                
+                case 8: // Left
+                    setX(getX() - 50);
+                    index++;
+                break;
+                
+                case 9: // Right
+                    setX(getX() + 50);
+                    index++;
+                break;
             }
         }
     }
@@ -116,14 +136,30 @@ public class Player extends Item{
     @Override
     public void render(Graphics g) {
         
-        switch (playerNo) {
+//        g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+        
+        switch (game.getInstructionAt(index)) {
             
-            case 1:
-                g.drawImage(Assets.player1, getX(), getY(), getWidth(), getHeight(), null);
+            case 4:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
             break;
-            
-            case 2:
-                g.drawImage(Assets.player2, getX(), getY(), getWidth(), getHeight(), null);
+            case 5:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            case 6:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            case 7:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            case 8:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            case 9:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            case 10:
+                g.drawImage(Assets.shield, getX(), getY(), getWidth(), getHeight(), null);
             break;
         }
     }

@@ -29,7 +29,7 @@ public class Assets {
     public static BufferedImage fireball;       // to store fireball
     public static BufferedImage shield;         // to store shiel
     public static BufferedImage play;           // to store play
-    
+    public static BufferedImage hearth;           // to store play
 
     /**
      * initializing the images of the game
@@ -44,7 +44,7 @@ public class Assets {
         green = ImageLoader.loadImage("/images/green.jpg");
         cian = ImageLoader.loadImage("/images/cian.jpg");
         bar = ImageLoader.loadImage("/images/cian.jpg");
-        block = ImageLoader.loadImage("/images/line.png");
+        block = ImageLoader.loadImage("/images/block.png");
         button = ImageLoader.loadImage("/images/button.png");
         
         arrowUp = ImageLoader.loadImage("/images/arrowUp.png");
@@ -55,5 +55,6 @@ public class Assets {
         fireball = ImageLoader.loadImage("/images/fireball.png");
         shield = ImageLoader.loadImage("/images/shield.png");
         play = ImageLoader.loadImage("/images/play.png");
+        hearth = ImageLoader.loadImage("/images/corazon.png");
     }
 }

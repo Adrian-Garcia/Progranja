@@ -6,20 +6,16 @@
 package pkgfinal;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 /**
  *
  * @author adria
  */
-public class Button extends Item{
+public class Live extends Item{
 
     private int width;
     private int height;
     private Game game;
-    private boolean pressed;
-    private int level;
-    private boolean available;
     
     /**
      * Box constructor
@@ -29,14 +25,11 @@ public class Button extends Item{
      * @param height
      * @param game 
      */
-    public Button(int x, int y, int width, int height, int level, boolean available, Game game) {
+    public Live(int x, int y, int width, int height, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
-        this.level = level;
-        this.available = available;
         this.game = game;
-        this.pressed = false;
     }
 
     /**
@@ -54,14 +47,6 @@ public class Button extends Item{
     public int getHeight() {
         return height;
     }
-    
-    /**
-     * Get status of pressed button
-     * @return 
-     */
-    public boolean getPressed() {
-        return pressed;
-    }
 
     /**
      * Set the Width
@@ -78,31 +63,12 @@ public class Button extends Item{
     public void setHeight(int height) {
         this.height = height;
     }
-    
-    /**
-     * Set the status of pressed button
-     * @param pressed 
-     */
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-    }
-    
-    /**
-     * To get the a rectangle with the position in x and y, the width, and the height of the player
-     * @return an <code>Rectangle</code> value with the rectangle 
-     */
-    public Rectangle getPerimetro() {
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
-    }
 
     /**
      * Control the player movement 
      */
     @Override
     public void tick() {
-        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
-            setPressed(true);
-        }
     }
 
     /**
@@ -111,6 +77,6 @@ public class Button extends Item{
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.button, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.hearth, getX(), getY(), getWidth(), getHeight(), null);
     }
 }

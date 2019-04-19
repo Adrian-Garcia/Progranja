@@ -6,20 +6,17 @@
 package pkgfinal;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 /**
  *
  * @author adria
  */
-public class Button extends Item{
+public class instArrow extends Item{
 
     private int width;
     private int height;
     private Game game;
-    private boolean pressed;
-    private int level;
-    private boolean available;
+    private int val;
     
     /**
      * Box constructor
@@ -29,14 +26,12 @@ public class Button extends Item{
      * @param height
      * @param game 
      */
-    public Button(int x, int y, int width, int height, int level, boolean available, Game game) {
+    public instArrow(int x, int y, int width, int height, int val, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
-        this.level = level;
-        this.available = available;
         this.game = game;
-        this.pressed = false;
+        this.val = val;
     }
 
     /**
@@ -56,11 +51,11 @@ public class Button extends Item{
     }
     
     /**
-     * Get status of pressed button
+     * Get the value of the arrow
      * @return 
      */
-    public boolean getPressed() {
-        return pressed;
+    public int getVal() {
+        return val;
     }
 
     /**
@@ -78,31 +73,13 @@ public class Button extends Item{
     public void setHeight(int height) {
         this.height = height;
     }
-    
-    /**
-     * Set the status of pressed button
-     * @param pressed 
-     */
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-    }
-    
-    /**
-     * To get the a rectangle with the position in x and y, the width, and the height of the player
-     * @return an <code>Rectangle</code> value with the rectangle 
-     */
-    public Rectangle getPerimetro() {
-        return new Rectangle(getX(), getY(), getWidth(), getHeight());
-    }
 
     /**
      * Control the player movement 
      */
     @Override
     public void tick() {
-        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
-            setPressed(true);
-        }
+        
     }
 
     /**
@@ -111,6 +88,32 @@ public class Button extends Item{
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.button, getX(), getY(), getWidth(), getHeight(), null);
+        
+        switch (val) {
+            
+            case 0:
+                g.drawImage(Assets.arrowUp, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 1:
+                g.drawImage(Assets.arrowDown, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 2:
+                g.drawImage(Assets.arrowLeft, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 3:
+                g.drawImage(Assets.arrowRight, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 4:
+                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 5:
+                g.drawImage(Assets.shield, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+        }
     }
 }

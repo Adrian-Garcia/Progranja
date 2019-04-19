@@ -21,32 +21,27 @@ public class Game implements Runnable{
     String title;                       // title of the window
     private int width;                  // width of the window
     private int height;                 // height of the window
+    private int noLives;                // number of lives of player 
+    private int instructions;           // number of instructions
     private Thread thread;              // thread to create the game
     private boolean running;            // to set the game
+    private boolean newInst;            // to now if game need new instruction
     private Player player1;             // to use player 1
     private Player player2;             // to use player 2
-    private Block block1;               // to use block
-    private Block block2;               // to use block
-    private Block block3;               // to use block
     private LinkedList<Button> buttons; // to use buttons
-    private Bar bar;                    // to use bar
-    private Bar Bar;                    // to use bar
-    private Bar barUp;                    // to use bar
-    private Arrow arrowUp;              // to use arrowUp
-    private Arrow arrowDown;            // to use arrowDown
-    private Arrow arrowLeft;            // to use arrowLeft
-    private Arrow arrowRight;           // to use arrowRight
-    private Arrow fireball;             // to use fireball to atack
-    private Arrow shield;               // to use shield to defend
-    private Arrow play;                 // to play the secuence
-    private moveArrow mArrowUp;         // to use arrowUp
-    private moveArrow mArrowDown;       // to use arrowDown
-    private moveArrow mArrowLeft;       // to use arrowLeft
-    private moveArrow mArrowRight;      // to use arrowRight
-    private moveArrow mFireball;        // to use fireball to atack
-    private moveArrow mShield;          // to use shield to defend
-
-    
+    private LinkedList<Block> blocks;   // to use blocks
+    private LinkedList<Bar> bars;       // to use Bars
+    private LinkedList<Integer> Instructions;// to use Instructions as numbers
+    private LinkedList<Instruction>Inst;// to use Instructions items
+    private LinkedList<Live> lives;     // to use lives
+    private Action arrowUp;             // to use arrowUp
+    private Action arrowDown;           // to use arrowDown
+    private Action arrowLeft;           // to use arrowLeft
+    private Action arrowRight;          // to use arrowRight
+    private Action fireball;            // to use fireball to atack
+    private Action shield;              // to use shield to defend
+    private Action play;                // to play the secuence
+    private Power fire;                 // to use fireball
     private MouseManager mouseManager;  // to manage the mouse
     
     /**
@@ -59,9 +54,17 @@ public class Game implements Runnable{
         this.title = title;
         this.width = width;
         this.height = height;
+        this.newInst = false;
+        this.instructions = 0;
+        this.noLives = 3;
         running = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
+        blocks = new LinkedList<Block>();
+        bars = new LinkedList<Bar>();
+        Instructions = new LinkedList<Integer>();
+        Inst = new LinkedList<Instruction>();
+        lives = new LinkedList<Live>();
     }
     
     /**
@@ -81,6 +84,26 @@ public class Game implements Runnable{
     public int getHeight() {
         return height;
     }
+    
+    public int getInstructionAt(int i) {
+        return Instructions.get(i);
+    }
+    
+    /**
+     * To get number of instructions
+     * @return instructions
+     */
+    public int getInstructions() {
+        return Instructions.size();
+    }
+    
+    /**
+     * Set  number of instructions
+     * @param instructions 
+     */
+    public void setInstructions(int instructions) {
+        this.instructions = instructions;
+    }
 
     /**
      * Set title of the game
@@ -88,6 +111,15 @@ public class Game implements Runnable{
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    /**
+     * Add instruction arrow
+     * @param val 
+     */
+    public void newInst(int val) {
+        instructions++;
+        Inst.get(instructions).setVal(val);
     }
     
     /**
@@ -99,44 +131,95 @@ public class Game implements Runnable{
         
         Assets.init();
         
-        // Bar
-        bar = new Bar(1100, 0, 150, 700, 1, this);
-        Bar = new Bar(950, 0, 150, 700, 2, this);
-        barUp = new Bar(0, 0, 950, 30, 3, this);
+        // Generate Bars
+        bars.add(new Bar(1100, 0, 150, 700, 1, this));
+        bars.add(new Bar(950, 0, 150, 700, 2, this));
+        bars.add(new Bar(0, 0, 950, 50, 3, this));
         
-        //Block lines
-        block1 = new Block(0, 140, 500, 50, this);
-        block2 = new Block(450, 500, 500, 50, this);
-        block3 = new Block(260, 320, 500, 50, this);
+        // Instrucciones dummies
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
         
-        // Generate buttons
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(-1);
+        Instructions.add(-1);
+        
+        Instructions.add(4);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(6);
+        Instructions.add(5);
+        
+        instructions = Instructions.size();
+        
+        // Generate lives
+        for (int i=0; i<noLives; i++) {
+            lives.add(new Live(i*40+55, 5, 40, 40, this));
+        }
+        
+        // Generate Buttons
         for (int i=0; i<4; i++) {
             buttons.add(new Button(i*300+60, 320, 200, 60, i+1, false, this));
         }
+        buttons.add(new Button(510, 420, 200, 60, 4, false, this));
         
-        player1 = new Player(850, 600, 90, 90, 1, this);
-        player2 = new Player(10, 40, 80, 90, 2, this);
+        // Generate Blocks
+        for (int i=0; i<13; i++) {
+            blocks.add(new Block(0, i*50+50, 50, 50, this));
+        } for (int i=0; i<18; i++) {
+            blocks.add(new Block(i*50+50, 50, 50, 50, this));
+        } for (int i=0; i<12; i++) {
+            blocks.add(new Block(900, i*50+100, 50, 50, this));
+        } for (int i=0; i<17; i++) {
+            blocks.add(new Block(i*50+50, 650, 50, 50, this));
+        }
         
-        // Arrows
-        arrowUp = new Arrow(975, 10, 100, 100, 0, this);
-        arrowDown = new Arrow(975, 100, 100, 100, 1, this);
-        arrowLeft = new Arrow(975, 190, 100, 100, 2, this);
-        arrowRight = new Arrow(975, 270, 100, 100, 3, this);
+        // Generate instructionss
+        for (int i=0; i<10; i++) {
+            Inst.add(new Instruction(1150, i*70+5, 70, 70, -1, i+1, this));
+        }
         
-        // Powers
-        fireball = new Arrow(975, 360, 100, 100, 4, this);
-        shield = new Arrow(975, 460, 100, 100, 5, this);
-        play = new Arrow(975, 570, 100, 100, 6, this);
+        // Generate Players 
+        player1 = new Player(900, 605, 40, 40, 1, this);
+        player2 = new Player(50, 100, 40, 40, 2, this);
         
-        // move Arrows
-        mArrowUp = new moveArrow(1540, 10, 150, 150, 0, this);
-        mArrowDown = new moveArrow(1540, 160, 150, 150, 1, this);
-        mArrowLeft = new moveArrow(1540, 300, 150, 150, 2, this);
-        mArrowRight = new moveArrow(1540, 430, 150, 150, 3, this);
+        // Generate Arrows
+        arrowUp = new Action(975, 10, 100, 100, 0, this);
+        arrowDown = new Action(975, 100, 100, 100, 1, this);
+        arrowLeft = new Action(975, 190, 100, 100, 2, this);
+        arrowRight = new Action(975, 270, 100, 100, 3, this);
         
-        // move Powers
-        mFireball = new moveArrow(1540, 570, 150, 150, 4, this);
-        mShield = new moveArrow(1540, 730, 150, 150, 5, this);
+        // Generate Actions
+        fireball = new Action(975, 360, 100, 100, 4, this);
+        shield = new Action(975, 460, 100, 100, 5, this);
+        play = new Action(975, 570, 100, 100, 6, this);
+        
+        // Generate Powers
+        fire = new Power(900, 650, 40, 40, this);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -147,6 +230,7 @@ public class Game implements Runnable{
     
     @Override
     public void run() {
+        
         init();
         // frames per second
         int fps = 50;
@@ -186,21 +270,28 @@ public class Game implements Runnable{
     
     private void tick() {
         
-        // move Arrows
-        mArrowUp.tick();
-        mArrowDown.tick();
-        mArrowLeft.tick();
-        mArrowRight.tick();
-        
-        // move Powers
-        mFireball.tick();
-        mShield.tick();
-        
+        // press Buttons
         for (int i=0; i<buttons.size(); i++) {
-            
             Button button = buttons.get(i);
             button.tick();
         }
+        
+        // colide Blocks
+        for (int i=0; i<blocks.size(); i++) {
+            Block block = blocks.get(i);
+            block.tick();
+        }
+        
+        // If level 1 is started
+        if (buttons.get(0).getPressed()) {
+            player1.tick();
+            fire.tick();
+        }
+        
+//        arrowUp.tick();
+//        arrowDown.tick();
+//        arrowLeft.tick();
+//        arrowRight.tick();
     }
     
     private void render() {
@@ -219,22 +310,33 @@ public class Game implements Runnable{
             
             if (buttons.get(0).getPressed()) {
                 
-                
-                
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);
                 
                 player1.render(g);
                 player2.render(g);
-                
-                block1.render(g);
-                block2.render(g);
-                block3.render(g);
-                
-                bar.render(g);
-                Bar.render(g);
-                barUp.render(g);
+                fire.render(g);
 
+                for (int i=0; i<bars.size(); i++) {
+                    Bar bar = bars.get(i);
+                    bar.render(g);
+                }
+                
+                for (int i=0; i<blocks.size(); i++) {
+                    Block block = blocks.get(i);
+                    block.render(g);
+                }
+                
+                for (int i=0; i<Inst.size(); i++) {
+                    Instruction instruction = Inst.get(i);
+                    instruction.render(g);
+                }
+                
+                for (int i=0; i<noLives; i++) {
+                    Live live = lives.get(i);
+                    live.render(g);
+                }
+                
                 arrowUp.render(g);
                 arrowDown.render(g);
                 arrowLeft.render(g);
@@ -244,15 +346,7 @@ public class Game implements Runnable{
                 shield.render(g);
                 play.render(g);
                 
-                mArrowUp.render(g);
-                mArrowDown.render(g);
-                mArrowLeft.render(g);
-                mArrowRight.render(g);
-                
-                mFireball.render(g);
-                mShield.render(g);
-                
-                String a = "Health: 100             Mana: 100";
+                String a = "Health:                                                                                      Mana: 100";
                 g.drawString(a, 10, 20);
                 
                 bs.show();
