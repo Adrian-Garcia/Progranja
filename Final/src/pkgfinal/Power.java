@@ -27,12 +27,11 @@ public class Power extends Item{
      * @param height
      * @param game 
      */
-    public Power(int x, int y, int width, int height, /*int powerType,*/ Game game) {
+    public Power(int x, int y, int width, int height, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
-        this.powerType = powerType;
         this.index = 0;
     }
 
@@ -106,24 +105,20 @@ public class Power extends Item{
                     index++;
                 break;
                 
-                case 6: // Up
-                    setY(getY() - 50);
-                    index++;
+                case 4:
+                    game.setShootFire(true);
                 break;
                 
-                case 7: // Down
-                    setY(getY() + 50);
-                    index++;
+                case 5:
+                    game.setShootFire(false);
                 break;
                 
-                case 8: // Left
-                    setX(getX() - 50);
-                    index++;
+                case 6:
+                    game.setShootShield(true);
                 break;
                 
-                case 9: // Right
-                    setX(getX() + 50);
-                    index++;
+                case 7:
+                    game.setShootShield(false);
                 break;
             }
         }
@@ -136,31 +131,8 @@ public class Power extends Item{
     @Override
     public void render(Graphics g) {
         
-//        g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-        
-        switch (game.getInstructionAt(index)) {
-            
-            case 4:
-                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            case 5:
-                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            case 6:
-                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            case 7:
-                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            case 8:
-                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            case 9:
-                g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            case 10:
-                g.drawImage(Assets.shield, getX(), getY(), getWidth(), getHeight(), null);
-            break;
+        if (game.getShootFire()) {
+            g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
         }
     }
 }

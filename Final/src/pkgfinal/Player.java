@@ -84,27 +84,49 @@ public class Player extends Item{
         
         if (index < game.getInstructions()) {
             
+            if (!game.getShootFire() && !game.getShootShield()) {
+                
+                switch (game.getInstructionAt(index)) {
+
+                    case 0: // Up
+                        setY(getY() - 50);
+                        index++;
+                    break;
+
+                    case 1: // Down
+                        setY(getY() + 50);
+                        index++;
+                    break;
+
+                    case 2: // Left
+                        setX(getX() - 50);
+                        index++;
+                    break;
+
+                    case 3: // Right
+                        setX(getX() + 50);
+                        index++;
+                    break;
+                }
+            }
+            
             switch (game.getInstructionAt(index)) {
                 
-                case 0: // Up
-                    setY(getY() - 50);
-                    index++;
+                case 4:
+                    game.setShootFire(!game.getShootFire());
                 break;
                 
-                case 1: // Down
-                    setY(getY() + 50);
-                    index++;
+                case 5:
+                    game.setShootShield(!game.getShootShield());
                 break;
                 
-                case 2: // Left
-                    setX(getX() - 50);
-                    index++;
-                break;
-                
-                case 3: // Right
-                    setX(getX() + 50);
-                    index++;
-                break;
+//                case 6:
+//                    game.setShootShield(true);
+//                break;
+//                
+//                case 7:
+//                    game.setShootShield(false);
+//                break;
             }
         }
     }

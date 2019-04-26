@@ -26,6 +26,8 @@ public class Game implements Runnable{
     private Thread thread;              // thread to create the game
     private boolean running;            // to set the game
     private boolean newInst;            // to now if game need new instruction
+    private boolean shootFire;          // to know if player shoot a fireball
+    private boolean shootShield;        // to know if player shoot a shield
     private Player player1;             // to use player 1
     private Player player2;             // to use player 2
     private LinkedList<Button> buttons; // to use buttons
@@ -57,6 +59,8 @@ public class Game implements Runnable{
         this.newInst = false;
         this.instructions = 0;
         this.noLives = 3;
+        this.shootFire = false;
+        this.shootShield = false;
         running = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
@@ -98,6 +102,22 @@ public class Game implements Runnable{
     }
     
     /**
+     * Get if a Fireball was shooted
+     * @return shootFire
+     */
+    public boolean getShootFire() {
+        return shootFire;
+    }
+    
+    /**
+     * Get if a Shield was shooted
+     * @return shootShield
+     */
+    public boolean getShootShield() {
+        return shootShield;
+    }
+    
+    /**
      * Set  number of instructions
      * @param instructions 
      */
@@ -111,6 +131,22 @@ public class Game implements Runnable{
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    /**
+     * Set if a Fireball is being shooted
+     * @param shootFire 
+     */
+    public void setShootFire(boolean shootFire) {
+        this.shootFire = shootFire;
+    }
+    
+    /**
+     * Set if a Shield is being shooted
+     * @param shootFire 
+     */
+    public void setShootShield(boolean shootFire) {
+        this.shootShield = shootShield;
     }
     
     /**
@@ -159,20 +195,14 @@ public class Game implements Runnable{
         Instructions.add(0);
         Instructions.add(0);
         Instructions.add(0);
-        Instructions.add(-1);
-        Instructions.add(-1);
         
         Instructions.add(4);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(6);
-        Instructions.add(5);
+        
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        
+        Instructions.add(4);
         
         instructions = Instructions.size();
         
@@ -214,12 +244,12 @@ public class Game implements Runnable{
         arrowRight = new Action(975, 270, 100, 100, 3, this);
         
         // Generate Actions
-        fireball = new Action(975, 360, 100, 100, 4, this);
+        fireball = new Action(975, 705, 100, 100, 4, this);
         shield = new Action(975, 460, 100, 100, 5, this);
         play = new Action(975, 570, 100, 100, 6, this);
         
         // Generate Powers
-        fire = new Power(900, 650, 40, 40, this);
+        fire = new Power(900, 605, 40, 40, this);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -315,7 +345,7 @@ public class Game implements Runnable{
                 
                 player1.render(g);
                 player2.render(g);
-                fire.render(g);
+                
 
                 for (int i=0; i<bars.size(); i++) {
                     Bar bar = bars.get(i);
@@ -326,6 +356,8 @@ public class Game implements Runnable{
                     Block block = blocks.get(i);
                     block.render(g);
                 }
+                
+                fire.render(g);
                 
                 for (int i=0; i<Inst.size(); i++) {
                     Instruction instruction = Inst.get(i);
