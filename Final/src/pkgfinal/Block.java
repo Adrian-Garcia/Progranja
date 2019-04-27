@@ -6,6 +6,7 @@
 package pkgfinal;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -69,6 +70,14 @@ public class Block extends Item{
      */
     @Override
     public void tick() {
+    }
+    
+    /**
+     * Get perimeter of Blocks for collisions
+     * @return 
+     */
+    public Rectangle getPerimetro() {
+        return new Rectangle (getX(), getY(), getWidth(), getHeight()-30);
     }
 
     /**

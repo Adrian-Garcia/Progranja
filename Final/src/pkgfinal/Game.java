@@ -190,19 +190,20 @@ public class Game implements Runnable{
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
+        Instructions.add(2);
         
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        
-        Instructions.add(4);
-        
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        
-        Instructions.add(4);
+//        Instructions.add(0);
+//        Instructions.add(0);
+//        Instructions.add(0);
+//        Instructions.add(0);
+//        
+//        Instructions.add(4);
+//        
+//        Instructions.add(0);
+//        Instructions.add(0);
+//        Instructions.add(0);
+//        
+//        Instructions.add(4);
         
         instructions = Instructions.size();
         
@@ -310,6 +311,12 @@ public class Game implements Runnable{
         for (int i=0; i<blocks.size(); i++) {
             Block block = blocks.get(i);
             block.tick();
+            
+            // Checking collition between player and block
+            if (player1.intersecta(block)) {
+                player1.setX(player1.getPrevX());
+                player2.setY(player1.getPrevY());
+            }
         }
         
         // If level 1 is started
@@ -342,10 +349,6 @@ public class Game implements Runnable{
                 
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);
-                
-                player1.render(g);
-                player2.render(g);
-                
 
                 for (int i=0; i<bars.size(); i++) {
                     Bar bar = bars.get(i);
@@ -356,6 +359,9 @@ public class Game implements Runnable{
                     Block block = blocks.get(i);
                     block.render(g);
                 }
+                
+                player1.render(g);
+                player2.render(g);
                 
                 fire.render(g);
                 
