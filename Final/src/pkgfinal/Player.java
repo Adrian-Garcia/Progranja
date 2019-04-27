@@ -6,6 +6,8 @@
 package pkgfinal;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -18,6 +20,8 @@ public class Player extends Item{
     private Game game;
     private int playerNo;
     private int index;
+    private int prevX;
+    private int prevY;
     
     /**
      * Box constructor
@@ -34,6 +38,8 @@ public class Player extends Item{
         this.game = game;
         this.playerNo = playerNo;
         this.index = 0;
+        this.prevX = x;
+        this.prevY = y;
     }
 
     /**
@@ -59,6 +65,22 @@ public class Player extends Item{
     public int getPlayerNo() {
         return playerNo;
     }
+    
+    /**
+     * Get the previous value of X position
+     * @return prevX
+     */
+    public int getPrevX() {
+        return prevX;
+    }
+    
+    /**
+     * Get the previous value of Y position
+     * @return prevY
+     */
+    public int getPrevY() {
+        return prevY;
+    }
 
     /**
      * Set the Width
@@ -75,6 +97,22 @@ public class Player extends Item{
     public void setHeight(int height) {
         this.height = height;
     }
+    
+    /**
+     * Set the previous value of X position
+     * @param prevX 
+     */
+    public void setPrevX(int prevX) {
+        this.prevX = prevX;
+    }
+    
+    /**
+     * Set the previous value of Y position
+     * @param prevY 
+     */
+    public void setPrevY(int prevY) {
+        this.prevY = prevY;
+    }
 
     /**
      * Control the player movement 
@@ -89,48 +127,68 @@ public class Player extends Item{
                 switch (game.getInstructionAt(index)) {
 
                     case 0: // Up
+                        setPrevY(getY());
                         setY(getY() - 50);
                         index++;
                     break;
 
                     case 1: // Down
+                        setPrevY(getY());
                         setY(getY() + 50);
                         index++;
                     break;
 
                     case 2: // Left
+                        setPrevX(getX());
                         setX(getX() - 50);
                         index++;
                     break;
 
                     case 3: // Right
+                        setPrevX(getX());
                         setX(getX() + 50);
                         index++;
                     break;
+                    
+                    case 4: // Throw a fire ball
+                        game.setShootFire(!game.getShootFire());
+                    break;
+
+                    case 5: // Throw a Shield
+                        game.setShootShield(!game.getShootShield());
+                    break;
                 }
-            }
-            
-            switch (game.getInstructionAt(index)) {
-                
-                case 4:
-                    game.setShootFire(!game.getShootFire());
-                break;
-                
-                case 5:
-                    game.setShootShield(!game.getShootShield());
-                break;
-                
-//                case 6:
-//                    game.setShootShield(true);
-//                break;
-//                
-//                case 7:
-//                    game.setShootShield(false);
-//                break;
             }
         }
     }
 
+    public Rectangle2D[] getBordes(){
+        Rectangle2D[] bordes = new Rectangle2D[4];
+        bordes[0] = new Rectangle2D.Double(getX()+getWidth(),getY(),1,getHeight());
+        bordes[1] = new Rectangle2D.Double(getX(),getY()-1,getWidth(),1);
+        bordes[2] = new Rectangle2D.Double(getX()-1,getY(),1,getHeight());
+        bordes[3] = new Rectangle2D.Double(getX(),getY()+getHeight(),getWidth(),1);
+        return bordes;
+    }
+    
+    /**
+     * Get perimeter of player for collisions
+     * @return 
+     */
+    public Rectangle getPerimetro() {
+        return new Rectangle (getX(), getY(), getWidth(), getHeight());
+    }
+    
+    /**
+     * Validate if there was an intersection 
+     * @param obj
+     * @return intersection
+     */
+    public boolean intersecta(Object obj) {
+                                                                //Castea
+        return obj instanceof Block && getPerimetro().intersects(((Block) obj).getPerimetro());
+    }
+    
     /**
      * render the image of the player 
      * @param g 
