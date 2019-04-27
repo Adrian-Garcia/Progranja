@@ -18,6 +18,8 @@ public class Player extends Item{
     private Game game;
     private int playerNo;
     private int index;
+    private int prevX;
+    private int prevY;
     
     /**
      * Box constructor
@@ -34,6 +36,8 @@ public class Player extends Item{
         this.game = game;
         this.playerNo = playerNo;
         this.index = 0;
+        this.prevX = x;
+        this.prevY = y;
     }
 
     /**
@@ -59,6 +63,22 @@ public class Player extends Item{
     public int getPlayerNo() {
         return playerNo;
     }
+    
+    /**
+     * Get the previous value of X position
+     * @return prevX
+     */
+    public int getPrevX() {
+        return prevX;
+    }
+    
+    /**
+     * Get the previous value of Y position
+     * @return prevY
+     */
+    public int getPrevY() {
+        return prevY;
+    }
 
     /**
      * Set the Width
@@ -75,6 +95,22 @@ public class Player extends Item{
     public void setHeight(int height) {
         this.height = height;
     }
+    
+    /**
+     * Set the previous value of X position
+     * @param prevX 
+     */
+    public void setPrevX(int prevX) {
+        this.prevX = prevX;
+    }
+    
+    /**
+     * Set the previous value of Y position
+     * @param prevY 
+     */
+    public void setPrevY(int prevY) {
+        this.prevY = prevY;
+    }
 
     /**
      * Control the player movement 
@@ -89,21 +125,25 @@ public class Player extends Item{
                 switch (game.getInstructionAt(index)) {
 
                     case 0: // Up
+                        setPrevY(getY());
                         setY(getY() - 50);
                         index++;
                     break;
 
                     case 1: // Down
+                        setPrevY(getY());
                         setY(getY() + 50);
                         index++;
                     break;
 
                     case 2: // Left
+                        setPrevX(getX());
                         setX(getX() - 50);
                         index++;
                     break;
 
                     case 3: // Right
+                        setPrevX(getX());
                         setX(getX() + 50);
                         index++;
                     break;
