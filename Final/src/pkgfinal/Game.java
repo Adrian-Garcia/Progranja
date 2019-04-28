@@ -240,7 +240,7 @@ public class Game implements Runnable{
         
         // Generate Players 
         player1 = new Player(900, 605, 40, 40, 1, this);
-        player2 = new Player(50, 100, 40, 40, 2, this);
+        player2 = new Player(55, 105, 40, 40, 2, this);
         
         // Generate Arrows
         arrowUp = new Action(975, 10, 100, 100, 0, this);
