@@ -23,11 +23,13 @@ public class Game implements Runnable{
     private int height;                 // height of the window
     private int noLives;                // number of lives of player 
     private int instructions;           // number of instructions
-    private Thread thread;              // thread to create the game
+    private int turn;                   // number of the player that have the turn
+    private boolean playPressed;        // to know if user play the game
     private boolean running;            // to set the game
     private boolean newInst;            // to now if game need new instruction
     private boolean shootFire;          // to know if player shoot a fireball
     private boolean shootShield;        // to know if player shoot a shield
+    private Thread thread;              // thread to create the game
     private Player player1;             // to use player 1
     private Player player2;             // to use player 2
     private LinkedList<Button> buttons; // to use buttons
@@ -62,6 +64,8 @@ public class Game implements Runnable{
         this.shootFire = false;
         this.shootShield = false;
         running = false;
+        playPressed = false;
+        turn = 1;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -307,8 +311,9 @@ public class Game implements Runnable{
             button.tick();
         }
         
-        // colide Blocks
+        // Tick and collide Blocks
         for (int i=0; i<blocks.size(); i++) {
+            
             Block block = blocks.get(i);
             block.tick();
             

@@ -161,15 +161,6 @@ public class Player extends Item{
             }
         }
     }
-
-    public Rectangle2D[] getBordes(){
-        Rectangle2D[] bordes = new Rectangle2D[4];
-        bordes[0] = new Rectangle2D.Double(getX()+getWidth(),getY(),1,getHeight());
-        bordes[1] = new Rectangle2D.Double(getX(),getY()-1,getWidth(),1);
-        bordes[2] = new Rectangle2D.Double(getX()-1,getY(),1,getHeight());
-        bordes[3] = new Rectangle2D.Double(getX(),getY()+getHeight(),getWidth(),1);
-        return bordes;
-    }
     
     /**
      * Get perimeter of player for collisions
