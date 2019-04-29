@@ -324,14 +324,17 @@ public class Game implements Runnable{
             block.tick();
             
             // Check collition between player and block
-//            if (player1.intersecta(block)) {
-//                player1.setX(player1.getPrevX());
-//                player1.setY(player1.getPrevY());
-//            }
+            if (player1.intersecta(block)) {
+                player1.setX(player1.getPrevX());
+                player1.setY(player1.getPrevY());
+            }
 
             // Collision of fireball with player 2
             if (fire.intersecta(player2)) {
                 System.out.println("Choca");
+                fire.setX(player1.getX());
+                fire.setY(player1.getY());
+                setShootFire(false);
             }
         }
         
