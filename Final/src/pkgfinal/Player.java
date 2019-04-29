@@ -151,7 +151,10 @@ public class Player extends Item{
                     break;
                     
                     case 4: // Throw a fire ball
-                        game.setShootFire(!game.getShootFire());
+                        if (game.getShootFire())
+                            game.setShootFire(false);
+                        else 
+                            game.setShootFire(true);
                     break;
 
                     case 5: // Throw a Shield

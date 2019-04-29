@@ -6,6 +6,7 @@
 package pkgfinal;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -89,43 +90,41 @@ public class Power extends Item{
                 
                 case 0: // Up
                     setY(getY() - 50);
-                    System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 1: // Down
                     setY(getY() + 50);
-                    System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 2: // Left
                     setX(getX() - 50);
-                    System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 3: // Right
                     setX(getX() + 50);
-                    System.out.println(game.getInstructionAt(index));
                 break;
-                
-//                case 4:
-//                    game.setShootFire(true);
-//                break;
-//                
-//                case 5:
-//                    game.setShootFire(false);
-//                break;
-//                
-//                case 6:
-//                    game.setShootShield(true);
-//                break;
-//                
-//                case 7:
-//                    game.setShootShield(false);
-//                break;
             }
         }
     }
 
+    /**
+     * Get perimeter of player for collisions
+     * @return 
+     */
+    public Rectangle getPerimetro() {
+        return new Rectangle (getX(), getY(), getWidth(), getHeight());
+    }
+    
+    /**
+     * Validate if there was an intersection 
+     * @param obj
+     * @return intersection
+     */
+    public boolean intersecta(Object obj) {
+                                                                //Castea
+        return obj instanceof Player && getPerimetro().intersects(((Player) obj).getPerimetro());
+    }
+    
     /**
      * render the image of the player 
      * @param g 

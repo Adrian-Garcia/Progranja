@@ -63,9 +63,9 @@ public class Game implements Runnable{
         this.noLives = 3;
         this.shootFire = false;
         this.shootShield = false;
-        running = false;
-        playPressed = false;
-        turn = 1;
+        this.running = false;
+        this.playPressed = false;
+        this.turn = 1;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -195,15 +195,24 @@ public class Game implements Runnable{
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
-        Instructions.add(3);
         
         Instructions.add(4);
         
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
+        Instructions.add(2);
         
-        Instructions.add(4);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
         
         instructions = Instructions.size();
         
@@ -318,6 +327,10 @@ public class Game implements Runnable{
 //                player1.setX(player1.getPrevX());
 //                player2.setY(player1.getPrevY());
 //            }
+
+            if (fire.intersecta(player2)) {
+                System.out.println("Choca");
+            }
         }
         
         // If level 1 is started
