@@ -32,7 +32,7 @@ public class Power extends Item{
         this.width = width;
         this.height = height;
         this.game = game;
-        this.index = 0;
+        this.index = -1;
     }
 
     /**
@@ -81,31 +81,33 @@ public class Power extends Item{
     @Override
     public void tick() {
         
-        if (index < game.getInstructions()) {
+        if (index < game.getInstructions()-1) {
+            
+            index++;
             
             switch (game.getInstructionAt(index)) {
                 
                 case 0: // Up
                     setY(getY() - 50);
-                    index++;
+//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 1: // Down
                     setY(getY() + 50);
-                    index++;
+//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 2: // Left
                     setX(getX() - 50);
-                    index++;
+//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 3: // Right
                     setX(getX() + 50);
-                    index++;
+//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 

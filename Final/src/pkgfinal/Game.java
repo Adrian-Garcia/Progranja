@@ -307,13 +307,13 @@ public class Game implements Runnable{
             button.tick();
         }
         
-        // Tick and collide Blocks
+        // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
             
             Block block = blocks.get(i);
             block.tick();
             
-            // Checking collition between player and block
+            // Check collition between player and block
 //            if (player1.intersecta(block)) {
 //                player1.setX(player1.getPrevX());
 //                player2.setY(player1.getPrevY());
@@ -326,10 +326,28 @@ public class Game implements Runnable{
             fire.tick();
         }
         
-//        arrowUp.tick();
-//        arrowDown.tick();
-//        arrowLeft.tick();
-//        arrowRight.tick();
+        // press Actions 
+        arrowUp.tick();
+        arrowDown.tick();
+        arrowLeft.tick();
+        arrowRight.tick();
+    
+        if (arrowUp.getPressed()) {
+            System.out.print("Up");
+            arrowUp.setPressed(false);
+        }
+        if (arrowDown.getPressed()) {
+            System.out.print("Down");
+            arrowDown.setPressed(false);
+        }
+        if (arrowLeft.getPressed()) {
+            System.out.print("Left");
+            arrowLeft.setPressed(false);
+        }
+        if (arrowRight.getPressed()) {
+            System.out.print("Right");
+            arrowRight.setPressed(false);
+        }
     }
     
     private void render() {
