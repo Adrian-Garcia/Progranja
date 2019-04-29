@@ -89,25 +89,21 @@ public class Power extends Item{
                 
                 case 0: // Up
                     setY(getY() - 50);
-//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 1: // Down
                     setY(getY() + 50);
-//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 2: // Left
                     setX(getX() - 50);
-//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 3: // Right
                     setX(getX() + 50);
-//                    index++;
                     System.out.println(game.getInstructionAt(index));
                 break;
                 
