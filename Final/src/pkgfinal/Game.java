@@ -46,6 +46,7 @@ public class Game implements Runnable{
     private Action shield;              // to use shield to defend
     private Action play;                // to play the secuence
     private Power fire;                 // to use fireball
+    private Power powerShield;          // to use shield
     private MouseManager mouseManager;  // to manage the mouse
     
     /**
@@ -63,9 +64,9 @@ public class Game implements Runnable{
         this.noLives = 3;
         this.shootFire = false;
         this.shootShield = false;
-        running = false;
-        playPressed = false;
-        turn = 1;
+        this.running = false;
+        this.playPressed = false;
+        this.turn = 1;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -93,6 +94,11 @@ public class Game implements Runnable{
         return height;
     }
     
+    /**
+     * To get instruction at certain position
+     * @param i
+     * @return instruction at i
+     */
     public int getInstructionAt(int i) {
         return Instructions.get(i);
     }
@@ -189,25 +195,24 @@ public class Game implements Runnable{
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
+        
+        Instructions.add(4);
+        
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
         
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        
-//        Instructions.add(4);
-//        
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        
-//        Instructions.add(4);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
         
         instructions = Instructions.size();
         
@@ -239,8 +244,12 @@ public class Game implements Runnable{
         }
         
         // Generate Players 
-        player1 = new Player(900, 605, 40, 40, 1, this);
+        player1 = new Player(850, 605, 40, 40, 1, this);
         player2 = new Player(55, 105, 40, 40, 2, this);
+
+        // Generate Powers
+        fire = new Power(850, 605, 40, 40, this);
+        powerShield = new Power(850, 605, 40, 40, this);
         
         // Generate Arrows
         arrowUp = new Action(975, 10, 100, 100, 0, this);
@@ -252,9 +261,6 @@ public class Game implements Runnable{
         fireball = new Action(975, 705, 100, 100, 4, this);
         shield = new Action(975, 460, 100, 100, 5, this);
         play = new Action(975, 570, 100, 100, 6, this);
-        
-        // Generate Powers
-        fire = new Power(900, 605, 40, 40, this);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -311,16 +317,24 @@ public class Game implements Runnable{
             button.tick();
         }
         
-        // Tick and collide Blocks
+        // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
             
             Block block = blocks.get(i);
             block.tick();
             
-            // Checking collition between player and block
+            // Check collition between player and block
             if (player1.intersecta(block)) {
                 player1.setX(player1.getPrevX());
-                player2.setY(player1.getPrevY());
+                player1.setY(player1.getPrevY());
+            }
+
+            // Collision of fireball with player 2
+            if (fire.intersecta(player2)) {
+                System.out.println("Choca");
+                fire.setX(player1.getX());
+                fire.setY(player1.getY());
+                setShootFire(false);
             }
         }
         
@@ -328,12 +342,31 @@ public class Game implements Runnable{
         if (buttons.get(0).getPressed()) {
             player1.tick();
             fire.tick();
+            powerShield.tick();
         }
         
-//        arrowUp.tick();
-//        arrowDown.tick();
-//        arrowLeft.tick();
-//        arrowRight.tick();
+        // press Actions 
+        arrowUp.tick();
+        arrowDown.tick();
+        arrowLeft.tick();
+        arrowRight.tick();
+    
+        if (arrowUp.getPressed()) {
+            System.out.print("Up");
+            arrowUp.setPressed(false);
+        }
+        if (arrowDown.getPressed()) {
+            System.out.print("Down");
+            arrowDown.setPressed(false);
+        }
+        if (arrowLeft.getPressed()) {
+            System.out.print("Left");
+            arrowLeft.setPressed(false);
+        }
+        if (arrowRight.getPressed()) {
+            System.out.print("Right");
+            arrowRight.setPressed(false);
+        }
     }
     
     private void render() {
@@ -368,7 +401,9 @@ public class Game implements Runnable{
                 player1.render(g);
                 player2.render(g);
                 
-                fire.render(g);
+                if (getShootFire()) {
+                    fire.render(g);
+                }
                 
                 for (int i=0; i<Inst.size(); i++) {
                     Instruction instruction = Inst.get(i);

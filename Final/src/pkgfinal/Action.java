@@ -6,6 +6,7 @@
 package pkgfinal;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Action extends Item{
     private int width;
     private int height;
     private Game game;
+    private boolean pressed;
     private int val;
     
     /**
@@ -32,6 +34,7 @@ public class Action extends Item{
         this.height = height;
         this.game = game;
         this.val = val;
+        pressed = false;
     }
 
     /**
@@ -57,6 +60,14 @@ public class Action extends Item{
     public int getVal() {
         return val;
     }
+    
+    /**
+     * Get the value of pressed boolean
+     * @return pressed
+     */
+    public boolean getPressed() {
+        return pressed;
+    }
 
     /**
      * Set the Width
@@ -78,8 +89,16 @@ public class Action extends Item{
      * Set the status of pressed button
      * @param pressed 
      */
-    public void setPressed() {
-        game.newInst(val);
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
+    
+    /**
+     * To get the a rectangle with the position in x and y, the width, and the height of the player
+     * @return an <code>Rectangle</code> value with the rectangle 
+     */
+    public Rectangle getPerimetro() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     /**
@@ -87,8 +106,8 @@ public class Action extends Item{
      */
     @Override
     public void tick() {
-        if (game.getMouseManager().isIzquierdo()) {
-            setPressed();
+        if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
+            setPressed(true);
         }
     }
 

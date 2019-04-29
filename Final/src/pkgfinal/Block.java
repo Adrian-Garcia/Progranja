@@ -77,7 +77,7 @@ public class Block extends Item{
      * @return 
      */
     public Rectangle getPerimetro() {
-        return new Rectangle (getX(), getY(), getWidth(), getHeight()-30);
+        return new Rectangle (getX(), getY(), getWidth(), getHeight());
     }
 
     /**
