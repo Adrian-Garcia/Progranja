@@ -46,6 +46,7 @@ public class Game implements Runnable{
     private Action shield;              // to use shield to defend
     private Action play;                // to play the secuence
     private Power fire;                 // to use fireball
+    private Power powerShield;          // to use shield
     private MouseManager mouseManager;  // to manage the mouse
     
     /**
@@ -194,7 +195,6 @@ public class Game implements Runnable{
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
-        Instructions.add(2);
         
         Instructions.add(4);
         
@@ -244,8 +244,12 @@ public class Game implements Runnable{
         }
         
         // Generate Players 
-        player1 = new Player(900, 605, 40, 40, 1, this);
+        player1 = new Player(850, 605, 40, 40, 1, this);
         player2 = new Player(55, 105, 40, 40, 2, this);
+
+        // Generate Powers
+        fire = new Power(850, 605, 40, 40, this);
+        powerShield = new Power(850, 605, 40, 40, this);
         
         // Generate Arrows
         arrowUp = new Action(975, 10, 100, 100, 0, this);
@@ -257,9 +261,6 @@ public class Game implements Runnable{
         fireball = new Action(975, 705, 100, 100, 4, this);
         shield = new Action(975, 460, 100, 100, 5, this);
         play = new Action(975, 570, 100, 100, 6, this);
-        
-        // Generate Powers
-        fire = new Power(900, 605, 40, 40, this);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -323,13 +324,17 @@ public class Game implements Runnable{
             block.tick();
             
             // Check collition between player and block
-//            if (player1.intersecta(block)) {
-//                player1.setX(player1.getPrevX());
-//                player2.setY(player1.getPrevY());
-//            }
+            if (player1.intersecta(block)) {
+                player1.setX(player1.getPrevX());
+                player1.setY(player1.getPrevY());
+            }
 
+            // Collision of fireball with player 2
             if (fire.intersecta(player2)) {
                 System.out.println("Choca");
+                fire.setX(player1.getX());
+                fire.setY(player1.getY());
+                setShootFire(false);
             }
         }
         
@@ -337,6 +342,7 @@ public class Game implements Runnable{
         if (buttons.get(0).getPressed()) {
             player1.tick();
             fire.tick();
+            powerShield.tick();
         }
         
         // press Actions 
