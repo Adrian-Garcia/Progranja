@@ -93,6 +93,11 @@ public class Game implements Runnable{
         return height;
     }
     
+    /**
+     * To get instruction at certain position
+     * @param i
+     * @return instruction at i
+     */
     public int getInstructionAt(int i) {
         return Instructions.get(i);
     }
@@ -190,24 +195,15 @@ public class Game implements Runnable{
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
+        Instructions.add(3);
+        
+        Instructions.add(4);
+        
         Instructions.add(2);
         Instructions.add(2);
         Instructions.add(2);
         
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        
-//        Instructions.add(4);
-//        
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        Instructions.add(0);
-//        
-//        Instructions.add(4);
+        Instructions.add(4);
         
         instructions = Instructions.size();
         
@@ -318,10 +314,10 @@ public class Game implements Runnable{
             block.tick();
             
             // Checking collition between player and block
-            if (player1.intersecta(block)) {
-                player1.setX(player1.getPrevX());
-                player2.setY(player1.getPrevY());
-            }
+//            if (player1.intersecta(block)) {
+//                player1.setX(player1.getPrevX());
+//                player2.setY(player1.getPrevY());
+//            }
         }
         
         // If level 1 is started
@@ -368,7 +364,9 @@ public class Game implements Runnable{
                 player1.render(g);
                 player2.render(g);
                 
-                fire.render(g);
+                if (getShootFire()) {
+                    fire.render(g);
+                }
                 
                 for (int i=0; i<Inst.size(); i++) {
                     Instruction instruction = Inst.get(i);

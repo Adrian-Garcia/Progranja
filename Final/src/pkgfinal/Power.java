@@ -88,38 +88,42 @@ public class Power extends Item{
                 case 0: // Up
                     setY(getY() - 50);
                     index++;
+                    System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 1: // Down
                     setY(getY() + 50);
                     index++;
+                    System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 2: // Left
                     setX(getX() - 50);
                     index++;
+                    System.out.println(game.getInstructionAt(index));
                 break;
                 
                 case 3: // Right
                     setX(getX() + 50);
                     index++;
+                    System.out.println(game.getInstructionAt(index));
                 break;
                 
-                case 4:
-                    game.setShootFire(true);
-                break;
-                
-                case 5:
-                    game.setShootFire(false);
-                break;
-                
-                case 6:
-                    game.setShootShield(true);
-                break;
-                
-                case 7:
-                    game.setShootShield(false);
-                break;
+//                case 4:
+//                    game.setShootFire(true);
+//                break;
+//                
+//                case 5:
+//                    game.setShootFire(false);
+//                break;
+//                
+//                case 6:
+//                    game.setShootShield(true);
+//                break;
+//                
+//                case 7:
+//                    game.setShootShield(false);
+//                break;
             }
         }
     }
@@ -130,9 +134,6 @@ public class Power extends Item{
      */
     @Override
     public void render(Graphics g) {
-        
-        if (game.getShootFire()) {
-            g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
-        }
+        g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
     }
 }
