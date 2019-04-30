@@ -33,7 +33,7 @@ public class Power extends Item{
         this.width = width;
         this.height = height;
         this.game = game;
-        this.index = -1;
+        this.index = 0;
     }
 
     /**
@@ -84,8 +84,6 @@ public class Power extends Item{
         
         if (index < game.getInstructions()-1) {
             
-            index++;
-            
             switch (game.getInstructionAt(index)) {
                 
                 case 0: // Up
@@ -104,6 +102,8 @@ public class Power extends Item{
                     setX(getX() + 50);
                 break;
             }
+            
+            index++;
         }
     }
 

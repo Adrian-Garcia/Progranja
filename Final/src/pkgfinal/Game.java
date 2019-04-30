@@ -214,6 +214,11 @@ public class Game implements Runnable{
         Instructions.add(0);
         Instructions.add(0);
         
+        Instructions.add(4);
+        
+        Instructions.add(3);
+        Instructions.add(3);
+        
         instructions = Instructions.size();
         
         // Generate lives
@@ -240,7 +245,7 @@ public class Game implements Runnable{
         
         // Generate instructionss
         for (int i=0; i<10; i++) {
-            Inst.add(new Instruction(1150, i*70+5, 70, 70, -1, i+1, this));
+            Inst.add(new Instruction(1150, i*70+5, 70, 70, 1, i+1, this));
         }
         
         // Generate Players 
