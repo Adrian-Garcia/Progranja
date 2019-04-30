@@ -8,6 +8,7 @@ package pkgfinal;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
+import javax.swing.JTextField;
 
 /**
  *
@@ -38,6 +39,8 @@ public class Game implements Runnable{
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
     private LinkedList<Instruction>Inst;// to use Instructions items
     private LinkedList<Live> lives;     // to use lives
+    private JTextField t1;
+    private JTextField t2;
     private Action arrowUp;             // to use arrowUp
     private Action arrowDown;           // to use arrowDown
     private Action arrowLeft;           // to use arrowLeft
@@ -403,6 +406,8 @@ public class Game implements Runnable{
                     block.render(g);
                 }
                 
+                display.jframe.add(t1);
+                
                 player1.render(g);
                 player2.render(g);
                 
@@ -428,6 +433,9 @@ public class Game implements Runnable{
                 fireball.render(g);
                 shield.render(g);
                 play.render(g);
+                
+                
+
                 
                 String a = "Health:                                                                                      Mana: 100";
                 g.drawString(a, 10, 20);

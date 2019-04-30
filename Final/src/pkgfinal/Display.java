@@ -8,19 +8,24 @@ package pkgfinal;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 /**
  *
  * @author adria
  */
 public class Display {
-    private JFrame jframe;  // this is the app class
+    public JFrame jframe;  // this is the app class
     private Canvas canvas;  // to display images
     
     private String title;   // title of the window
     private int width;      // width of the window
     private int height;     // height of the window
     
+    private boolean start;  // To know if game has start
+    public JTextField t1;  // To put a textfield at the game
+            
+            
     /**
      * initializes the values for the application game
      * @param title to display the title of the window
@@ -30,7 +35,8 @@ public class Display {
     public Display(String title, int width, int height) {
         this.title = title;
         this.width = width;
-        this.height = height;        
+        this.height = height;
+        this.start = start;        
         createDisplay();
     }
     
@@ -40,6 +46,22 @@ public class Display {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+    
+    /**
+     * To get if the game has start
+     * @return 
+     */
+    public boolean getStart() {
+        return start;
+    }
+    
+    /**
+     * Setter to start the game
+     * @param start 
+     */
+    public void setStart(boolean start) {
+        this.start = start;
     }
     
     /**
@@ -64,12 +86,14 @@ public class Display {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setFocusable(false);
         
+        JTextField t1 = new JTextField("Instrucciones: ");  
+        t1.setBounds(975, 630, 250,30);
+        jframe.add(t1);
+        
         // adding the canvas to the app window and packing to
         // get the right dimensions
         jframe.add(canvas);
         jframe.pack();
-        
-        
     }
 
     /**
