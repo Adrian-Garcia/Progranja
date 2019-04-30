@@ -61,7 +61,20 @@ public class Display {
      * @param start 
      */
     public void setStart(boolean start) {
+        
+        System.out.println("1");
+        
+        boolean prev = this.start;
+        
+        if (prev != start) {
+            if (start) {
+                initTextField();
+            }
+        }   
+        
+        System.out.println("3");
         this.start = start;
+        
     }
     
     /**
@@ -86,10 +99,6 @@ public class Display {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setFocusable(false);
         
-        JTextField t1 = new JTextField("Instrucciones: ");  
-        t1.setBounds(975, 630, 250,30);
-        jframe.add(t1);
-        
         // adding the canvas to the app window and packing to
         // get the right dimensions
         jframe.add(canvas);
@@ -110,5 +119,13 @@ public class Display {
      */
     public Canvas getCanvas() {
         return canvas;
+    }
+    
+    public void initTextField() {
+        System.out.println("2");
+        JTextField t1 = new JTextField("Instrucciones: ");  
+        t1.setBounds(975, 630, 250,30);
+        jframe.add(t1);
+        System.out.println("2");
     }
 }

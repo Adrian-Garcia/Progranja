@@ -185,45 +185,6 @@ public class Game implements Runnable{
         bars.add(new Bar(950, 0, 150, 700, 2, this));
         bars.add(new Bar(0, 0, 950, 50, 3, this));
         
-        // Instrucciones dummies
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        
-        Instructions.add(4);
-        
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        
-        Instructions.add(4);
-        
-//        Instructions.add(3);
-//        Instructions.add(3);
-        
-        instructions = Instructions.size();
-        
         // Generate lives
         for (int i=0; i<noLives; i++) {
             lives.add(new Live(i*40+55, 5, 40, 40, this));
@@ -406,8 +367,6 @@ public class Game implements Runnable{
                     block.render(g);
                 }
                 
-//                display.jframe.add(t1);
-                
                 player1.render(g);
                 player2.render(g);
                 
@@ -434,8 +393,7 @@ public class Game implements Runnable{
                 shield.render(g);
                 play.render(g);
                 
-                
-
+                display.setStart(true);
                 
                 String a = "Health:                                                                                      Mana: 100";
                 g.drawString(a, 10, 20);
