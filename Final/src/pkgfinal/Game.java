@@ -216,8 +216,8 @@ public class Game implements Runnable{
         
         Instructions.add(4);
         
-        Instructions.add(3);
-        Instructions.add(3);
+//        Instructions.add(3);
+//        Instructions.add(3);
         
         instructions = Instructions.size();
         

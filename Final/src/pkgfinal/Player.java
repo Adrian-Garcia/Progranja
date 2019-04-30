@@ -129,50 +129,45 @@ public class Player extends Item{
                     case 0: // Up
                         setPrevY(getY());
                         setY(getY() - 50);
-                        index++;
+//                        index++;
                     break;
 
                     case 1: // Down
                         setPrevY(getY());
                         setY(getY() + 50);
-                        index++;
+//                        index++;
                     break;
 
                     case 2: // Left
                         setPrevX(getX());
                         setX(getX() - 50);
-                        index++;
+//                        index++;
                     break;
 
                     case 3: // Right
                         setPrevX(getX());
                         setX(getX() + 50);
-                        index++;
+//                        index++;
                     break;
                     
                     case 4: // Throw a fire ball
-                        if (game.getShootFire()){
-                            game.setShootFire(false);
-                            System.out.println("SetShoot fire was true");
-                        }
-                        else { 
-                            game.setShootFire(true);
-                            System.out.println("SetShoot fire was false");
-                        }    
+                        game.setShootFire(!game.getShootFire());
+//                        index++;
                     break;
 
                     case 5: // Throw a Shield
                         if (game.getShootShield()){
                             game.setShootShield(false);
                             System.out.println("SetShoot shield was true");
-                        }   
-                        
+                        }
                         else {
                             game.setShootShield(true);
                             System.out.println("SetShoot shield was false");
                         }    
                     break;
                 }
+                
+                index++;
             }
         }
     }
