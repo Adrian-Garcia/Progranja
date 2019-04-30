@@ -243,7 +243,7 @@ public class Game implements Runnable{
             blocks.add(new Block(i*50+50, 650, 50, 50, this));
         }
         
-        // Generate instructionss
+        // Generate instructions
         for (int i=0; i<10; i++) {
             Inst.add(new Instruction(1150, i*70+5, 70, 70, 1, i+1, this));
         }
