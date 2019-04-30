@@ -406,7 +406,7 @@ public class Game implements Runnable{
                     block.render(g);
                 }
                 
-                display.jframe.add(t1);
+//                display.jframe.add(t1);
                 
                 player1.render(g);
                 player2.render(g);
