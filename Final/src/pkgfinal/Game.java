@@ -27,6 +27,7 @@ public class Game implements Runnable{
     private int noLives;                // number of lives of player 
     private int instructions;           // number of instructions
     private int turn;                   // number of the player that have the turn
+    private int index;                  // Index of the instructions
     private boolean playPressed;        // to know if user play the game
     private boolean running;            // to set the game
     private boolean newInst;            // to now if game need new instruction
@@ -64,6 +65,7 @@ public class Game implements Runnable{
         this.running = false;
         this.playPressed = false;
         this.gameStarted = false;
+        this.index = 0;
         this.turn = 1;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
@@ -185,12 +187,12 @@ public class Game implements Runnable{
         
         // Generate Instructions
         for (int i=0; i<16; i++) {
-            Inst.add(new String("Player.left();"));
+            Inst.add(new String(""));
             Instructions.add(2);
         }
         
         for (int i=0; i<11; i++) {
-            Inst.add(new String("Player.up();"));
+            Inst.add(new String(""));
             Instructions.add(0);
         }
         
@@ -288,7 +290,6 @@ public class Game implements Runnable{
 
             // Collision of fireball with player 2
             if (fire.intersecta(player2)) {
-                System.out.println("Choca");
                 fire.setX(player1.getX());
                 fire.setY(player1.getY());
                 setShootFire(false);
@@ -343,6 +344,35 @@ public class Game implements Runnable{
                     Live live = lives.get(i);
                     live.render(g);
                 }
+                
+                if (display.getNewInstruction()) {
+                    
+                    String newInst = display.getInstruction();
+                    Inst.set(index, newInst);
+                    
+                    // Posible instructions of the user
+                    if (newInst.equals("play")) {
+                        buttons.get(0).setPressed(true);
+                    } else if (newInst.equals("Player.up();")) {
+                        
+                    } else if (newInst.equals("Player.down();")) {
+                        
+                    } else if (newInst.equals("Player.left();")) {
+                        
+                    } else if (newInst.equals("Player.right();")) {
+                        
+                    } else if (newInst.equals("Player.run();")) {
+                        
+                    } else if (newInst.equals("exit")) {
+                        
+                    } else if (newInst.equals("help")) {
+                        
+                    }
+                    
+                    if (index < Inst.size()) {
+                        index++;
+                    }
+                } 
                                 
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
@@ -366,9 +396,38 @@ public class Game implements Runnable{
                     button.render(g);
                 }
                 
+                if (display.getNewInstruction()) {
+                    
+                    String newInst = display.getInstruction();
+                    Inst.set(index, newInst);
+                    
+                    // Posible instructions of the user
+                    if (newInst.equals("play")) {
+                        buttons.get(0).setPressed(true);
+                    } else if (newInst.equals("Player.up();")) {
+                        
+                    } else if (newInst.equals("Player.down();")) {
+                        
+                    } else if (newInst.equals("Player.left();")) {
+                        
+                    } else if (newInst.equals("Player.right();")) {
+                        
+                    } else if (newInst.equals("Player.play();")) {
+                        
+                    } else if (newInst.equals("exit")) {
+                        
+                    } else if (newInst.equals("help")) {
+                        
+                    } 
+                    
+                    if (index < Inst.size()) {
+                        index++;
+                    }
+                }
+                
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 1000, i*20+50);
+                    g.drawString(instruction, 975, i*20+50);
                 }
 
                 bs.show();

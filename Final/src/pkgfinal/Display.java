@@ -68,13 +68,15 @@ public class Display {
      * @return newInstruction
      */
     public boolean getNewInstruction() {
-     
-        if (this.newInstruction) {
+        
+        if (newInstruction) {
             newInstruction = false;
             return true;
         }
         
-        return newInstruction;
+        else {
+            return false;
+        }
     }
     
     /**
@@ -155,6 +157,7 @@ public class Display {
             public void actionPerformed(ActionEvent arg0) {
                 instruction = textField.getText();
                 textField.setText("");
+                newInstruction = true;
             }
         });
         
