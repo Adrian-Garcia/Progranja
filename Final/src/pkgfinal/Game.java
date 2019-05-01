@@ -8,9 +8,6 @@ package pkgfinal;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
 /**
  *
@@ -34,6 +31,7 @@ public class Game implements Runnable{
     private boolean shootFire;          // to know if player shoot a fireball
     private boolean shootShield;        // to know if player shoot a shield
     private boolean gameStarted;        // To know if the game has begun
+    private boolean run;                // To make the player to begin
     private Thread thread;              // thread to create the game
     private Player player1;             // to use player 1
     private Player player2;             // to use player 2
@@ -67,6 +65,7 @@ public class Game implements Runnable{
         this.gameStarted = false;
         this.index = 0;
         this.turn = 1;
+        this.run = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -168,6 +167,18 @@ public class Game implements Runnable{
     }
     
     /**
+     * Restart the instructions, clear the screen
+     */
+    public void clear() {
+        
+        for (int i=0; i<Inst.size(); i++) {
+            Inst.set(i, "");
+            Instructions.clear();
+            index = 0;
+        }
+    }
+    
+    /**
      * initializing the display window of the game
      */
     private void init() {
@@ -186,14 +197,8 @@ public class Game implements Runnable{
         }
         
         // Generate Instructions
-        for (int i=0; i<16; i++) {
+        for (int i=0; i<30; i++) {
             Inst.add(new String(""));
-            
-        }
-        
-        for (int i=0; i<11; i++) {
-            Inst.add(new String(""));
-            Instructions.add(0);
         }
         
         // Generate Buttons
@@ -298,7 +303,18 @@ public class Game implements Runnable{
         
         // If level 1 is started
         if (buttons.get(0).getPressed()) {
-            player1.tick();
+            
+            if (run) {
+                player1.setFinish(false);
+                player1.tick();
+                
+                if (player1.getFinish()) {
+                    run = false;
+                    player1.setFinish(true);
+                    clear();
+                }
+                
+            }
             fire.tick();
             powerShield.tick();
         }
@@ -362,7 +378,7 @@ public class Game implements Runnable{
                     } else if (newInst.equals("Player.right();")) {
                         Instructions.add(3);
                     } else if (newInst.equals("Player.run();")) {
-                        
+                        run = true;
                     } else if (newInst.equals("exit")) {
                         
                     } else if (newInst.equals("help")) {
@@ -376,7 +392,7 @@ public class Game implements Runnable{
                                 
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 975, i*20+50);
+                    g.drawString(instruction, 975, i*20+30);
                 }
                 
                 String a = "Health:                                                                                      Mana: 100";
@@ -405,29 +421,29 @@ public class Game implements Runnable{
                     if (newInst.equals("play")) {
                         buttons.get(0).setPressed(true);
                     } else if (newInst.equals("Player.up();")) {
-                        
+                        Instructions.add(0);
                     } else if (newInst.equals("Player.down();")) {
-                        
+                        Instructions.add(1);
                     } else if (newInst.equals("Player.left();")) {
-                        
+                        Instructions.add(2);
                     } else if (newInst.equals("Player.right();")) {
-                        
-                    } else if (newInst.equals("Player.play();")) {
-                        
+                        Instructions.add(3);
+                    } else if (newInst.equals("Player.run();")) {
+                        run = true;
                     } else if (newInst.equals("exit")) {
                         
                     } else if (newInst.equals("help")) {
                         
-                    } 
+                    }
                     
                     if (index < Inst.size()) {
                         index++;
                     }
-                }
-                
+                } 
+                                
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 975, i*20+50);
+                    g.drawString(instruction, 975, i*20+30);
                 }
 
                 bs.show();

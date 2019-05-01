@@ -22,6 +22,8 @@ public class Player extends Item{
     private int index;
     private int prevX;
     private int prevY;
+    private boolean finish;
+    private int counter;
     
     /**
      * Box constructor
@@ -40,6 +42,8 @@ public class Player extends Item{
         this.index = 0;
         this.prevX = x;
         this.prevY = y;
+        this.finish = false;
+        this.counter = 0;
     }
 
     /**
@@ -80,6 +84,22 @@ public class Player extends Item{
      */
     public int getPrevY() {
         return prevY;
+    }
+    
+    /**
+     * To make game know if all the instructions where done
+     * @return 
+     */
+    public boolean getFinish() {
+        return finish;
+    }
+    
+    /**
+     * Setter of finish
+     * @param finish 
+     */
+    public void setFinish(boolean finish) {
+        this.finish = finish;
     }
 
     /**
@@ -124,44 +144,56 @@ public class Player extends Item{
             
             if (!game.getShootFire() && !game.getShootShield()) {
                 
-                switch (game.getInstructionAt(index)) {
-
-                    case 0: // Up
-                        setPrevY(getY());
-                        setY(getY() - 50);
-                    break;
-
-                    case 1: // Down
-                        setPrevY(getY());
-                        setY(getY() + 50);
-                    break;
-
-                    case 2: // Left
-                        setPrevX(getX());
-                        setX(getX() - 50);
-                    break;
-
-                    case 3: // Right
-                        setPrevX(getX());
-                        setX(getX() + 50);
-                    break;
-                    
-                    case 4: // Throw a fire ball
-                        game.setShootFire(!game.getShootFire());
-                    break;
-
-                    case 5: // Throw a Shield
-                        if (game.getShootShield()){
-                            game.setShootShield(false);
-                        }
-                        else {
-                            game.setShootShield(true);
-                        }    
-                    break;
-                }
+                counter++;
                 
-                index++;
+                if (counter > 7) {
+                
+                    counter = 0;
+                    
+                    switch (game.getInstructionAt(index)) {
+
+                        case 0: // Up
+                            setPrevY(getY());
+                            setY(getY() - 50);
+                        break;
+
+                        case 1: // Down
+                            setPrevY(getY());
+                            setY(getY() + 50);
+                        break;
+
+                        case 2: // Left
+                            setPrevX(getX());
+                            setX(getX() - 50);
+                        break;
+
+                        case 3: // Right
+                            setPrevX(getX());
+                            setX(getX() + 50);
+                        break;
+
+                        case 4: // Throw a fire ball
+                            game.setShootFire(!game.getShootFire());
+                        break;
+
+                        case 5: // Throw a Shield
+                            if (game.getShootShield()){
+                                game.setShootShield(false);
+                            }
+                            else {
+                                game.setShootShield(true);
+                            }    
+                        break;
+                    }
+
+                    index++;
+                }
             }
+        }
+        
+        // Player finish
+        else {
+            finish = true;
         }
     }
     
