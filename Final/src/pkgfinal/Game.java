@@ -8,7 +8,9 @@ package pkgfinal;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
+import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 /**
  *
@@ -30,6 +32,7 @@ public class Game implements Runnable{
     private boolean newInst;            // to now if game need new instruction
     private boolean shootFire;          // to know if player shoot a fireball
     private boolean shootShield;        // to know if player shoot a shield
+    private boolean gameStarted;        // To know if the game has begun
     private Thread thread;              // thread to create the game
     private Player player1;             // to use player 1
     private Player player2;             // to use player 2
@@ -69,6 +72,7 @@ public class Game implements Runnable{
         this.shootShield = false;
         this.running = false;
         this.playPressed = false;
+        this.gameStarted = false;
         this.turn = 1;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
@@ -169,6 +173,21 @@ public class Game implements Runnable{
     public void newInst(int val) {
         instructions++;
         Inst.get(instructions).setVal(val);
+    }
+    
+    public void startForm() {
+        JTextField textField = new JTextField();  
+        textField.setBounds(975, 630, 200, 30);
+        
+        JButton button=new JButton("►");  
+        button.setBounds(1185, 630, 50, 30);  
+        
+        gameStarted = true;
+        
+//        button.addClickListener(e -> button);
+        
+        display.jframe.add(textField);
+        display.jframe.add(button);
     }
     
     /**
@@ -353,6 +372,9 @@ public class Game implements Runnable{
         } else {
             
             if (buttons.get(0).getPressed()) {
+                
+                if (!gameStarted)
+                    startForm();
                 
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);

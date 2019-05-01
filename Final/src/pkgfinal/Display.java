@@ -7,24 +7,28 @@ package pkgfinal;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 
 /**
  *
  * @author adria
  */
 public class Display {
-    public JFrame jframe;  // this is the app class
-    private Canvas canvas;  // to display images
-    
-    private String title;   // title of the window
-    private int width;      // width of the window
-    private int height;     // height of the window
-    
-    private boolean start;  // To know if game has start
-    public JTextField t1;  // To put a textfield at the game
-            
+    public JFrame jframe;               // this is the app class
+    private Canvas canvas;              // to display images
+    private String title;               // title of the window
+    private int width;                  // width of the window
+    private int height;                 // height of the window
+    private boolean start;              // To know if game has start
+    public JTextField t1;               // To put a textfield at the game
+    private boolean buttonPressed;      // To press the button
+    public String instruction;          // Information of the JTextField
             
     /**
      * initializes the values for the application game
@@ -36,7 +40,9 @@ public class Display {
         this.title = title;
         this.width = width;
         this.height = height;
-        this.start = start;        
+        this.start = false;  
+        this.buttonPressed = false;
+        this.instruction = "";
         createDisplay();
     }
     
@@ -95,9 +101,26 @@ public class Display {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setFocusable(false);
         
-        JTextField t1 = new JTextField();  
-        t1.setBounds(975, 630, 250,30);
-        jframe.add(t1);
+        JTextField textField = new JTextField(instruction);
+        textField.setBounds(975, 630, 200, 30);
+        
+        JButton button=new JButton("►");  
+        button.setBounds(1185, 630, 50, 30);  
+        
+        jframe.add(textField);
+        jframe.add(button);
+        
+        // When the button is pressed, take the action of the textField
+        button.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                System.out.print("Botton: ");
+                instruction = textField.getText();
+                System.out.println(instruction);
+                textField.setText("");
+            }
+        });
         
         // adding the canvas to the app window and packing to
         // get the right dimensions
@@ -122,8 +145,8 @@ public class Display {
     }
     
     public void initTextField() {
-//        JTextField t1 = new JTextField("Instrucciones: ");  
-//        t1.setBounds(975, 630, 250,30);
-//        jframe.add(t1);
+        JTextField textField = new JTextField();  
+        textField.setBounds(975, 630, 250,30);
+        jframe.add(textField);
     }
 }
