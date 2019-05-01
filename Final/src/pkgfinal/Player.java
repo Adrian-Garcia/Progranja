@@ -129,30 +129,25 @@ public class Player extends Item{
                     case 0: // Up
                         setPrevY(getY());
                         setY(getY() - 50);
-//                        index++;
                     break;
 
                     case 1: // Down
                         setPrevY(getY());
                         setY(getY() + 50);
-//                        index++;
                     break;
 
                     case 2: // Left
                         setPrevX(getX());
                         setX(getX() - 50);
-//                        index++;
                     break;
 
                     case 3: // Right
                         setPrevX(getX());
                         setX(getX() + 50);
-//                        index++;
                     break;
                     
                     case 4: // Throw a fire ball
                         game.setShootFire(!game.getShootFire());
-//                        index++;
                     break;
 
                     case 5: // Throw a Shield
