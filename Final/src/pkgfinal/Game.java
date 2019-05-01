@@ -188,7 +188,7 @@ public class Game implements Runnable{
         // Generate Instructions
         for (int i=0; i<16; i++) {
             Inst.add(new String(""));
-            Instructions.add(2);
+            
         }
         
         for (int i=0; i<11; i++) {
@@ -354,13 +354,13 @@ public class Game implements Runnable{
                     if (newInst.equals("play")) {
                         buttons.get(0).setPressed(true);
                     } else if (newInst.equals("Player.up();")) {
-                        
+                        Instructions.add(0);
                     } else if (newInst.equals("Player.down();")) {
-                        
+                        Instructions.add(1);
                     } else if (newInst.equals("Player.left();")) {
-                        
+                        Instructions.add(2);
                     } else if (newInst.equals("Player.right();")) {
-                        
+                        Instructions.add(3);
                     } else if (newInst.equals("Player.run();")) {
                         
                     } else if (newInst.equals("exit")) {
