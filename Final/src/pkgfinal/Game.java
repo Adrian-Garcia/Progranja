@@ -182,15 +182,44 @@ public class Game implements Runnable{
             lives.add(new Live(i*70+55, 30, 60, 65, this));
         }
         
+        Instructions.add(0);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        
+        
         // Generate Instructions
         for (int i=0; i<16; i++) {
             Inst.add(new String("Player.left();"));
-            Instructions.add(2);
         }
         
         for (int i=0; i<11; i++) {
             Inst.add(new String("Player.up();"));
-            Instructions.add(0);
+            
         }
         
         // Generate Buttons
@@ -202,33 +231,33 @@ public class Game implements Runnable{
         // Generate Blocks
         // eje y izquierdo
         for (int i=0; i<5; i++) {
-            blocks.add(new Block(50, i*75+150, 50, 65, this));
+            blocks.add(new Block(50, i*75+150, 25, 32, this));
         }
         // eje y derecho
         for (int i=0; i<5; i++) {
-            blocks.add(new Block(800, i*75+275, 50, 65, this));
+            blocks.add(new Block(800, i*75+275, 25, 32, this));
         }
         
         // eje x arriba
          for (int i=0; i<8; i++) {
-            blocks.add(new Block(i*75+130, 150, 50, 65, this));
+            blocks.add(new Block(i*75+130, 150, 25, 32, this));
         } 
         //eje x abajo
         for (int i=0; i<8; i++) {
-            blocks.add(new Block(i*75+200, 575, 50, 65, this));
+            blocks.add(new Block(i*75+200, 575, 25, 32, this));
         }
         
         // eje x medio izquierdo
          for (int i=0; i<5; i++) {
-            blocks.add(new Block(i*75+115, 425, 50, 65, this));
+            blocks.add(new Block(i*75+115, 425, 25, 32, this));
         }
         // eje x medio derecho
         for (int i=0; i<6; i++) {
-            blocks.add(new Block(i*75+350, 300, 50, 65, this));
+            blocks.add(new Block(i*75+350, 300, 25, 32, this));
         }
         
         // Generate Players 
-        cow = new Player(55, 500, 150, 150, 2 , 1, this);
+        cow = new Player(80, 550, 50, 50, 2 , 1, this);
         farm = new Player(700, 50, 325, 325, 2, 2, this);
 
         // Generate Powers
