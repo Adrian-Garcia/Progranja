@@ -40,17 +40,17 @@ public class Game implements Runnable{
     private LinkedList<Block> blocks;   // to use blocks
     private LinkedList<Bar> bars;       // to use Bars
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
-    private LinkedList<Instruction>Inst;// to use Instructions items
+//    private LinkedList<Instruction>Inst;// to use Instructions items
     private LinkedList<Live> lives;     // to use lives
     private JTextField t1;
     private JTextField t2;
-    private Action arrowUp;             // to use arrowUp
-    private Action arrowDown;           // to use arrowDown
-    private Action arrowLeft;           // to use arrowLeft
-    private Action arrowRight;          // to use arrowRight
-    private Action fireball;            // to use fireball to atack
-    private Action shield;              // to use shield to defend
-    private Action play;                // to play the secuence
+//    private Action arrowUp;             // to use arrowUp
+//    private Action arrowDown;           // to use arrowDown
+//    private Action arrowLeft;           // to use arrowLeft
+//    private Action arrowRight;          // to use arrowRight
+//    private Action fireball;            // to use fireball to atack
+//    private Action shield;              // to use shield to defend
+//    private Action play;                // to play the secuence
     private Power fire;                 // to use fireball
     private Power powerShield;          // to use shield
     private MouseManager mouseManager;  // to manage the mouse
@@ -79,7 +79,7 @@ public class Game implements Runnable{
         blocks = new LinkedList<Block>();
         bars = new LinkedList<Bar>();
         Instructions = new LinkedList<Integer>();
-        Inst = new LinkedList<Instruction>();
+//        Inst = new LinkedList<Instruction>();
         lives = new LinkedList<Live>();
     }
     
@@ -172,21 +172,8 @@ public class Game implements Runnable{
      */
     public void newInst(int val) {
         instructions++;
-        Inst.get(instructions).setVal(val);
+//        Inst.get(instructions).setVal(val);
     }
-    
-//    public void startForm() {
-//        JTextField textField = new JTextField();  
-//        textField.setBounds(975, 630, 200, 30);
-//        
-//        JButton button=new JButton("►");  
-//        button.setBounds(1185, 630, 50, 30);  
-//        
-//        gameStarted = true;
-//        
-//        display.jframe.add(textField);
-//        display.jframe.add(button);
-//    }
     
     /**
      * initializing the display window of the game
@@ -198,8 +185,9 @@ public class Game implements Runnable{
         Assets.init();
         
         // Generate Bars
-        bars.add(new Bar(1100, 0, 150, 700, 1, this));
-        bars.add(new Bar(950, 0, 150, 700, 2, this));
+        bars.add(new Bar(950, 0, 300, 700, 1, this));
+//        bars.add(new Bar(1100, 0, 150, 700, 1, this));
+//        bars.add(new Bar(950, 0, 150, 700, 2, this));
         bars.add(new Bar(0, 0, 950, 50, 3, this));
         
         // Generate lives
@@ -225,9 +213,9 @@ public class Game implements Runnable{
         }
         
         // Generate instructions
-        for (int i=0; i<10; i++) {
-            Inst.add(new Instruction(1150, i*70+5, 70, 70, 1, i+1, this));
-        }
+//        for (int i=0; i<10; i++) {
+//            Inst.add(new Instruction(1150, i*70+5, 70, 70, 1, i+1, this));
+//        }
         
         // Generate Players 
         player1 = new Player(850, 605, 40, 40, 1, this);
@@ -238,16 +226,16 @@ public class Game implements Runnable{
         powerShield = new Power(850, 605, 40, 40, this);
         
         // Generate Arrows
-        arrowUp = new Action(975, 10, 100, 100, 0, this);
-        arrowDown = new Action(975, 100, 100, 100, 1, this);
-        arrowLeft = new Action(975, 190, 100, 100, 2, this);
-        arrowRight = new Action(975, 270, 100, 100, 3, this);
-        
-        // Generate Actions
-        fireball = new Action(975, 705, 100, 100, 4, this);
-        shield = new Action(975, 460, 100, 100, 5, this);
-        play = new Action(975, 570, 100, 100, 6, this);
-        
+//        arrowUp = new Action(975, 10, 100, 100, 0, this);
+//        arrowDown = new Action(975, 100, 100, 100, 1, this);
+//        arrowLeft = new Action(975, 190, 100, 100, 2, this);
+//        arrowRight = new Action(975, 270, 100, 100, 3, this);
+//        
+//        // Generate Actions
+//        fireball = new Action(975, 705, 100, 100, 4, this);
+//        shield = new Action(975, 460, 100, 100, 5, this);
+//        play = new Action(975, 570, 100, 100, 6, this);
+//        
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
@@ -332,27 +320,27 @@ public class Game implements Runnable{
         }
         
         // press Actions 
-        arrowUp.tick();
-        arrowDown.tick();
-        arrowLeft.tick();
-        arrowRight.tick();
-    
-        if (arrowUp.getPressed()) {
-            System.out.print("Up");
-            arrowUp.setPressed(false);
-        }
-        if (arrowDown.getPressed()) {
-            System.out.print("Down");
-            arrowDown.setPressed(false);
-        }
-        if (arrowLeft.getPressed()) {
-            System.out.print("Left");
-            arrowLeft.setPressed(false);
-        }
-        if (arrowRight.getPressed()) {
-            System.out.print("Right");
-            arrowRight.setPressed(false);
-        }
+//        arrowUp.tick();
+//        arrowDown.tick();
+//        arrowLeft.tick();
+//        arrowRight.tick();
+//    
+//        if (arrowUp.getPressed()) {
+//            System.out.print("Up");
+//            arrowUp.setPressed(false);
+//        }
+//        if (arrowDown.getPressed()) {
+//            System.out.print("Down");
+//            arrowDown.setPressed(false);
+//        }
+//        if (arrowLeft.getPressed()) {
+//            System.out.print("Left");
+//            arrowLeft.setPressed(false);
+//        }
+//        if (arrowRight.getPressed()) {
+//            System.out.print("Right");
+//            arrowRight.setPressed(false);
+//        }
     }
     
     private void render() {
@@ -370,10 +358,7 @@ public class Game implements Runnable{
         } else {
             
             if (buttons.get(0).getPressed()) {
-                
-//                if (!gameStarted)
-//                    startForm();
-                
+                                
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);
 
@@ -394,24 +379,24 @@ public class Game implements Runnable{
                     fire.render(g);
                 }
                 
-                for (int i=0; i<Inst.size(); i++) {
-                    Instruction instruction = Inst.get(i);
-                    instruction.render(g);
-                }
+//                for (int i=0; i<Inst.size(); i++) {
+//                    Instruction instruction = Inst.get(i);
+//                    instruction.render(g);
+//                }
                 
                 for (int i=0; i<noLives; i++) {
                     Live live = lives.get(i);
                     live.render(g);
                 }
                 
-                arrowUp.render(g);
-                arrowDown.render(g);
-                arrowLeft.render(g);
-                arrowRight.render(g);
-                
-                fireball.render(g);
-                shield.render(g);
-                play.render(g);
+//                arrowUp.render(g);
+//                arrowDown.render(g);
+//                arrowLeft.render(g);
+//                arrowRight.render(g);
+//                
+//                fireball.render(g);
+//                shield.render(g);
+//                play.render(g);
                 
                 display.setStart(true);
                 
