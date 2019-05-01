@@ -70,6 +70,7 @@ public class Game implements Runnable{
         blocks = new LinkedList<Block>();
         bars = new LinkedList<Bar>();
         Instructions = new LinkedList<Integer>();
+        Inst = new LinkedList<String>();
         lives = new LinkedList<Live>();
     }
     
@@ -180,6 +181,17 @@ public class Game implements Runnable{
         // Generate lives
         for (int i=0; i<noLives; i++) {
             lives.add(new Live(i*40+55, 5, 40, 40, this));
+        }
+        
+        // Generate Instructions
+        for (int i=0; i<16; i++) {
+            Inst.add(new String("Player.left();"));
+            Instructions.add(2);
+        }
+        
+        for (int i=0; i<11; i++) {
+            Inst.add(new String("Player.up();"));
+            Instructions.add(0);
         }
         
         // Generate Buttons
@@ -331,8 +343,11 @@ public class Game implements Runnable{
                     Live live = lives.get(i);
                     live.render(g);
                 }
-                
-                display.setStart(true);
+                                
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    g.drawString(instruction, 975, i*20+50);
+                }
                 
                 String a = "Health:                                                                                      Mana: 100";
                 g.drawString(a, 10, 20);
@@ -349,6 +364,11 @@ public class Game implements Runnable{
                 for (int i = 0; i < buttons.size(); i++) {
                     Button button = buttons.get(i);
                     button.render(g);
+                }
+                
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    g.drawString(instruction, 1000, i*20+50);
                 }
 
                 bs.show();
