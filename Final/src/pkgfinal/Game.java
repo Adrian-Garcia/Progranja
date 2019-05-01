@@ -312,9 +312,9 @@ public class Game implements Runnable{
                     run = false;
                     player1.setFinish(true);
                     clear();
-                }
-                
+                }   
             }
+            
             fire.tick();
             powerShield.tick();
         }
@@ -369,6 +369,7 @@ public class Game implements Runnable{
                     // Posible instructions of the user
                     if (newInst.equals("play")) {
                         buttons.get(0).setPressed(true);
+                        clear();
                     } else if (newInst.equals("Player.up();")) {
                         Instructions.add(0);
                     } else if (newInst.equals("Player.down();")) {
@@ -379,8 +380,8 @@ public class Game implements Runnable{
                         Instructions.add(3);
                     } else if (newInst.equals("Player.run();")) {
                         run = true;
-                    } else if (newInst.equals("exit")) {
-                        
+                    } else if (newInst.equals("clear")) {
+                        clear();
                     } else if (newInst.equals("help")) {
                         
                     }
@@ -420,6 +421,7 @@ public class Game implements Runnable{
                     // Posible instructions of the user
                     if (newInst.equals("play")) {
                         buttons.get(0).setPressed(true);
+                        clear();
                     } else if (newInst.equals("Player.up();")) {
                         Instructions.add(0);
                     } else if (newInst.equals("Player.down();")) {

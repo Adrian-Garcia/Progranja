@@ -194,6 +194,7 @@ public class Player extends Item{
         // Player finish
         else {
             finish = true;
+            index=0;
         }
     }
     
