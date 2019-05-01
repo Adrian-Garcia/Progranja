@@ -175,20 +175,18 @@ public class Game implements Runnable{
         Inst.get(instructions).setVal(val);
     }
     
-    public void startForm() {
-        JTextField textField = new JTextField();  
-        textField.setBounds(975, 630, 200, 30);
-        
-        JButton button=new JButton("►");  
-        button.setBounds(1185, 630, 50, 30);  
-        
-        gameStarted = true;
-        
-//        button.addClickListener(e -> button);
-        
-        display.jframe.add(textField);
-        display.jframe.add(button);
-    }
+//    public void startForm() {
+//        JTextField textField = new JTextField();  
+//        textField.setBounds(975, 630, 200, 30);
+//        
+//        JButton button=new JButton("►");  
+//        button.setBounds(1185, 630, 50, 30);  
+//        
+//        gameStarted = true;
+//        
+//        display.jframe.add(textField);
+//        display.jframe.add(button);
+//    }
     
     /**
      * initializing the display window of the game
@@ -373,8 +371,8 @@ public class Game implements Runnable{
             
             if (buttons.get(0).getPressed()) {
                 
-                if (!gameStarted)
-                    startForm();
+//                if (!gameStarted)
+//                    startForm();
                 
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);

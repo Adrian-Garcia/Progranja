@@ -26,9 +26,10 @@ public class Display {
     private int width;                  // width of the window
     private int height;                 // height of the window
     private boolean start;              // To know if game has start
+    private boolean newInstruction;     // Let the game know that there is a new instruction
     public JTextField t1;               // To put a textfield at the game
     private boolean buttonPressed;      // To press the button
-    public String instruction;          // Information of the JTextField
+    private String instruction;          // Information of the JTextField
             
     /**
      * initializes the values for the application game
@@ -63,6 +64,28 @@ public class Display {
     }
     
     /**
+     * Get if the user input a new Instruction
+     * @return newInstruction
+     */
+    public boolean getNewInstruction() {
+     
+        if (this.newInstruction) {
+            newInstruction = false;
+            return true;
+        }
+        
+        return newInstruction;
+    }
+    
+    /**
+     * Get the instruction of the user
+     * @return 
+     */
+    public String getInstruction() {
+        return instruction;
+    }
+    
+    /**
      * Setter to start the game
      * @param start 
      */
@@ -76,7 +99,22 @@ public class Display {
             }
         }
         this.start = start;
-        
+    }
+    
+    /**
+     * Setter of newInstruction
+     * @param newInstruction 
+     */
+    public void setNewInstruction(boolean newInstruction) {
+        this.newInstruction = newInstruction;
+    }
+    
+    /**
+     * Setter of instruction
+     * @param instruction 
+     */
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
     
     /**
@@ -115,9 +153,7 @@ public class Display {
             
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                System.out.print("Botton: ");
                 instruction = textField.getText();
-                System.out.println(instruction);
                 textField.setText("");
             }
         });
