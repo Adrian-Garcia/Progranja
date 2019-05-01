@@ -382,7 +382,7 @@ public class Game implements Runnable{
                         run = true;
                     } else if (newInst.equals("clear")) {
                         clear();
-                    } else if (newInst.equals("help")) {
+                    } else if (newInst.equals("exit")) {
                         
                     }
                     
