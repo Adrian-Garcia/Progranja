@@ -8,9 +8,6 @@ package pkgfinal;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
 /**
  *
@@ -27,30 +24,23 @@ public class Game implements Runnable{
     private int noLives;                // number of lives of player 
     private int instructions;           // number of instructions
     private int turn;                   // number of the player that have the turn
+    private int index;                  // Index of the instructions
     private boolean playPressed;        // to know if user play the game
     private boolean running;            // to set the game
     private boolean newInst;            // to now if game need new instruction
     private boolean shootFire;          // to know if player shoot a fireball
     private boolean shootShield;        // to know if player shoot a shield
     private boolean gameStarted;        // To know if the game has begun
+    private boolean run;                // To make the player to begin
     private Thread thread;              // thread to create the game
     private Player player1;             // to use player 1
     private Player player2;             // to use player 2
+    private LinkedList<String> Inst;    // to show instructions to the user
     private LinkedList<Button> buttons; // to use buttons
     private LinkedList<Block> blocks;   // to use blocks
     private LinkedList<Bar> bars;       // to use Bars
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
-    private LinkedList<Instruction>Inst;// to use Instructions items
     private LinkedList<Live> lives;     // to use lives
-    private JTextField t1;
-    private JTextField t2;
-    private Action arrowUp;             // to use arrowUp
-    private Action arrowDown;           // to use arrowDown
-    private Action arrowLeft;           // to use arrowLeft
-    private Action arrowRight;          // to use arrowRight
-    private Action fireball;            // to use fireball to atack
-    private Action shield;              // to use shield to defend
-    private Action play;                // to play the secuence
     private Power fire;                 // to use fireball
     private Power powerShield;          // to use shield
     private MouseManager mouseManager;  // to manage the mouse
@@ -73,13 +63,15 @@ public class Game implements Runnable{
         this.running = false;
         this.playPressed = false;
         this.gameStarted = false;
+        this.index = 0;
         this.turn = 1;
+        this.run = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
         bars = new LinkedList<Bar>();
         Instructions = new LinkedList<Integer>();
-        Inst = new LinkedList<Instruction>();
+        Inst = new LinkedList<String>();
         lives = new LinkedList<Live>();
     }
     
@@ -172,22 +164,18 @@ public class Game implements Runnable{
      */
     public void newInst(int val) {
         instructions++;
-        Inst.get(instructions).setVal(val);
     }
     
-    public void startForm() {
-        JTextField textField = new JTextField();  
-        textField.setBounds(975, 630, 200, 30);
+    /**
+     * Restart the instructions, clear the screen
+     */
+    public void clear() {
         
-        JButton button=new JButton("►");  
-        button.setBounds(1185, 630, 50, 30);  
-        
-        gameStarted = true;
-        
-//        button.addClickListener(e -> button);
-        
-        display.jframe.add(textField);
-        display.jframe.add(button);
+        for (int i=0; i<Inst.size(); i++) {
+            Inst.set(i, "");
+            Instructions.clear();
+            index = 0;
+        }
     }
     
     /**
@@ -200,13 +188,17 @@ public class Game implements Runnable{
         Assets.init();
         
         // Generate Bars
-        bars.add(new Bar(1100, 0, 150, 700, 1, this));
-        bars.add(new Bar(950, 0, 150, 700, 2, this));
+        bars.add(new Bar(950, 0, 300, 700, 1, this));
         bars.add(new Bar(0, 0, 950, 50, 3, this));
         
         // Generate lives
         for (int i=0; i<noLives; i++) {
             lives.add(new Live(i*40+55, 5, 40, 40, this));
+        }
+        
+        // Generate Instructions
+        for (int i=0; i<30; i++) {
+            Inst.add(new String(""));
         }
         
         // Generate Buttons
@@ -226,11 +218,6 @@ public class Game implements Runnable{
             blocks.add(new Block(i*50+50, 650, 50, 50, this));
         }
         
-        // Generate instructions
-        for (int i=0; i<10; i++) {
-            Inst.add(new Instruction(1150, i*70+5, 70, 70, 1, i+1, this));
-        }
-        
         // Generate Players 
         player1 = new Player(850, 605, 40, 40, 1, this);
         player2 = new Player(55, 105, 40, 40, 2, this);
@@ -238,17 +225,6 @@ public class Game implements Runnable{
         // Generate Powers
         fire = new Power(850, 605, 40, 40, this);
         powerShield = new Power(850, 605, 40, 40, this);
-        
-        // Generate Arrows
-        arrowUp = new Action(975, 10, 100, 100, 0, this);
-        arrowDown = new Action(975, 100, 100, 100, 1, this);
-        arrowLeft = new Action(975, 190, 100, 100, 2, this);
-        arrowRight = new Action(975, 270, 100, 100, 3, this);
-        
-        // Generate Actions
-        fireball = new Action(975, 705, 100, 100, 4, this);
-        shield = new Action(975, 460, 100, 100, 5, this);
-        play = new Action(975, 570, 100, 100, 6, this);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -319,7 +295,6 @@ public class Game implements Runnable{
 
             // Collision of fireball with player 2
             if (fire.intersecta(player2)) {
-                System.out.println("Choca");
                 fire.setX(player1.getX());
                 fire.setY(player1.getY());
                 setShootFire(false);
@@ -328,32 +303,20 @@ public class Game implements Runnable{
         
         // If level 1 is started
         if (buttons.get(0).getPressed()) {
-            player1.tick();
+            
+            if (run) {
+                player1.setFinish(false);
+                player1.tick();
+                
+                if (player1.getFinish()) {
+                    run = false;
+                    player1.setFinish(true);
+                    clear();
+                }   
+            }
+            
             fire.tick();
             powerShield.tick();
-        }
-        
-        // press Actions 
-        arrowUp.tick();
-        arrowDown.tick();
-        arrowLeft.tick();
-        arrowRight.tick();
-    
-        if (arrowUp.getPressed()) {
-            System.out.print("Up");
-            arrowUp.setPressed(false);
-        }
-        if (arrowDown.getPressed()) {
-            System.out.print("Down");
-            arrowDown.setPressed(false);
-        }
-        if (arrowLeft.getPressed()) {
-            System.out.print("Left");
-            arrowLeft.setPressed(false);
-        }
-        if (arrowRight.getPressed()) {
-            System.out.print("Right");
-            arrowRight.setPressed(false);
         }
     }
     
@@ -372,10 +335,7 @@ public class Game implements Runnable{
         } else {
             
             if (buttons.get(0).getPressed()) {
-                
-                if (!gameStarted)
-                    startForm();
-                
+                                
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.cian, 0, 0, width, height, null);
 
@@ -396,26 +356,45 @@ public class Game implements Runnable{
                     fire.render(g);
                 }
                 
-                for (int i=0; i<Inst.size(); i++) {
-                    Instruction instruction = Inst.get(i);
-                    instruction.render(g);
-                }
-                
                 for (int i=0; i<noLives; i++) {
                     Live live = lives.get(i);
                     live.render(g);
                 }
                 
-                arrowUp.render(g);
-                arrowDown.render(g);
-                arrowLeft.render(g);
-                arrowRight.render(g);
-                
-                fireball.render(g);
-                shield.render(g);
-                play.render(g);
-                
-                display.setStart(true);
+                if (display.getNewInstruction()) {
+                    
+                    String newInst = display.getInstruction();
+                    Inst.set(index, newInst);
+                    
+                    // Posible instructions of the user
+                    if (newInst.equals("play")) {
+                        buttons.get(0).setPressed(true);
+                        clear();
+                    } else if (newInst.equals("Player.up();")) {
+                        Instructions.add(0);
+                    } else if (newInst.equals("Player.down();")) {
+                        Instructions.add(1);
+                    } else if (newInst.equals("Player.left();")) {
+                        Instructions.add(2);
+                    } else if (newInst.equals("Player.right();")) {
+                        Instructions.add(3);
+                    } else if (newInst.equals("Player.run();")) {
+                        run = true;
+                    } else if (newInst.equals("clear")) {
+                        clear();
+                    } else if (newInst.equals("exit")) {
+                        
+                    }
+                    
+                    if (index < Inst.size()) {
+                        index++;
+                    }
+                } 
+                                
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    g.drawString(instruction, 975, i*20+30);
+                }
                 
                 String a = "Health:                                                                                      Mana: 100";
                 g.drawString(a, 10, 20);
@@ -432,6 +411,41 @@ public class Game implements Runnable{
                 for (int i = 0; i < buttons.size(); i++) {
                     Button button = buttons.get(i);
                     button.render(g);
+                }
+                
+                if (display.getNewInstruction()) {
+                    
+                    String newInst = display.getInstruction();
+                    Inst.set(index, newInst);
+                    
+                    // Posible instructions of the user
+                    if (newInst.equals("play")) {
+                        buttons.get(0).setPressed(true);
+                        clear();
+                    } else if (newInst.equals("Player.up();")) {
+                        Instructions.add(0);
+                    } else if (newInst.equals("Player.down();")) {
+                        Instructions.add(1);
+                    } else if (newInst.equals("Player.left();")) {
+                        Instructions.add(2);
+                    } else if (newInst.equals("Player.right();")) {
+                        Instructions.add(3);
+                    } else if (newInst.equals("Player.run();")) {
+                        run = true;
+                    } else if (newInst.equals("exit")) {
+                        
+                    } else if (newInst.equals("help")) {
+                        
+                    }
+                    
+                    if (index < Inst.size()) {
+                        index++;
+                    }
+                } 
+                                
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    g.drawString(instruction, 975, i*20+30);
                 }
 
                 bs.show();
