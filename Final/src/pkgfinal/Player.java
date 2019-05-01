@@ -22,7 +22,11 @@ public class Player extends Item{
     private int index;
     private int prevX;
     private int prevY;
-    
+    private int direction;
+    private Animation animationUp;
+    private Animation animationLeft;
+    private Animation animationDown;
+    private Animation animationRight;
     /**
      * Box constructor
      * @param x
@@ -31,7 +35,7 @@ public class Player extends Item{
      * @param height
      * @param game 
      */
-    public Player(int x, int y, int width, int height, int playerNo, Game game) {
+    public Player(int x, int y, int width, int height,int direction, int playerNo, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
@@ -40,6 +44,11 @@ public class Player extends Item{
         this.index = 0;
         this.prevX = x;
         this.prevY = y;
+        
+        this.animationUp = new Animation(Assets.playerUp, 100);
+        this.animationLeft = new Animation(Assets.playerLeft, 100);
+        this.animationDown = new Animation(Assets.playerDown, 100);
+        this.animationRight = new Animation(Assets.playerRight, 100);
     }
 
     /**
@@ -114,6 +123,15 @@ public class Player extends Item{
         this.prevY = prevY;
     }
 
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    
     /**
      * Control the player movement 
      */
@@ -129,21 +147,29 @@ public class Player extends Item{
                     case 0: // Up
                         setPrevY(getY());
                         setY(getY() - 50);
+                        setDirection(0);
+                        this.animationUp.tick();
                     break;
 
                     case 1: // Down
                         setPrevY(getY());
                         setY(getY() + 50);
+                        setDirection(1);
+                        this.animationDown.tick();
                     break;
 
                     case 2: // Left
                         setPrevX(getX());
                         setX(getX() - 50);
+                        setDirection(2);
+                        this.animationLeft.tick();
                     break;
 
                     case 3: // Right
                         setPrevX(getX());
                         setX(getX() + 50);
+                        setDirection(3);
+                        this.animationRight.tick();
                     break;
                     
                     case 4: // Throw a fire ball
@@ -153,9 +179,11 @@ public class Player extends Item{
                     case 5: // Throw a Shield
                         if (game.getShootShield()){
                             game.setShootShield(false);
+                            System.out.println("SetShoot shield was true");
                         }
                         else {
                             game.setShootShield(true);
+                            System.out.println("SetShoot shield was false");
                         }    
                     break;
                 }
@@ -191,14 +219,29 @@ public class Player extends Item{
     public void render(Graphics g) {
         
         switch (playerNo) {
-            
+
             case 1:
-                g.drawImage(Assets.player1, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            
+                if (getDirection() == 0) {
+                    g.drawImage(animationUp.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                if (getDirection() == 1) {
+                    g.drawImage(animationDown.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                if (getDirection() == 2) {
+                    g.drawImage(animationLeft.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                if (getDirection() == 3) {
+                    g.drawImage(animationRight.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                break;
+
             case 2:
-                g.drawImage(Assets.player2, getX(), getY(), getWidth(), getHeight(), null);
-            break;
+                g.drawImage(Assets.farm, getX(), getY(), getWidth(), getHeight(), null);
+                break;
         }
     }
 }

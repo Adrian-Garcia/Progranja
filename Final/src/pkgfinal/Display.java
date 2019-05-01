@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-//import javax.swing.JLabel;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 
@@ -68,15 +68,13 @@ public class Display {
      * @return newInstruction
      */
     public boolean getNewInstruction() {
-        
-        if (newInstruction) {
+     
+        if (this.newInstruction) {
             newInstruction = false;
             return true;
         }
         
-        else {
-            return false;
-        }
+        return newInstruction;
     }
     
     /**
@@ -157,7 +155,6 @@ public class Display {
             public void actionPerformed(ActionEvent arg0) {
                 instruction = textField.getText();
                 textField.setText("");
-                newInstruction = true;
             }
         });
         

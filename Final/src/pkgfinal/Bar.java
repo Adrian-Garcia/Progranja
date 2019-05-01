@@ -31,14 +31,13 @@ public class Bar extends Item{
      * @param height
      * @param game 
      */
-    public Bar(int x, int y, int width, int height, int color, Game game) {
+    public Bar(int x, int y, int width, int height, Game game) {
         super(x, y);
         this.direction = direction;
         this.width = width;
         this.height = height;
         this.game = game;
         this.speed = 1;
-        this.color = color;
     }
 
     /**
@@ -112,19 +111,8 @@ public class Bar extends Item{
      */
     @Override
     public void render(Graphics g) {
-        switch (color) {
+        
+            g.drawImage(Assets.wood, getX(), getY(), getWidth(), getHeight(), null);
             
-            case 1:
-                g.drawImage(Assets.background, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-                
-            case 2:
-                g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-            
-            case 3:
-                g.drawImage(Assets.green, getX(), getY(), getWidth(), getHeight(), null);
-            break;
-        }
     }
 }
