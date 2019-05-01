@@ -185,12 +185,12 @@ public class Game implements Runnable{
         // Generate Instructions
         for (int i=0; i<16; i++) {
             Inst.add(new String("Player.left();"));
-            Instructions.add(2);
+            //Instructions.add(2);
         }
         
         for (int i=0; i<11; i++) {
             Inst.add(new String("Player.up();"));
-            Instructions.add(0);
+            //Instructions.add(0);
         }
         
         // Generate Buttons
@@ -228,12 +228,45 @@ public class Game implements Runnable{
         }
         
         // Generate Players 
-        cow = new Player(55, 500, 150, 150, 2 , 1, this);
+        cow = new Player(85, 555, 75, 75, 0 , 1, this);
         farm = new Player(700, 50, 325, 325, 2, 2, this);
 
         // Generate Powers
         fire = new Power(850, 605, 40, 40, this);
         powerShield = new Power(850, 605, 40, 40, this);
+        
+        Instructions.add(0);
+        //Instructions.add(0);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(2);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(0);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
+        Instructions.add(3);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -350,8 +383,9 @@ public class Game implements Runnable{
                     block.render(g);
                 }
                 
-                cow.render(g);
                 farm.render(g);
+                cow.render(g);
+                
                 
                 if (getShootFire()) {
                     fire.render(g);

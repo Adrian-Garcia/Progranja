@@ -37,7 +37,7 @@ public class Assets {
      */
     public static void init() {
          
-        Playersprites = ImageLoader.loadImage("/images/cow_walk.png");
+        Playersprites = ImageLoader.loadImage("/images/spritenuevo.png");
         
         SpreadSheet spritesheet = new SpreadSheet(Playersprites);
         playerUp = new BufferedImage[4];
@@ -46,10 +46,10 @@ public class Assets {
         playerRight = new BufferedImage[4];
         
         for (int i = 0; i < 4 ; i++){
-            playerUp[i] = spritesheet.crop(i * 128, 0, 128, 128);
-            playerLeft[i] = spritesheet.crop(i * 128, 128, 128, 128);
-            playerDown[i] = spritesheet.crop(i * 128, 256, 128, 128);
-            playerRight[i] = spritesheet.crop(i * 128, 384, 128, 128);
+            playerUp[i] = spritesheet.crop(i * 76, 0, 76, 77);
+            playerLeft[i] = spritesheet.crop(i * 76, 77, 76, 77);
+            playerDown[i] = spritesheet.crop(i * 76, 154, 76, 77);
+            playerRight[i] = spritesheet.crop(i * 76, 231, 76, 77);
         }
         
         farm = ImageLoader.loadImage("/images/farmhouse.png");

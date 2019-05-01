@@ -27,6 +27,8 @@ public class Player extends Item{
     private Animation animationLeft;
     private Animation animationDown;
     private Animation animationRight;
+    private boolean finish;
+    private int counter;
     /**
      * Box constructor
      * @param x
@@ -44,11 +46,14 @@ public class Player extends Item{
         this.index = 0;
         this.prevX = x;
         this.prevY = y;
+        this.finish = false;
+        this.counter = 0;
         
         this.animationUp = new Animation(Assets.playerUp, 100);
         this.animationLeft = new Animation(Assets.playerLeft, 100);
         this.animationDown = new Animation(Assets.playerDown, 100);
         this.animationRight = new Animation(Assets.playerRight, 100);
+        
     }
 
     /**
@@ -130,8 +135,21 @@ public class Player extends Item{
     public void setDirection(int direction) {
         this.direction = direction;
     }
-
+/**
+     * To make game know if all the instructions where done
+     * @return 
+     */
+    public boolean getFinish() {
+        return finish;
+    }
     
+    /**
+     * Setter of finish
+     * @param finish 
+     */
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
     /**
      * Control the player movement 
      */
@@ -142,63 +160,74 @@ public class Player extends Item{
             
             if (!game.getShootFire() && !game.getShootShield()) {
                 
-                switch (game.getInstructionAt(index)) {
-
-                    case 0: // Up
-                        setPrevY(getY());
-                        setY(getY() - 50);
-                        setDirection(0);
-                        this.animationUp.tick();
-                    break;
-
-                    case 1: // Down
-                        setPrevY(getY());
-                        setY(getY() + 50);
-                        setDirection(1);
-                        this.animationDown.tick();
-                    break;
-
-                    case 2: // Left
-                        setPrevX(getX());
-                        setX(getX() - 50);
-                        setDirection(2);
-                        this.animationLeft.tick();
-                    break;
-
-                    case 3: // Right
-                        setPrevX(getX());
-                        setX(getX() + 50);
-                        setDirection(3);
-                        this.animationRight.tick();
-                    break;
-                    
-                    case 4: // Throw a fire ball
-                        game.setShootFire(!game.getShootFire());
-                    break;
-
-                    case 5: // Throw a Shield
-                        if (game.getShootShield()){
-                            game.setShootShield(false);
-                            System.out.println("SetShoot shield was true");
-                        }
-                        else {
-                            game.setShootShield(true);
-                            System.out.println("SetShoot shield was false");
-                        }    
-                    break;
-                }
+                counter++;
                 
-                index++;
+                if (counter > 7) {
+                
+                    counter = 0;
+                    
+                    switch (game.getInstructionAt(index)) {
+
+                        case 0: // Up
+                            setPrevY(getY());
+                            setY(getY() - 50);
+                            setDirection(0);
+                            this.animationUp.tick();
+                        break;
+
+                        case 1: // Down
+                            setPrevY(getY());
+                            setY(getY() + 50);
+                            setDirection(1);
+                            this.animationDown.tick();
+                        break;
+
+                        case 2: // Left
+                            setPrevX(getX());
+                            setX(getX() - 50);
+                            setDirection(2);
+                            this.animationLeft.tick();
+                        break;
+
+                        case 3: // Right
+                            setPrevX(getX());
+                            setX(getX() + 50);
+                            setDirection(3);
+                            this.animationRight.tick();
+                        break;
+
+                        case 4: // Throw a fire ball
+                            game.setShootFire(!game.getShootFire());
+                        break;
+
+                        case 5: // Throw a Shield
+                            if (game.getShootShield()){
+                                game.setShootShield(false);
+                            }
+                            else {
+                                game.setShootShield(true);
+                            }    
+                        break;
+                    }
+
+                    index++;
+                }
             }
         }
+        
+        // Player finish
+        else {
+            finish = true;
+        }
     }
+   
     
     /**
      * Get perimeter of player for collisions
      * @return 
      */
     public Rectangle getPerimetro() {
-        return new Rectangle (getX(), getY(), getWidth(), getHeight());
+        return new Rectangle (getX(), getY(), getWidth()-15, getHeight()-15);
     }
     
     /**
