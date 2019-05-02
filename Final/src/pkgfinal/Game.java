@@ -32,6 +32,8 @@ public class Game implements Runnable{
     private boolean shootShield;        // to know if player shoot a shield
     private boolean gameStarted;        // To know if the game has begun
     private boolean run;                // To make the player to begin
+    private boolean win;                // To win
+    private boolean loss;               // To lose
     private Thread thread;              // thread to create the game
     private Player cow;             // to use player 1
     private Player farm;             // to use player 2
@@ -66,6 +68,8 @@ public class Game implements Runnable{
         this.turn = 1;
         this.run = false;
         this.index = 0;
+        this.win = false;
+        this.loss = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -307,10 +311,17 @@ public class Game implements Runnable{
                 cow.setX(cow.getPrevX());
                 cow.setY(cow.getPrevY());
             }
-             if (cow.intersecta(farm)) {
-                // pasa de nivel
+            if (cow.intersecta(farm)) {
+                win = true;
             }
-
+            
+            if (win) {
+                System.out.println("Aqui va la foto de Ganaste :D");
+            } 
+            if (loss) {
+                System.out.println("Aqui va la foto de Perdiste D:");
+            }
+            
             // Collision of fireball with player 2
             if (fire.intersecta(farm)) {
                 System.out.println("Choca");
@@ -331,11 +342,15 @@ public class Game implements Runnable{
                     run = false;
                     cow.setFinish(true);
                     clear();
+                    noLives--;
                 }   
             }
-//            cow.tick();
             fire.tick();
             powerShield.tick();
+            
+            if (noLives < 0) {
+                loss = true;
+            }   
         }
     }
     
