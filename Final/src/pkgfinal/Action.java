@@ -121,19 +121,19 @@ public class Action extends Item{
         switch (val) {
             
             case 0:
-                g.drawImage(Assets.arrowUp, getX(), getY(), getWidth(), getHeight(), null);
+                
             break;
             
             case 1:
-                g.drawImage(Assets.arrowDown, getX(), getY(), getWidth(), getHeight(), null);
+                
             break;
             
             case 2:
-                g.drawImage(Assets.arrowLeft, getX(), getY(), getWidth(), getHeight(), null);
+               
             break;
             
             case 3:
-                g.drawImage(Assets.arrowRight, getX(), getY(), getWidth(), getHeight(), null);
+                
             break;
             
             case 4:

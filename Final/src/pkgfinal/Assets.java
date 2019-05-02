@@ -12,20 +12,21 @@ import java.awt.image.BufferedImage;
  * @author adria
  */
 public class Assets {
-
-    public static BufferedImage player1;        // to store background image
-    public static BufferedImage player2;        // to store background image
+    public static BufferedImage Playersprites;
+    public static BufferedImage playerUp[];
+    public static BufferedImage playerLeft[];
+    public static BufferedImage playerDown[];
+    public static BufferedImage playerRight[];
+    public static BufferedImage farm; 
+    public static BufferedImage wood;
+    
     public static BufferedImage background;     // to store background image
-    public static BufferedImage cian;           // to store cian color
-    public static BufferedImage green;          // to store green color
+    public static BufferedImage pasto;           // to store cian color
     public static BufferedImage clearGray;      // to store gray color
     public static BufferedImage bar;            // to store bar image
     public static BufferedImage button;         // to store button image
     public static BufferedImage block;          // to store button image
-    public static BufferedImage arrowUp;        // to store arrow up button
-    public static BufferedImage arrowDown;      // to store arrow down button
-    public static BufferedImage arrowLeft;      // to store arrow left button
-    public static BufferedImage arrowRight;     // to store arrow right button
+
     public static BufferedImage fireball;       // to store fireball
     public static BufferedImage shield;         // to store shiel
     public static BufferedImage play;           // to store play
@@ -35,26 +36,35 @@ public class Assets {
      * initializing the images of the game
      */
     public static void init() {
+         
+        Playersprites = ImageLoader.loadImage("/images/cow_walk.png");
         
-        player1 = ImageLoader.loadImage("/images/player1.png");
-        player2 = ImageLoader.loadImage("/images/player2.png");
+        SpreadSheet spritesheet = new SpreadSheet(Playersprites);
+        playerUp = new BufferedImage[4];
+        playerLeft = new BufferedImage[4];
+        playerDown = new BufferedImage[4];
+        playerRight = new BufferedImage[4];
         
+        for (int i = 0; i < 4 ; i++){
+            playerUp[i] = spritesheet.crop(i * 128, 0, 128, 128);
+            playerLeft[i] = spritesheet.crop(i * 128, 128, 128, 128);
+            playerDown[i] = spritesheet.crop(i * 128, 256, 128, 128);
+            playerRight[i] = spritesheet.crop(i * 128, 384, 128, 128);
+        }
+        
+        farm = ImageLoader.loadImage("/images/farmhouse.png");
+        wood = ImageLoader.loadImage("/images/boardlargo.png");
         background = ImageLoader.loadImage("/images/gray.jpg");
         clearGray = ImageLoader.loadImage("/images/clearGray.jpg");
-        green = ImageLoader.loadImage("/images/green.jpg");
-        cian = ImageLoader.loadImage("/images/cian.jpg");
+        pasto = ImageLoader.loadImage("/images/2278.jpg");
         bar = ImageLoader.loadImage("/images/cian.jpg");
         block = ImageLoader.loadImage("/images/block.png");
         button = ImageLoader.loadImage("/images/button.png");
         
-        arrowUp = ImageLoader.loadImage("/images/arrowUp.png");
-        arrowDown = ImageLoader.loadImage("/images/arrowDown.png");
-        arrowLeft = ImageLoader.loadImage("/images/arrowLeft.png");
-        arrowRight = ImageLoader.loadImage("/images/arrowRight.png");
         
         fireball = ImageLoader.loadImage("/images/fireball.png");
         shield = ImageLoader.loadImage("/images/shield.png");
         play = ImageLoader.loadImage("/images/play.png");
-        hearth = ImageLoader.loadImage("/images/corazon.png");
+        hearth = ImageLoader.loadImage("/images/Vidas.png");
     }
 }
