@@ -19,7 +19,7 @@ public class Assets {
     public static BufferedImage playerRight[];
     public static BufferedImage farm; 
     public static BufferedImage wood;
-    
+    public static BufferedImage instrucciones;
     public static BufferedImage background;     // to store background image
     public static BufferedImage pasto;           // to store cian color
     public static BufferedImage clearGray;      // to store gray color
@@ -46,7 +46,7 @@ public class Assets {
         playerRight = new BufferedImage[4];
         
         for (int i = 0; i < 4 ; i++){
-            playerUp[i] = spritesheet.crop(i * 76, 0, 76, 77);
+           playerUp[i] = spritesheet.crop(i * 76, 0, 76, 77);
             playerLeft[i] = spritesheet.crop(i * 76, 77, 76, 77);
             playerDown[i] = spritesheet.crop(i * 76, 154, 76, 77);
             playerRight[i] = spritesheet.crop(i * 76, 231, 76, 77);
@@ -60,7 +60,7 @@ public class Assets {
         bar = ImageLoader.loadImage("/images/cian.jpg");
         block = ImageLoader.loadImage("/images/block.png");
         button = ImageLoader.loadImage("/images/button.png");
-        
+        instrucciones = ImageLoader.loadImage("/images/instrucciones.png");
         
         fireball = ImageLoader.loadImage("/images/fireball.png");
         shield = ImageLoader.loadImage("/images/shield.png");

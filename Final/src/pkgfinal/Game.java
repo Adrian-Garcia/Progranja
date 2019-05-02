@@ -5,12 +5,11 @@
  */
 package pkgfinal;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 
 /**
  *
@@ -27,12 +26,16 @@ public class Game implements Runnable{
     private int noLives;                // number of lives of player 
     private int instructions;           // number of instructions
     private int turn;                   // number of the player that have the turn
+    private int index;                  // index
     private boolean playPressed;        // to know if user play the game
     private boolean running;            // to set the game
     private boolean newInst;            // to now if game need new instruction
     private boolean shootFire;          // to know if player shoot a fireball
     private boolean shootShield;        // to know if player shoot a shield
     private boolean gameStarted;        // To know if the game has begun
+    private boolean run;                // To make the player to begin
+    private boolean win;                // To win
+    private boolean loss;               // To lose
     private Thread thread;              // thread to create the game
     private Player cow;             // to use player 1
     private Player farm;             // to use player 2
@@ -65,6 +68,10 @@ public class Game implements Runnable{
         this.playPressed = false;
         this.gameStarted = false;
         this.turn = 1;
+        this.run = false;
+        this.index = 0;
+        this.win = false;
+        this.loss = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -165,6 +172,18 @@ public class Game implements Runnable{
     }
     
     /**
+     * Restart the instructions, clear the screen
+     */
+    public void clear() {
+        
+        for (int i=0; i<Inst.size(); i++) {
+            Inst.set(i, "");
+            Instructions.clear();
+            index = 0;
+        }
+    }
+    
+    /**
      * initializing the display window of the game
      */
     private void init() {
@@ -174,8 +193,7 @@ public class Game implements Runnable{
         Assets.init();
         
         // Generate Bars
-        wood = new Bar(965, 25, 265, 650, this);
-
+        wood = new Bar(960, 25, 280, 650, this);
         
         // Generate lives
         for (int i=0; i<noLives; i++) {
@@ -183,14 +201,8 @@ public class Game implements Runnable{
         }
         
         // Generate Instructions
-        for (int i=0; i<16; i++) {
-            Inst.add(new String("Player.left();"));
-            //Instructions.add(2);
-        }
-        
-        for (int i=0; i<11; i++) {
-            Inst.add(new String("Player.up();"));
-            //Instructions.add(0);
+        for (int i=0; i<30; i++) {
+            Inst.add(new String(""));
         }
         
         // Generate Buttons
@@ -234,39 +246,6 @@ public class Game implements Runnable{
         // Generate Powers
         fire = new Power(850, 605, 40, 40, this);
         powerShield = new Power(850, 605, 40, 40, this);
-        
-        Instructions.add(0);
-        //Instructions.add(0);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(2);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(0);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
-        Instructions.add(3);
         
         //Mouse methods
         display.getJframe().addMouseListener(mouseManager);
@@ -347,11 +326,33 @@ public class Game implements Runnable{
             }
         }
         
+        if (cow.intersecta(farm)) {
+            win = true;
+        }
+
+        
+        
         // If level 1 is started
         if (buttons.get(0).getPressed()) {
-            cow.tick();
+            
+            if (run) {
+                cow.setFinish(false);
+                cow.tick();
+                
+                if (cow.getFinish()) {
+                    run = false;
+                    cow.setFinish(true);
+                    clear();
+                    noLives--;
+                    System.out.print(noLives);
+                }   
+            }
             fire.tick();
             powerShield.tick();
+            
+            if (noLives <= 0) {
+                loss = true;
+            }   
         }
     }
     
@@ -373,19 +374,16 @@ public class Game implements Runnable{
                                 
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.pasto, 0, 0, width, height, null);
-
                 
                 wood.render(g);
-                
                 
                 for (int i=0; i<blocks.size(); i++) {
                     Block block = blocks.get(i);
                     block.render(g);
                 }
                 
-                farm.render(g);
                 cow.render(g);
-                
+                farm.render(g);
                 
                 if (getShootFire()) {
                     fire.render(g);
@@ -395,14 +393,57 @@ public class Game implements Runnable{
                     Live live = lives.get(i);
                     live.render(g);
                 }
-                                
+                
+                if (display.getNewInstruction()) {
+                    
+                    String newInst = display.getInstruction();
+                    Inst.set(index, newInst);
+                    
+                    // Posible instructions of the user
+                    if (newInst.equals("play")) {
+                        buttons.get(0).setPressed(true);
+                        clear();
+                    } else if (newInst.equals("cow.up();")) {
+                        Instructions.add(0);
+                    } else if (newInst.equals("cow.down();")) {
+                        Instructions.add(1);
+                    } else if (newInst.equals("cow.left();")) {
+                        Instructions.add(2);
+                    } else if (newInst.equals("cow.right();")) {
+                        Instructions.add(3);
+                    } else if (newInst.equals("cow.run();")) {
+                        run = true;
+                    } else if (newInst.equals("clear")) {
+                        clear();
+                    }
+                    if (win) {
+                        g.setColor(Color.red);
+                        Font currentFont = g.getFont();
+                        Font newFont = currentFont.deriveFont(currentFont.getSize() * 5F);
+                        g.setFont(newFont);
+                        g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
+                        } 
+                    if (loss) {
+                        g.setColor(Color.red);
+                        Font currentFont = g.getFont();
+                        Font newFont = currentFont.deriveFont(currentFont.getSize() * 5F);
+                        g.setFont(newFont);
+                        g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                        System.out.println("loss");
+                        } 
+                    if (index < Inst.size()) {
+                        index++;
+                    }
+                } 
+                             
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 975, i*20+50);
+                    g.setColor(Color.white);
+                    Font currentFont = g.getFont();
+                    Font newFont = currentFont.deriveFont(currentFont.getSize());
+                    g.setFont(newFont);
+                    g.drawString(instruction, 1054, i*20+100);
                 }
-                
-                //String a = "Health:                                                                                      Mana: 100";
-                //g.drawString(a, 10, 20);
                 
                 bs.show();
                 g.dispose();
@@ -411,16 +452,37 @@ public class Game implements Runnable{
             else {
                 
                 g = bs.getDrawGraphics();
-                g.drawImage(Assets.background, 0, 0, width, height, null);
+                g.drawImage(Assets.pasto, 0, 0, width, height, null);
+                g.drawImage(Assets.instrucciones, 0, 0, 900, 750, null);
 
-                for (int i = 0; i < buttons.size(); i++) {
-                    Button button = buttons.get(i);
-                    button.render(g);
-                }
+              //  for (int i = 0; i < buttons.size(); i++) {
+               //     Button button = buttons.get(i);
+               //     button.render(g);
+               // }
                 
+                wood.render(g);
+                
+                if (display.getNewInstruction()) {
+                    
+                    String newInst = display.getInstruction();
+                    Inst.set(index, newInst);
+                    
+                    // Posible instructions of the user
+                    if (newInst.equals("play")) {
+                        buttons.get(0).setPressed(true);
+                        clear();
+                    } else if (newInst.equals("clear")) {
+                        clear();
+                    }
+                    
+                    if (index < Inst.size()) {
+                        index++;
+                    }
+                } 
+                                
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 1000, i*20+50);
+                    g.drawString(instruction, 975, i*20+30);
                 }
 
                 bs.show();

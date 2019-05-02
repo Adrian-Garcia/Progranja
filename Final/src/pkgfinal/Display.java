@@ -68,13 +68,15 @@ public class Display {
      * @return newInstruction
      */
     public boolean getNewInstruction() {
-     
-        if (this.newInstruction) {
+        
+        if (newInstruction) {
             newInstruction = false;
             return true;
         }
         
-        return newInstruction;
+        else {
+            return false;
+        }
     }
     
     /**
@@ -140,10 +142,10 @@ public class Display {
         canvas.setFocusable(false);
         
         JTextField textField = new JTextField(instruction);
-        textField.setBounds(975, 630, 200, 30);
+        textField.setBounds(998, 600, 150, 30);
         
         JButton button=new JButton("►");  
-        button.setBounds(1185, 630, 50, 30);  
+        button.setBounds(1158, 600, 50, 30);  
         
         jframe.add(textField);
         jframe.add(button);
@@ -155,6 +157,7 @@ public class Display {
             public void actionPerformed(ActionEvent arg0) {
                 instruction = textField.getText();
                 textField.setText("");
+                newInstruction = true;
             }
         });
         

@@ -22,13 +22,13 @@ public class Player extends Item{
     private int index;
     private int prevX;
     private int prevY;
+    private boolean finish;
+    private int counter;
     private int direction;
     private Animation animationUp;
     private Animation animationLeft;
     private Animation animationDown;
     private Animation animationRight;
-    private boolean finish;
-    private int counter;
     /**
      * Box constructor
      * @param x
@@ -46,14 +46,11 @@ public class Player extends Item{
         this.index = 0;
         this.prevX = x;
         this.prevY = y;
-        this.finish = false;
         this.counter = 0;
-        
         this.animationUp = new Animation(Assets.playerUp, 100);
         this.animationLeft = new Animation(Assets.playerLeft, 100);
         this.animationDown = new Animation(Assets.playerDown, 100);
         this.animationRight = new Animation(Assets.playerRight, 100);
-        
     }
 
     /**
@@ -95,6 +92,22 @@ public class Player extends Item{
     public int getPrevY() {
         return prevY;
     }
+    
+    /**
+     * To make game know if all the instructions where done
+     * @return 
+     */
+    public boolean getFinish() {
+        return finish;
+    }
+    
+    /**
+     * Setter of finish
+     * @param finish 
+     */
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
 
     /**
      * Set the Width
@@ -135,21 +148,8 @@ public class Player extends Item{
     public void setDirection(int direction) {
         this.direction = direction;
     }
-/**
-     * To make game know if all the instructions where done
-     * @return 
-     */
-    public boolean getFinish() {
-        return finish;
-    }
+
     
-    /**
-     * Setter of finish
-     * @param finish 
-     */
-    public void setFinish(boolean finish) {
-        this.finish = finish;
-    }
     /**
      * Control the player movement 
      */
@@ -218,16 +218,16 @@ public class Player extends Item{
         // Player finish
         else {
             finish = true;
+            index=0;
         }
     }
-   
     
     /**
      * Get perimeter of player for collisions
      * @return 
      */
     public Rectangle getPerimetro() {
-        return new Rectangle (getX(), getY(), getWidth()-15, getHeight()-15);
+        return new Rectangle (getX(), getY(), getWidth() -15, getHeight() -15) ;
     }
     
     /**
