@@ -5,6 +5,8 @@
  */
 package pkgfinal;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.LinkedList;
@@ -32,9 +34,11 @@ public class Game implements Runnable{
     private boolean shootShield;        // to know if player shoot a shield
     private boolean gameStarted;        // To know if the game has begun
     private boolean run;                // To make the player to begin
+    private boolean win;                // To win
+    private boolean loss;               // To lose
     private Thread thread;              // thread to create the game
     private Player cow;             // to use player 1
-    private Player farm;             // to use player 2
+    private Casa farm;             // to use player 2
     private LinkedList<String> Inst;    // to show instructions to the user
     private LinkedList<Button> buttons; // to use buttons
     private LinkedList<Block> blocks;   // to use blocks
@@ -66,6 +70,8 @@ public class Game implements Runnable{
         this.turn = 1;
         this.run = false;
         this.index = 0;
+        this.win = false;
+        this.loss = false;
         mouseManager = new MouseManager();
         buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
@@ -187,7 +193,7 @@ public class Game implements Runnable{
         Assets.init();
         
         // Generate Bars
-        wood = new Bar(965, 25, 265, 650, this);
+        wood = new Bar(960, 25, 280, 650, this);
         
         // Generate lives
         for (int i=0; i<noLives; i++) {
@@ -208,34 +214,35 @@ public class Game implements Runnable{
         // Generate Blocks
         // eje y izquierdo
         for (int i=0; i<5; i++) {
-            blocks.add(new Block(50, i*75+150, 25, 32, this));
+            blocks.add(new Block(50, i*75+150, 50, 65, this));
         }
         // eje y derecho
         for (int i=0; i<5; i++) {
-            blocks.add(new Block(800, i*75+275, 25, 32, this));
+            blocks.add(new Block(800, i*75+275, 50, 65, this));
         }
         
         // eje x arriba
          for (int i=0; i<8; i++) {
-            blocks.add(new Block(i*75+130, 150, 25, 32, this));
+            blocks.add(new Block(i*75+130, 150, 50, 65, this));
         } 
         //eje x abajo
         for (int i=0; i<8; i++) {
-            blocks.add(new Block(i*75+200, 575, 25, 32, this));
+            blocks.add(new Block(i*75+200, 575, 50, 65, this));
         }
         
         // eje x medio izquierdo
          for (int i=0; i<5; i++) {
-            blocks.add(new Block(i*75+115, 425, 25, 32, this));
+            blocks.add(new Block(i*75+115, 425, 50, 65, this));
         }
         // eje x medio derecho
         for (int i=0; i<6; i++) {
-            blocks.add(new Block(i*75+350, 300, 25, 32, this));
+            blocks.add(new Block(i*75+350, 300, 50, 65, this));
         }
         
         // Generate Players 
-        cow = new Player(80, 550, 50, 50, 2 , 1, this);
-        farm = new Player(700, 50, 325, 325, 2, 2, this);
+//        cow = new Player(600, 200, 75, 75, 0 , 1, this);
+        cow = new Player(85, 555, 75, 75, 0 , 1, this);
+        farm = new Casa(700, 50, 325, 325, 2, 2, this);
 
         // Generate Powers
         fire = new Power(850, 605, 40, 40, this);
@@ -296,6 +303,11 @@ public class Game implements Runnable{
             button.tick();
         }
         
+        if (cow.intersecta(farm)) {
+            win = true;
+            System.out.println("Ajua");
+        }
+        
         // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
             
@@ -307,9 +319,6 @@ public class Game implements Runnable{
                 cow.setX(cow.getPrevX());
                 cow.setY(cow.getPrevY());
             }
-             if (cow.intersecta(farm)) {
-                // pasa de nivel
-            }
 
             // Collision of fireball with player 2
             if (fire.intersecta(farm)) {
@@ -319,6 +328,13 @@ public class Game implements Runnable{
                 setShootFire(false);
             }
         }
+        
+        if (farm.intersecta(cow)) {
+            win = true;
+
+        }
+
+        
         
         // If level 1 is started
         if (buttons.get(0).getPressed()) {
@@ -331,11 +347,16 @@ public class Game implements Runnable{
                     run = false;
                     cow.setFinish(true);
                     clear();
+                    noLives--;
+                    System.out.print(noLives);
                 }   
             }
-//            cow.tick();
             fire.tick();
             powerShield.tick();
+            
+            if (noLives <= 0) {
+                loss = true;
+            }   
         }
     }
     
@@ -386,28 +407,44 @@ public class Game implements Runnable{
                     if (newInst.equals("play")) {
                         buttons.get(0).setPressed(true);
                         clear();
-                    } else if (newInst.equals("Player.up();")) {
+                    } else if (newInst.equals("cow.up();")) {
                         Instructions.add(0);
-                    } else if (newInst.equals("Player.down();")) {
+                    } else if (newInst.equals("cow.down();")) {
                         Instructions.add(1);
-                    } else if (newInst.equals("Player.left();")) {
+                    } else if (newInst.equals("cow.left();")) {
                         Instructions.add(2);
-                    } else if (newInst.equals("Player.right();")) {
+                    } else if (newInst.equals("cow.right();")) {
                         Instructions.add(3);
-                    } else if (newInst.equals("Player.run();")) {
+                    } else if (newInst.equals("cow.run();")) {
                         run = true;
                     } else if (newInst.equals("clear")) {
                         clear();
-                    }
-                    
+                    } 
                     if (index < Inst.size()) {
                         index++;
                     }
                 } 
-                                
+                
+                if (win) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
+                } 
+                if (loss) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                }
+                             
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 975, i*20+30);
+                    g.setColor(Color.white);
+//                    Font currentFont = g.getFont();
+//                    Font newFont = currentFont.deriveFont(currentFont.getSize()*2);
+//                    Font newFont = currentFont.deriveFont(currentFont.getSize()*2);
+//                    Font newFont = currentFont.deriveFont(currentFont.getSize()/2);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                    g.drawString(instruction, 1054, i*30+100);
                 }
                 
                 bs.show();
@@ -417,12 +454,15 @@ public class Game implements Runnable{
             else {
                 
                 g = bs.getDrawGraphics();
-                g.drawImage(Assets.background, 0, 0, width, height, null);
+                g.drawImage(Assets.pasto, 0, 0, width, height, null);
+                g.drawImage(Assets.instrucciones, 0, 0, 900, 750, null);
 
-                for (int i = 0; i < buttons.size(); i++) {
-                    Button button = buttons.get(i);
-                    button.render(g);
-                }
+              //  for (int i = 0; i < buttons.size(); i++) {
+               //     Button button = buttons.get(i);
+               //     button.render(g);
+               // }
+                
+                wood.render(g);
                 
                 if (display.getNewInstruction()) {
                     
@@ -433,16 +473,6 @@ public class Game implements Runnable{
                     if (newInst.equals("play")) {
                         buttons.get(0).setPressed(true);
                         clear();
-                    } else if (newInst.equals("Player.up();")) {
-                        Instructions.add(0);
-                    } else if (newInst.equals("Player.down();")) {
-                        Instructions.add(1);
-                    } else if (newInst.equals("Player.left();")) {
-                        Instructions.add(2);
-                    } else if (newInst.equals("Player.right();")) {
-                        Instructions.add(3);
-                    } else if (newInst.equals("Player.run();")) {
-                        run = true;
                     } else if (newInst.equals("clear")) {
                         clear();
                     }
