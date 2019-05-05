@@ -38,6 +38,7 @@ public class Game implements Runnable{
     private boolean level1;             // to go to level 1
     private boolean level2;             // to go to level 2
     private boolean level3;             // to go to level 3
+    private boolean changeLevel;        // to make the game know when to change game
     private Thread thread;              // thread to create the game
     private Player cow;             // to use player 1
     private Casa farm;             // to use player 2
@@ -66,7 +67,6 @@ public class Game implements Runnable{
         this.shootFire = false;
         this.shootShield = false;
         this.running = false;
-        this.playPressed = false;
         this.gameStarted = false;
         this.turn = 1;
         this.run = false;
@@ -294,14 +294,6 @@ public class Game implements Runnable{
     
     private void tick() {
         
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        // Player colides farm
-//        if (cow.intersecta(farm)) {
-//            win = true;
-//            System.out.println("Ajua");
-//        }
-        
         // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
             
@@ -316,16 +308,15 @@ public class Game implements Runnable{
 
             // Collision of fireball with player 2
             if (fire.intersecta(farm)) {
-                System.out.println("Choca");
                 fire.setX(cow.getX());
                 fire.setY(cow.getY());
                 setShootFire(false);
             }
         }
         
+        // Farm Collide cow
         if (farm.intersecta(cow)) {
             win = true;
-
         }
         
         // If level 1 is started
@@ -340,7 +331,6 @@ public class Game implements Runnable{
                     cow.setFinish(true);
                     clear();
                     noLives--;
-                    System.out.print(noLives);
                 }   
             }
             fire.tick();
@@ -349,6 +339,55 @@ public class Game implements Runnable{
             if (noLives <= 0) {
                 loss = true;
             }   
+        }
+        
+        // If Level 2 is starter
+        else if (level2) {
+            
+            if (changeLevel) {
+                changeLevel = false;
+            }
+            
+            if (run) {
+                cow.setFinish(false);
+                cow.tick();
+                
+                if (cow.getFinish()) {
+                    run = false;
+                    cow.setFinish(true);
+                    clear();
+                    noLives--;
+                }   
+            }
+            
+            if (noLives <= 0) {
+                loss = true;
+            }   
+        }
+        
+        // If Level 3 is started
+        else if (level3) {
+            
+            // change position 
+            if (changeLevel) {
+                changeLevel= false;
+            }
+            
+            if (run) {
+                cow.setFinish(false);
+                cow.tick();
+                
+                if (cow.getFinish()) {
+                    run = false;
+                    cow.setFinish(true);
+                    clear();
+                    noLives--;
+                }   
+            }
+            
+            if (noLives <= 0) {
+                loss = true;
+            }
         }
     }
     
@@ -396,8 +435,23 @@ public class Game implements Runnable{
                     Inst.set(index, newInst);
                     
                     // Posible instructions of the user
-                    if (newInst.equals("play")) {
+                    if (newInst.equals("game.level1();") || newInst.equals("game.restartLevel1();")) {
                         level1 = true;
+                        level2 = false;
+                        level3 = false;
+                        changeLevel = true;
+                        clear();
+                    } else if (newInst.equals("game.level2();") || newInst.equals("game.restartLevel2();")) {
+                        level1 = false;
+                        level2 = true;
+                        level3 = false;
+                        changeLevel = true;
+                        clear();
+                    } else if (newInst.equals("game.level3();") || newInst.equals("game.restartLevel3();")) {
+                        level1 = false;
+                        level2 = false;
+                        level3 = true;
+                        changeLevel = true;
                         clear();
                     } else if (newInst.equals("cow.up();")) {
                         Instructions.add(0);
@@ -411,7 +465,30 @@ public class Game implements Runnable{
                         run = true;
                     } else if (newInst.equals("clear")) {
                         clear();
-                    } 
+                    } else if (newInst.equals("for x in range(1)")) {
+                        Instructions.add(11);
+                    } else if (newInst.equals("for x in range(2)")) {
+                        Instructions.add(12);
+                    } else if (newInst.equals("for x in range(3)")) {
+                        Instructions.add(13);
+                    } else if (newInst.equals("for x in range(4)")) {
+                        Instructions.add(14);
+                    } else if (newInst.equals("for x in range(5)")) {
+                        Instructions.add(15);
+                    } else if (newInst.equals("for x in range(6)")) {
+                        Instructions.add(16);
+                    } else if (newInst.equals("for x in range(7)")) {
+                        Instructions.add(17);
+                    } else if (newInst.equals("for x in range(8)")) {
+                        Instructions.add(18);
+                    } else if (newInst.equals("for x in range(9)")) {
+                        Instructions.add(19);
+                    } else if (newInst.equals("for x in range(10)")) {
+                        Instructions.add(20);
+                    } else if (newInst.equals("end")) {
+                        Instructions.add(9);
+                    }
+                    
                     if (index < Inst.size()) {
                         index++;
                     }
@@ -431,16 +508,20 @@ public class Game implements Runnable{
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
                     g.setColor(Color.white);
-//                    Font currentFont = g.getFont();
-//                    Font newFont = currentFont.deriveFont(currentFont.getSize()*2);
-//                    Font newFont = currentFont.deriveFont(currentFont.getSize()*2);
-//                    Font newFont = currentFont.deriveFont(currentFont.getSize()/2);
                     g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
                     g.drawString(instruction, 1054, i*30+100);
                 }
                 
                 bs.show();
                 g.dispose();
+            }
+            
+            else if (level2) {
+                
+            }
+            
+            else if (level3) {
+                
             }
             
             else {
