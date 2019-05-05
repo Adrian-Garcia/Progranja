@@ -27,23 +27,21 @@ public class Game implements Runnable{
     private int instructions;           // number of instructions
     private int turn;                   // number of the player that have the turn
     private int index;                  // index
-    private boolean playPressed;        // to know if user play the game
     private boolean running;            // to set the game
     private boolean newInst;            // to now if game need new instruction
     private boolean shootFire;          // to know if player shoot a fireball
     private boolean shootShield;        // to know if player shoot a shield
     private boolean gameStarted;        // To know if the game has begun
     private boolean run;                // To make the player to begin
-    private boolean win;                // To win
-    private boolean loss;               // To lose
+    private boolean win;                // to win
+    private boolean loss;               // to lose
+    private boolean level1;             // to go to level 1
+    private boolean level2;             // to go to level 2
+    private boolean level3;             // to go to level 3
     private Thread thread;              // thread to create the game
     private Player cow;             // to use player 1
     private Casa farm;             // to use player 2
     private LinkedList<String> Inst;    // to show instructions to the user
-    private LinkedList<Button> buttons; // to use buttons
-    private boolean level1;             // to go to level 1
-    private boolean level2;             // to go to level 2
-    private boolean level3;             // to go to level 3
     private LinkedList<Block> blocks;   // to use blocks
     private Bar wood;       // to use Bars
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
@@ -75,8 +73,10 @@ public class Game implements Runnable{
         this.index = 0;
         this.win = false;
         this.loss = false;
+        this.level1 = false;
+        this.level2 = false;
+        this.level3 = false;
         mouseManager = new MouseManager();
-        buttons = new LinkedList<Button>();
         blocks = new LinkedList<Block>();
         Instructions = new LinkedList<Integer>();
         Inst = new LinkedList<String>();
@@ -208,12 +208,6 @@ public class Game implements Runnable{
             Inst.add(new String(""));
         }
         
-        // Generate Buttons
-        for (int i=0; i<4; i++) {
-            buttons.add(new Button(i*300+60, 320, 200, 60, i+1, false, this));
-        }
-        buttons.add(new Button(510, 420, 200, 60, 4, false, this));
-        
         // Generate Blocks
         // eje y izquierdo
         for (int i=0; i<5; i++) {
@@ -300,16 +294,13 @@ public class Game implements Runnable{
     
     private void tick() {
         
-        // press Buttons
-        for (int i=0; i<buttons.size(); i++) {
-            Button button = buttons.get(i);
-            button.tick();
-        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-        if (cow.intersecta(farm)) {
-            win = true;
-            System.out.println("Ajua");
-        }
+        // Player colides farm
+//        if (cow.intersecta(farm)) {
+//            win = true;
+//            System.out.println("Ajua");
+//        }
         
         // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
@@ -336,11 +327,9 @@ public class Game implements Runnable{
             win = true;
 
         }
-
-        
         
         // If level 1 is started
-        if (buttons.get(0).getPressed()) {
+        if (level1) {
             
             if (run) {
                 cow.setFinish(false);
@@ -377,7 +366,7 @@ public class Game implements Runnable{
             display.getCanvas().createBufferStrategy(3);
         } else {
             
-            if (buttons.get(0).getPressed()) {
+            if (level1) {
                                 
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.pasto, 0, 0, width, height, null);
@@ -408,7 +397,7 @@ public class Game implements Runnable{
                     
                     // Posible instructions of the user
                     if (newInst.equals("play")) {
-                        buttons.get(0).setPressed(true);
+                        level1 = true;
                         clear();
                     } else if (newInst.equals("cow.up();")) {
                         Instructions.add(0);
@@ -469,7 +458,7 @@ public class Game implements Runnable{
                     
                     // Posible instructions of the user
                     if (newInst.equals("play")) {
-                        buttons.get(0).setPressed(true);
+                        level1 = true;
                         clear();
                     } else if (newInst.equals("clear")) {
                         clear();
