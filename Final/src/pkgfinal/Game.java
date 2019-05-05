@@ -41,6 +41,9 @@ public class Game implements Runnable{
     private Casa farm;             // to use player 2
     private LinkedList<String> Inst;    // to show instructions to the user
     private LinkedList<Button> buttons; // to use buttons
+    private boolean level1;             // to go to level 1
+    private boolean level2;             // to go to level 2
+    private boolean level3;             // to go to level 3
     private LinkedList<Block> blocks;   // to use blocks
     private Bar wood;       // to use Bars
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
@@ -456,11 +459,6 @@ public class Game implements Runnable{
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.pasto, 0, 0, width, height, null);
                 g.drawImage(Assets.instrucciones, 0, 0, 900, 750, null);
-
-              //  for (int i = 0; i < buttons.size(); i++) {
-               //     Button button = buttons.get(i);
-               //     button.render(g);
-               // }
                 
                 wood.render(g);
                 
@@ -480,11 +478,13 @@ public class Game implements Runnable{
                     if (index < Inst.size()) {
                         index++;
                     }
-                } 
+                }
                                 
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    g.drawString(instruction, 975, i*20+30);
+                    g.setColor(Color.white);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                    g.drawString(instruction, 1054, i*30+100);
                 }
 
                 bs.show();
