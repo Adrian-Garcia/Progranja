@@ -8,6 +8,7 @@ package pkgfinal;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Player extends Item{
     private Animation animationLeft;
     private Animation animationDown;
     private Animation animationRight;
+    private LinkedList<Integer> forInstructions;
     /**
      * Box constructor
      * @param x
@@ -58,6 +60,7 @@ public class Player extends Item{
         this.animationLeft = new Animation(Assets.playerLeft, 100);
         this.animationDown = new Animation(Assets.playerDown, 100);
         this.animationRight = new Animation(Assets.playerRight, 100);
+        forInstructions = new LinkedList<Integer>();
     }
 
     /**
@@ -156,6 +159,52 @@ public class Player extends Item{
         this.direction = direction;
     }
 
+    public void forInit(int repetitions) {
+        
+        repetitions -= 10;
+        forIndex = index+1;
+        
+        while (game.getInstructionAt(forIndex) != 1) {
+            forInstructions.add(game.getInstructionAt(forIndex));
+            forIndex++;
+        }
+        
+        for (int i=0; i<repetitions; i++) {
+            
+            switch(forInstructions.get(i)) {
+                
+                case 0: // Up
+                    setPrevY(getY());
+                    setY(getY() - 13);
+                    setDirection(0);
+                    this.animationUp.tick();
+                break;
+
+                case 1: // Down
+                    setPrevY(getY());
+                    setY(getY() - 13);
+                    setDirection(1);
+                    this.animationDown.tick();
+                break;
+
+                case 2: // Left
+                    setPrevX(getX());
+                    setX(getX() - 21);
+                    setDirection(2);
+                    this.animationLeft.tick();
+                break;
+
+                case 3: // Right
+                    setPrevX(getX());
+                    setX(getX() + 21);
+                    setDirection(3);
+                    this.animationRight.tick();
+                break;
+            }
+        }
+        
+        index += size;
+    }
     
     /**
      * Control the player movement 
@@ -224,53 +273,43 @@ public class Player extends Item{
                         break;
                         
                         case 11:
-                            forLimit = 1;
-                            forStart = true;
+                            forInit(11);
                         break;
                             
                         case 12: 
-                            forLimit = 2;
-                            forStart = true;
+                            forInit(12);
                         break;
                         
                         case 13: 
-                            forLimit = 3;
-                            forStart = true; 
+                            forInit(13);
                         break;
                             
                         case 14: 
-                            forLimit = 4;
-                            forStart = true;  
+                            forInit(14);  
                         break;
                         
                         case 15: 
-                            forLimit = 5;
-                            forStart = true;  
+                            forInit(15);
                         break;
                             
                         case 16: 
-                            forLimit = 6;
-                            forStart = true;  
+                            forInit(16);  
                         break;
                         
                         case 17: 
-                            forLimit = 7;
-                            forStart = true;  
+                            forInit(17);  
                         break;
                         
                         case 18: 
-                            forLimit = 8;
-                            forStart = true;  
+                            forInit(18);  
                         break;
                         
                         case 19: 
-                            forLimit = 9;
-                            forStart = true;  
+                            forInit(19);  
                         break;
                         
                         case 20: 
-                            forLimit = 10;
-                            forStart = true;  
+                            forInit(20);  
                         break;
                     }
                     
