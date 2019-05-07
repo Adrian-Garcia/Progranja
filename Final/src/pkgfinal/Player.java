@@ -27,10 +27,9 @@ public class Player extends Item{
     private boolean finish;
     private int counter;
     private int direction;
-    private int forPosition;
     private int forIndex;
     private int forLimit;
-    private boolean forStart;
+    private int forStart;
     private Animation animationUp;
     private Animation animationLeft;
     private Animation animationDown;
@@ -55,7 +54,8 @@ public class Player extends Item{
         this.prevX = x;
         this.prevY = y;
         this.counter = 0;
-        this.forStart = false;
+        this.forStart = 0;
+        this.forIndex = 0;
         this.animationUp = new Animation(Assets.playerUp, 100);
         this.animationLeft = new Animation(Assets.playerLeft, 100);
         this.animationDown = new Animation(Assets.playerDown, 100);
@@ -158,52 +158,6 @@ public class Player extends Item{
     public void setDirection(int direction) {
         this.direction = direction;
     }
-
-    public void forInit(int repetitions) {
-        
-        while (game.getInstructionAt(index+2) != 10) {
-            
-            forInstructions.add(game.getInstructionAt(index));
-            index++;
-        }
-        
-        for (int i=0; i<repetitions-10; i++) {
-
-            System.out.print(forInstructions.get(i) + " ");
-
-            switch(forInstructions.get(i)) {
-
-                case 0: // Up
-                    setPrevY(getY());
-                    setY(getY() - 50);
-                    setDirection(0);
-                    this.animationUp.tick();
-                break;
-
-                case 1: // Down
-                    setPrevY(getY());
-                    setY(getY() - 50);
-                    setDirection(1);
-                    this.animationDown.tick();
-                break;
-
-                case 2: // Left
-                    setPrevX(getX());
-                    setX(getX() - 50);
-                    setDirection(2);
-                    this.animationLeft.tick();
-                break;
-
-                case 3: // Right
-                    setPrevX(getX());
-                    setX(getX() + 50);
-                    setDirection(3);
-                    this.animationRight.tick();
-                break;
-            }
-        }
-        forInstructions.clear();
-    }
     
     /**
      * Control the player movement 
@@ -221,8 +175,6 @@ public class Player extends Item{
                 
                     counter = 0;
                     
-                    System.out.print(game.getInstructionAt(index) + " ");
-                    
                     switch (game.getInstructionAt(index)) {
                         
                         case 0: // Up
@@ -234,7 +186,7 @@ public class Player extends Item{
 
                         case 1: // Down
                             setPrevY(getY());
-                            setY(getY() - 13);
+                            setY(getY() + 13);
                             setDirection(1);
                             this.animationDown.tick();
                         break;
@@ -266,51 +218,64 @@ public class Player extends Item{
                             }    
                         break;
                         
-                        case 10: 
-                            if (forStart){
-                                index = forPosition;
-                                forIndex++;
+                        case 10:
+                            forIndex++;
+                            if (forIndex < forLimit) {
+                                index = forStart;   
+                            } else {
+                                forIndex = 0;
+                                index++;
                             }
                         break;
                         
                         case 11:
-                            forInit(11);
+                            forStart = index+1;
+                            forLimit = 1;
                         break;
                             
                         case 12: 
-                            forInit(12);
+                            forStart = index+1;
+                            forLimit = 2;
                         break;
                         
                         case 13: 
-                            forInit(13);
+                            forStart = index+1;
+                            forLimit = 3;
                         break;
                             
                         case 14: 
-                            forInit(14);  
+                            forStart = index+1;
+                            forLimit = 4;
                         break;
                         
                         case 15: 
-                            forInit(15);
+                            forStart = index+1;
+                            forLimit = 5;
                         break;
                             
                         case 16: 
-                            forInit(16);  
+                            forStart = index+1;
+                            forLimit = 6;
                         break;
                         
                         case 17: 
-                            forInit(17);  
+                            forStart = index+1;
+                            forLimit = 7;
                         break;
                         
                         case 18: 
-                            forInit(18);  
+                            forStart = index+1;
+                            forLimit = 8;
                         break;
                         
                         case 19: 
-                            forInit(19);  
+                            forStart = index+1;
+                            forLimit = 9;
                         break;
                         
                         case 20: 
-                            forInit(20);  
+                            forStart = index+1;
+                            forLimit = 10;
                         break;
                     }
                     
