@@ -182,6 +182,6 @@ public class Bad extends Item{
     @Override
     public void render(Graphics g) {
         
-        g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
     }
 }

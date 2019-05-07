@@ -44,7 +44,8 @@ public class Game implements Runnable{
     private boolean changeLevel;        // to make the game know when to change game
     private Thread thread;              // thread to create the game
     private Player cow;                 // to use player 1
-    private Casa farm;                  // to use player 2
+    private Bad wolf;                   // to use wolfs
+    private Casa farm;                  // to win levels
     private Bar wood;                   // to use Bars
     private Power fire;                 // to use fireball
     private Button help;                // to display instructions of the game
@@ -256,11 +257,16 @@ public class Game implements Runnable{
             blocks.add(new Block(i*75+350, 300, 50, 65, this));
         }
         
-        // Generate Players 
+        // Generate Player
 //        cow = new Player(600, 200, 75, 75, 0 , 1, this);
         cow = new Player(105, 555, 75, 75, 0 , 1, this);
+        
+        // Generate Farm
         farm = new Casa(700, 50, 325, 325, 2, 2, this);
 
+        // Generate Enemy
+        wolf = new Bad(400, 555, 75, 75, this);
+        
         // Generate Powers
         fire = new Power(850, 605, 40, 40, this);
         powerShield = new Power(850, 605, 40, 40, this);
@@ -272,7 +278,7 @@ public class Game implements Runnable{
         display.getCanvas().addMouseMotionListener(mouseManager);
         
         //Start music
-        Assets.music.play();
+//        Assets.music.play();
     }
     
     @Override
@@ -341,6 +347,13 @@ public class Game implements Runnable{
             break;
             
             case 4:     // Level 4
+                
+                cow.setX(100);
+                cow.setY(555);
+                
+                wolf.setX(400);
+                wolf.setY(555);
+            
             break;
             
             case 5:     // Level 5
@@ -467,6 +480,45 @@ public class Game implements Runnable{
             }
             
             if (noLives <= 0) {
+                loss = true;
+            }
+        }
+        
+        else if (level4) {
+            
+            if (changeLevel)
+                initLevel(4);
+            
+            if (run) {
+                
+                cow.setFinish(false);
+                cow.tick();
+                
+                if (cow.getFinish()) {
+                    run = false;
+                    cow.setFinish(true);
+                    clear();
+                    noLives--;
+                    Assets.moo.play();
+                }   
+            }
+            
+            help.tick();
+            window.tick();
+            
+            if (help.getPressed()) {
+                window.setX(300);
+                window.setY(300);
+                window.setPressed(false);
+            }
+            
+            if (window.getPressed()) {
+                window.setX(-1000);
+                window.setY(-1000);
+                help.setPressed(false);
+            }
+            
+            if (noLives <= 0 || wolf.intersecta(cow)) {
                 loss = true;
             }
         }
@@ -700,7 +752,54 @@ public class Game implements Runnable{
             }
 
             else if (level4) {
+                g = bs.getDrawGraphics();
+                g.drawImage(Assets.pasto, 0, 0, width, height, null);
                 
+                wood.render(g);
+                
+                for (int i=0; i<blocks.size(); i++) {
+                    Block block = blocks.get(i);
+                    block.render(g);
+                }
+                
+                cow.render(g);
+                farm.render(g);
+                help.render(g);
+                window.render(g);
+                
+                if (getShootFire()) {
+                    fire.render(g);
+                }
+                
+                for (int i=0; i<noLives; i++) {
+                    Live live = lives.get(i);
+                    live.render(g);
+                }
+                
+                instructions();
+                
+                if (win) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
+                } 
+                if (loss) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                }
+                             
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    String space = (Ident.get(i)) ? "     " : "" ;
+                    
+                    g.setColor(Color.white);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                    g.drawString(space+instruction, 1054, i*30+100);
+                } 
+                
+                bs.show();
+                g.dispose();
             }
             
             else if (level5) {
