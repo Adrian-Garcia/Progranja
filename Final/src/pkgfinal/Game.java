@@ -397,6 +397,7 @@ public class Game implements Runnable{
     
     
     private void instructions() {
+        
         if (display.getNewInstruction()) {
             
             String newInst = display.getInstruction();
@@ -523,92 +524,7 @@ public class Game implements Runnable{
                     live.render(g);
                 }
                 
-                if (display.getNewInstruction()) {
-                    
-                    String newInst = display.getInstruction();
-                    Inst.set(index, newInst);
-                    
-                    // Posible instructions of the user
-                    if (newInst.equals("game.level1()") || newInst.equals("game.restartLevel1()")) {
-                        level1 = true;
-                        level2 = false;
-                        level3 = false;
-                        level4 = false;
-                        level5 = false;
-                        changeLevel = true;
-                        clear();
-                    } else if (newInst.equals("game.level2()") || newInst.equals("game.restartLevel2()")) {
-                        level1 = false;
-                        level2 = true;
-                        level3 = false;
-                        level4 = false;
-                        level5 = false;
-                        changeLevel = true;
-                        clear();
-                    } else if (newInst.equals("game.level3()") || newInst.equals("game.restartLevel3()")) {
-                        level1 = false;
-                        level2 = false;
-                        level3 = true;
-                        level4 = false;
-                        level5 = false;
-                        changeLevel = true;
-                        clear();
-                    } else if (newInst.equals("game.level4()") || newInst.equals("game.restartLevel4()")) {
-                        level1 = false;
-                        level2 = false;
-                        level3 = false;
-                        level4 = true;
-                        level5 = false;
-                        changeLevel = true;
-                        clear();
-                    } else if (newInst.equals("game.level5()") || newInst.equals("game.restartLevel5()")) {
-                        level1 = false;
-                        level2 = false;
-                        level3 = false;
-                        level4 = false;
-                        level5 = true;
-                        changeLevel = true;
-                        clear();
-                    } else if (newInst.equals("cow.up()")) {
-                        Instructions.add(0);
-                    } else if (newInst.equals("cow.down()")) {
-                        Instructions.add(1);
-                    } else if (newInst.equals("cow.left()")) {
-                        Instructions.add(2);
-                    } else if (newInst.equals("cow.right()")) {
-                        Instructions.add(3);
-                    } else if (newInst.equals("cow.run()")) {
-                        run = true;
-                    } else if (newInst.equals("clear")) {
-                        clear();
-                    } else if (newInst.equals("for x in range(1)")) {
-                        Instructions.add(11);
-                    } else if (newInst.equals("for x in range(2)")) {
-                        Instructions.add(12);
-                    } else if (newInst.equals("for x in range(3)")) {
-                        Instructions.add(13);
-                    } else if (newInst.equals("for x in range(4)")) {
-                        Instructions.add(14);
-                    } else if (newInst.equals("for x in range(5)")) {
-                        Instructions.add(15);
-                    } else if (newInst.equals("for x in range(6)")) {
-                        Instructions.add(16);
-                    } else if (newInst.equals("for x in range(7)")) {
-                        Instructions.add(17);
-                    } else if (newInst.equals("for x in range(8)")) {
-                        Instructions.add(18);
-                    } else if (newInst.equals("for x in range(9)")) {
-                        Instructions.add(19);
-                    } else if (newInst.equals("for x in range(10)")) {
-                        Instructions.add(20);
-                    } else if (newInst.equals("end")) {
-                        Instructions.add(10);
-                    }
-                    
-                    if (index < Inst.size()) {
-                        index++;
-                    }
-                } 
+                instructions();
                 
                 if (win) {
                     g.setColor(Color.red);
