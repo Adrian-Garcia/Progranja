@@ -32,6 +32,9 @@ public class Assets {
     public static BufferedImage play;           // to store play
     public static BufferedImage hearth;           // to store play
 
+    public static SoundClip music;              // to store music for the game
+    public static SoundClip moo;                // to store moo sound
+    
     /**
      * initializing the images of the game
      */
@@ -66,5 +69,8 @@ public class Assets {
         shield = ImageLoader.loadImage("/images/shield.png");
         play = ImageLoader.loadImage("/images/play.png");
         hearth = ImageLoader.loadImage("/images/Vidas.png");
+        
+        music = new SoundClip("/sounds/music.wav");
+        moo = new SoundClip("/sounds/moo.wav");
     }
 }

@@ -82,13 +82,7 @@ public class Button extends Item{
      */
     public void setPressed(boolean pressed) {
         
-        if (pressed) {
-            this.pressed = true;
-            System.out.println("pressed");
-        } else {
-            this.pressed = false;
-            System.out.println("not pressed");
-        }
+        this.pressed = pressed;
     }
     
     /**

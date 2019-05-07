@@ -179,7 +179,7 @@ public class Game implements Runnable{
     
     /**
      * Add instruction arrow
-     * @param val 
+     * @param val
      */
     public void newInst(int val) {
         instructions++;
@@ -270,6 +270,9 @@ public class Game implements Runnable{
         display.getJframe().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
         display.getCanvas().addMouseMotionListener(mouseManager);
+        
+        //Start music
+        Assets.music.play();
     }
     
     @Override
@@ -394,6 +397,7 @@ public class Game implements Runnable{
                     cow.setFinish(true);
                     clear();
                     noLives--;
+                    Assets.moo.play();
                 }   
             }
             
@@ -415,7 +419,6 @@ public class Game implements Runnable{
                 window.setY(-1000);
                 help.setPressed(false);
             }
-            
             
             if (noLives <= 0) {
                 loss = true;
