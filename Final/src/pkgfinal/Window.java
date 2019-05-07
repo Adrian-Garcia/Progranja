@@ -81,14 +81,7 @@ public class Window extends Item{
      * @param pressed 
      */
     public void setPressed(boolean pressed) {
-        
-        if (pressed) {
-            this.pressed = true;
-            System.out.println("pressed");
-        } else {
-            this.pressed = false;
-            System.out.println("not pressed");
-        }
+        this.pressed = pressed;
     }
     
     /**
@@ -106,8 +99,6 @@ public class Window extends Item{
     public void tick() {
         if (game.getMouseManager().isIzquierdo() && getPerimetro().contains(game.getMouseManager().getX(), game.getMouseManager().getY())) {
             setPressed(true);
-        } else {
-            setPressed(false);
         }
     }
 

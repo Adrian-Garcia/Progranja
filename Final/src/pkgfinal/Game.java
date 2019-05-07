@@ -48,6 +48,7 @@ public class Game implements Runnable{
     private Bar wood;                   // to use Bars
     private Power fire;                 // to use fireball
     private Button help;                // to display instructions of the game
+    private Window window;              // to display windows
     private Power powerShield;          // to use shield
     private LinkedList<Boolean> Ident;  // to know if it is necesary to ident
     private LinkedList<String> Inst;    // to show instructions to the user
@@ -212,6 +213,9 @@ public class Game implements Runnable{
         
         // Generate Button of information
         help = new Button(0, 200, 25, 100, this);
+        
+        // Generate Window with information
+        window = new Window(-1000, -1000, 700, 300, this);
         
         // Generate lives
         for (int i=0; i<noLives; i++) {
@@ -394,8 +398,24 @@ public class Game implements Runnable{
             }
             
             help.tick();
+            window.tick();
             fire.tick();
             powerShield.tick();
+            
+            window.tick();
+            
+            if (help.getPressed()) {
+                window.setX(300);
+                window.setY(300);
+                window.setPressed(false);
+            }
+            
+            if (window.getPressed()) {
+                window.setX(-1000);
+                window.setY(-1000);
+                help.setPressed(false);
+            }
+            
             
             if (noLives <= 0) {
                 loss = true;
@@ -528,9 +548,8 @@ public class Game implements Runnable{
             
             else if (newInst.equals("cow.right()")) {
                 Instructions.add(3);
-                
                 if (loop) Ident.set(index, true);
-            } 
+            }
             
             else if (newInst.equals("cow.run()")) {
                 run = true;
@@ -632,6 +651,7 @@ public class Game implements Runnable{
                 cow.render(g);
                 farm.render(g);
                 help.render(g);
+                window.render(g);
                 
                 if (getShootFire()) {
                     fire.render(g);
