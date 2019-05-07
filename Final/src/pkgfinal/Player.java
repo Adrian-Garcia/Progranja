@@ -175,14 +175,14 @@ public class Player extends Item{
 
                         case 0: // Up
                             setPrevY(getY());
-                            setY(getY() - 50);
+                            setY(getY() - 65);
                             setDirection(0);
                             this.animationUp.tick();
                         break;
 
                         case 1: // Down
                             setPrevY(getY());
-                            setY(getY() + 50);
+                            setY(getY() + 65);
                             setDirection(1);
                             this.animationDown.tick();
                         break;

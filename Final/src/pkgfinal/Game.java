@@ -38,6 +38,8 @@ public class Game implements Runnable{
     private boolean level1;             // to go to level 1
     private boolean level2;             // to go to level 2
     private boolean level3;             // to go to level 3
+    private boolean level4;             // to go to level 4
+    private boolean level5;             // to go to level 5
     private boolean changeLevel;        // to make the game know when to change game
     private Thread thread;              // thread to create the game
     private Player cow;             // to use player 1
@@ -76,6 +78,8 @@ public class Game implements Runnable{
         this.level1 = false;
         this.level2 = false;
         this.level3 = false;
+        this.level4 = false;
+        this.level5 = false;
         mouseManager = new MouseManager();
         blocks = new LinkedList<Block>();
         Instructions = new LinkedList<Integer>();
@@ -238,7 +242,7 @@ public class Game implements Runnable{
         
         // Generate Players 
 //        cow = new Player(600, 200, 75, 75, 0 , 1, this);
-        cow = new Player(85, 555, 75, 75, 0 , 1, this);
+        cow = new Player(105, 555, 75, 75, 0 , 1, this);
         farm = new Casa(700, 50, 325, 325, 2, 2, this);
 
         // Generate Powers
@@ -391,6 +395,96 @@ public class Game implements Runnable{
         }
     }
     
+    
+    private void instructions() {
+        if (display.getNewInstruction()) {
+            
+            String newInst = display.getInstruction();
+            Inst.set(index, newInst);
+
+            // Posible instructions of the user
+            if (newInst.equals("game.level1()") || newInst.equals("game.restartLevel1()")) {
+                level1 = true;
+                level2 = false;
+                level3 = false;
+                level4 = false;
+                level5 = false;
+                changeLevel = true;
+                clear();
+            } else if (newInst.equals("game.level2()") || newInst.equals("game.restartLevel2()")) {
+                level1 = false;
+                level2 = true;
+                level3 = false;
+                level4 = false;
+                level5 = false;
+                changeLevel = true;
+                clear();
+            } else if (newInst.equals("game.level3()") || newInst.equals("game.restartLevel3()")) {
+                level1 = false;
+                level2 = false;
+                level3 = true;
+                level4 = false;
+                level5 = false;
+                changeLevel = true;
+                clear();
+            } else if (newInst.equals("game.level4()") || newInst.equals("game.restartLevel4()")) {
+                level1 = false;
+                level2 = false;
+                level3 = false;
+                level4 = true;
+                level5 = false;
+                changeLevel = true;
+                clear();
+            } else if (newInst.equals("game.level5()") || newInst.equals("game.restartLevel5()")) {
+                level1 = false;
+                level2 = false;
+                level3 = false;
+                level4 = false;
+                level5 = true;
+                changeLevel = true;
+                clear();
+            } else if (newInst.equals("cow.up()")) {
+                Instructions.add(0);
+            } else if (newInst.equals("cow.down()")) {
+                Instructions.add(1);
+            } else if (newInst.equals("cow.left()")) {
+                Instructions.add(2);
+            } else if (newInst.equals("cow.right()")) {
+                Instructions.add(3);
+            } else if (newInst.equals("cow.run()")) {
+                run = true;
+            } else if (newInst.equals("clear")) {
+                clear();
+            } else if (newInst.equals("for x in range(1)")) {
+                Instructions.add(11);
+            } else if (newInst.equals("for x in range(2)")) {
+                Instructions.add(12);
+            } else if (newInst.equals("for x in range(3)")) {
+                Instructions.add(13);
+            } else if (newInst.equals("for x in range(4)")) {
+                Instructions.add(14);
+            } else if (newInst.equals("for x in range(5)")) {
+                Instructions.add(15);
+            } else if (newInst.equals("for x in range(6)")) {
+                Instructions.add(16);
+            } else if (newInst.equals("for x in range(7)")) {
+                Instructions.add(17);
+            } else if (newInst.equals("for x in range(8)")) {
+                Instructions.add(18);
+            } else if (newInst.equals("for x in range(9)")) {
+                Instructions.add(19);
+            } else if (newInst.equals("for x in range(10)")) {
+                Instructions.add(20);
+            } else if (newInst.equals("end")) {
+                Instructions.add(10);
+            }
+
+            if (index < Inst.size()) {
+                index++;
+            }
+        }
+    }
+    
     private void render() {
         
         // get the buffer strategy from the display
@@ -435,33 +529,55 @@ public class Game implements Runnable{
                     Inst.set(index, newInst);
                     
                     // Posible instructions of the user
-                    if (newInst.equals("game.level1();") || newInst.equals("game.restartLevel1();")) {
+                    if (newInst.equals("game.level1()") || newInst.equals("game.restartLevel1()")) {
                         level1 = true;
                         level2 = false;
                         level3 = false;
+                        level4 = false;
+                        level5 = false;
                         changeLevel = true;
                         clear();
-                    } else if (newInst.equals("game.level2();") || newInst.equals("game.restartLevel2();")) {
+                    } else if (newInst.equals("game.level2()") || newInst.equals("game.restartLevel2()")) {
                         level1 = false;
                         level2 = true;
                         level3 = false;
+                        level4 = false;
+                        level5 = false;
                         changeLevel = true;
                         clear();
-                    } else if (newInst.equals("game.level3();") || newInst.equals("game.restartLevel3();")) {
+                    } else if (newInst.equals("game.level3()") || newInst.equals("game.restartLevel3()")) {
                         level1 = false;
                         level2 = false;
                         level3 = true;
+                        level4 = false;
+                        level5 = false;
                         changeLevel = true;
                         clear();
-                    } else if (newInst.equals("cow.up();")) {
+                    } else if (newInst.equals("game.level4()") || newInst.equals("game.restartLevel4()")) {
+                        level1 = false;
+                        level2 = false;
+                        level3 = false;
+                        level4 = true;
+                        level5 = false;
+                        changeLevel = true;
+                        clear();
+                    } else if (newInst.equals("game.level5()") || newInst.equals("game.restartLevel5()")) {
+                        level1 = false;
+                        level2 = false;
+                        level3 = false;
+                        level4 = false;
+                        level5 = true;
+                        changeLevel = true;
+                        clear();
+                    } else if (newInst.equals("cow.up()")) {
                         Instructions.add(0);
-                    } else if (newInst.equals("cow.down();")) {
+                    } else if (newInst.equals("cow.down()")) {
                         Instructions.add(1);
-                    } else if (newInst.equals("cow.left();")) {
+                    } else if (newInst.equals("cow.left()")) {
                         Instructions.add(2);
-                    } else if (newInst.equals("cow.right();")) {
+                    } else if (newInst.equals("cow.right()")) {
                         Instructions.add(3);
-                    } else if (newInst.equals("cow.run();")) {
+                    } else if (newInst.equals("cow.run()")) {
                         run = true;
                     } else if (newInst.equals("clear")) {
                         clear();
@@ -486,7 +602,7 @@ public class Game implements Runnable{
                     } else if (newInst.equals("for x in range(10)")) {
                         Instructions.add(20);
                     } else if (newInst.equals("end")) {
-                        Instructions.add(9);
+                        Instructions.add(10);
                     }
                     
                     if (index < Inst.size()) {
