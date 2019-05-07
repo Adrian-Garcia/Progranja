@@ -160,16 +160,14 @@ public class Player extends Item{
     }
 
     public void forInit(int repetitions) {
-
-        repetitions -= 10;
-        index++;
         
-        while (game.getInstructionAt(index) != 10) {
+        while (game.getInstructionAt(index+2) != 10) {
+            
             forInstructions.add(game.getInstructionAt(index));
             index++;
         }
-
-        for (int i=0; i<repetitions; i++) {
+        
+        for (int i=0; i<repetitions-10; i++) {
 
             System.out.print(forInstructions.get(i) + " ");
 
@@ -177,33 +175,34 @@ public class Player extends Item{
 
                 case 0: // Up
                     setPrevY(getY());
-                    setY(getY() - 13);
+                    setY(getY() - 50);
                     setDirection(0);
                     this.animationUp.tick();
                 break;
 
                 case 1: // Down
                     setPrevY(getY());
-                    setY(getY() - 13);
+                    setY(getY() - 50);
                     setDirection(1);
                     this.animationDown.tick();
                 break;
 
                 case 2: // Left
                     setPrevX(getX());
-                    setX(getX() - 21);
+                    setX(getX() - 50);
                     setDirection(2);
                     this.animationLeft.tick();
                 break;
 
                 case 3: // Right
                     setPrevX(getX());
-                    setX(getX() + 21);
+                    setX(getX() + 50);
                     setDirection(3);
                     this.animationRight.tick();
                 break;
             }
         }
+        forInstructions.clear();
     }
     
     /**
