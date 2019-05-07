@@ -20,11 +20,16 @@ public class Player extends Item{
     private Game game;
     private int playerNo;
     private int index;
+    private int smallIndex;
     private int prevX;
     private int prevY;
     private boolean finish;
     private int counter;
     private int direction;
+    private int forPosition;
+    private int forIndex;
+    private int forLimit;
+    private boolean forStart;
     private Animation animationUp;
     private Animation animationLeft;
     private Animation animationDown;
@@ -44,9 +49,11 @@ public class Player extends Item{
         this.game = game;
         this.playerNo = playerNo;
         this.index = 0;
+        this.smallIndex = 0;
         this.prevX = x;
         this.prevY = y;
         this.counter = 0;
+        this.forStart = false;
         this.animationUp = new Animation(Assets.playerUp, 100);
         this.animationLeft = new Animation(Assets.playerLeft, 100);
         this.animationDown = new Animation(Assets.playerDown, 100);
@@ -170,28 +177,28 @@ public class Player extends Item{
 
                         case 0: // Up
                             setPrevY(getY());
-                            setY(getY() - 50);
+                            setY(getY() - 13);
                             setDirection(0);
                             this.animationUp.tick();
                         break;
 
                         case 1: // Down
                             setPrevY(getY());
-                            setY(getY() + 50);
+                            setY(getY() - 13);
                             setDirection(1);
                             this.animationDown.tick();
                         break;
 
                         case 2: // Left
                             setPrevX(getX());
-                            setX(getX() - 50);
+                            setX(getX() - 21);
                             setDirection(2);
                             this.animationLeft.tick();
                         break;
 
                         case 3: // Right
                             setPrevX(getX());
-                            setX(getX() + 50);
+                            setX(getX() + 21);
                             setDirection(3);
                             this.animationRight.tick();
                         break;
@@ -208,9 +215,70 @@ public class Player extends Item{
                                 game.setShootShield(true);
                             }    
                         break;
+                        
+                        case 10: 
+                            if (forStart){
+                                index = forPosition;
+                                forIndex++;
+                            }
+                        break;
+                        
+                        case 11:
+                            forLimit = 1;
+                            forStart = true;
+                        break;
+                            
+                        case 12: 
+                            forLimit = 2;
+                            forStart = true;
+                        break;
+                        
+                        case 13: 
+                            forLimit = 3;
+                            forStart = true; 
+                        break;
+                            
+                        case 14: 
+                            forLimit = 4;
+                            forStart = true;  
+                        break;
+                        
+                        case 15: 
+                            forLimit = 5;
+                            forStart = true;  
+                        break;
+                            
+                        case 16: 
+                            forLimit = 6;
+                            forStart = true;  
+                        break;
+                        
+                        case 17: 
+                            forLimit = 7;
+                            forStart = true;  
+                        break;
+                        
+                        case 18: 
+                            forLimit = 8;
+                            forStart = true;  
+                        break;
+                        
+                        case 19: 
+                            forLimit = 9;
+                            forStart = true;  
+                        break;
+                        
+                        case 20: 
+                            forLimit = 10;
+                            forStart = true;  
+                        break;
                     }
-
-                    index++;
+                    
+                    smallIndex++;
+                    if (smallIndex == 4){
+                        index++;
+                        smallIndex = 0;
+                    }
                 }
             }
         }
