@@ -40,6 +40,7 @@ public class Game implements Runnable{
     private boolean level3;             // to go to level 3
     private boolean level4;             // to go to level 4
     private boolean level5;             // to go to level 5
+    private boolean loop;               // to know if there is a loop
     private boolean changeLevel;        // to make the game know when to change game
     private Thread thread;              // thread to create the game
     private Player cow;                 // to use player 1
@@ -81,6 +82,7 @@ public class Game implements Runnable{
         this.level3 = false;
         this.level4 = false;
         this.level5 = false;
+        this.loop = false;
         mouseManager = new MouseManager();
         blocks = new LinkedList<Block>();
         Instructions = new LinkedList<Integer>();
@@ -304,6 +306,7 @@ public class Game implements Runnable{
         switch(level) {
             
             case 1:     // Level 1
+                
                 for (;i<blocks.size(); i++) {
                     Block block = blocks.get(i);
                     block.setX(50);
@@ -501,26 +504,37 @@ public class Game implements Runnable{
                 clear();
             } else if (newInst.equals("for x in range(1)")) {
                 Instructions.add(11);
+                loop = true;
             } else if (newInst.equals("for x in range(2)")) {
                 Instructions.add(12);
+                loop = true;
             } else if (newInst.equals("for x in range(3)")) {
                 Instructions.add(13);
+                loop = true;
             } else if (newInst.equals("for x in range(4)")) {
                 Instructions.add(14);
+                loop = true;
             } else if (newInst.equals("for x in range(5)")) {
                 Instructions.add(15);
+                loop = true;
             } else if (newInst.equals("for x in range(6)")) {
                 Instructions.add(16);
+                loop = true;
             } else if (newInst.equals("for x in range(7)")) {
                 Instructions.add(17);
+                loop = true;
             } else if (newInst.equals("for x in range(8)")) {
                 Instructions.add(18);
+                loop = true;
             } else if (newInst.equals("for x in range(9)")) {
                 Instructions.add(19);
+                loop = true;
             } else if (newInst.equals("for x in range(10)")) {
                 Instructions.add(20);
+                loop = true;
             } else if (newInst.equals("end")) {
                 Instructions.add(10);
+                loop = false;
             }
 
             if (index < Inst.size()) {
@@ -582,9 +596,10 @@ public class Game implements Runnable{
                              
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
+                    String space = (loop) ? "   " : "" ;
                     g.setColor(Color.white);
                     g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-                    g.drawString(instruction, 1054, i*30+100);
+                    g.drawString(space+instruction, 1054, i*30+100);
                 }
                 
                 bs.show();
