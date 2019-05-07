@@ -161,16 +161,16 @@ public class Player extends Item{
     
     /**
      * Control the player movement 
+     * Manage with numbers to know where direction to go
+     * For loops can be done as well
      */
     @Override
     public void tick() {
         
         if (index < game.getInstructions()) {
             
-            if (!game.getShootFire() && !game.getShootShield()) {
-                
-                counter++;
-                
+            if (!game.getShootFire() && !game.getShootShield()) {    
+                counter++;    
                 if (counter > 7) {
                 
                     counter = 0;

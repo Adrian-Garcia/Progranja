@@ -45,14 +45,15 @@ public class Game implements Runnable{
     private Thread thread;              // thread to create the game
     private Player cow;                 // to use player 1
     private Casa farm;                  // to use player 2
+    private Bar wood;                   // to use Bars
+    private Power fire;                 // to use fireball
+    private Button help;                // to display instructions of the game
+    private Power powerShield;          // to use shield
     private LinkedList<Boolean> Ident;  // to know if it is necesary to ident
     private LinkedList<String> Inst;    // to show instructions to the user
     private LinkedList<Block> blocks;   // to use blocks
-    private Bar wood;                   // to use Bars
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
     private LinkedList<Live> lives;     // to use lives
-    private Power fire;                 // to use fireball
-    private Power powerShield;          // to use shield
     private MouseManager mouseManager;  // to manage the mouse
     
     /**
@@ -208,6 +209,9 @@ public class Game implements Runnable{
         
         // Generate Bars
         wood = new Bar(960, 25, 280, 650, this);
+        
+        // Generate Button of information
+        help = new Button(0, 200, 25, 100, this);
         
         // Generate lives
         for (int i=0; i<noLives; i++) {
@@ -388,6 +392,8 @@ public class Game implements Runnable{
                     noLives--;
                 }   
             }
+            
+            help.tick();
             fire.tick();
             powerShield.tick();
             
@@ -534,52 +540,52 @@ public class Game implements Runnable{
                 clear();
             } 
             
-            else if (newInst.equals("for x in range(1)")) {
+            else if (newInst.equals("for x in range(1)") || newInst.equals("for x in range (1)") || newInst.equals("for x in range(1) ") || newInst.equals("for x in range (1) ")) {
                 Instructions.add(11);
                 loop = true;
-            } 
+            }
             
-            else if (newInst.equals("for x in range(2)")) {
+            else if (newInst.equals("for x in range(2)") || newInst.equals("for x in range (2)") || newInst.equals("for x in range(2) ") || newInst.equals("for x in range (2) ")) {
                 Instructions.add(12);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(3)")) {
+            else if (newInst.equals("for x in range(3)") || newInst.equals("for x in range (3)") || newInst.equals("for x in range(3) ") || newInst.equals("for x in range (3) ")) {
                 Instructions.add(13);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(4)")) {
+            else if (newInst.equals("for x in range(4)") || newInst.equals("for x in range (4)") || newInst.equals("for x in range(4) ") || newInst.equals("for x in range (4) ")) {
                 Instructions.add(14);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(5)")) {
+            else if (newInst.equals("for x in range(5)") || newInst.equals("for x in range (5)") || newInst.equals("for x in range(5) ") || newInst.equals("for x in range (5) ")) {
                 Instructions.add(15);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(6)")) {
+            else if (newInst.equals("for x in range(6)") || newInst.equals("for x in range (6)") || newInst.equals("for x in range(6) ") || newInst.equals("for x in range (6) ")) {
                 Instructions.add(16);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(7)")) {
+            else if (newInst.equals("for x in range(7)") || newInst.equals("for x in range (7)") || newInst.equals("for x in range(7) ") || newInst.equals("for x in range (7) ")) {
                 Instructions.add(17);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(8)")) {
+            else if (newInst.equals("for x in range(8)") || newInst.equals("for x in range (8)") || newInst.equals("for x in range(8) ") || newInst.equals("for x in range (8) ")) {
                 Instructions.add(18);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(9)")) {
+            else if (newInst.equals("for x in range(9)") || newInst.equals("for x in range (9)") || newInst.equals("for x in range(9) ") || newInst.equals("for x in range (9) ")) {
                 Instructions.add(19);
                 loop = true;
             } 
             
-            else if (newInst.equals("for x in range(10)")) {
+            else if (newInst.equals("for x in range(10)") || newInst.equals("for x in range (10)") || newInst.equals("for x in range(10) ") || newInst.equals("for x in range (10) ")) {
                 Instructions.add(20);
                 loop = true;
             } 
@@ -625,6 +631,7 @@ public class Game implements Runnable{
                 
                 cow.render(g);
                 farm.render(g);
+                help.render(g);
                 
                 if (getShootFire()) {
                     fire.render(g);
