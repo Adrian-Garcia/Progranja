@@ -298,9 +298,21 @@ public class Game implements Runnable{
     }
     
     private void initLevel(int level) {
+        
+        int i=0;
+        
         switch(level) {
             
             case 1:     // Level 1
+                for (;i<blocks.size(); i++) {
+                    Block block = blocks.get(i);
+                    block.setX(50);
+                    block.setY(30);
+                }
+                
+                cow.setX(600);
+                cow.setY(200);
+                
             break;
             
             case 2:     // Level 2
@@ -315,6 +327,8 @@ public class Game implements Runnable{
             case 5:     // Level 5
             break;
         }
+        
+        changeLevel = false;
     }
     
     
@@ -352,10 +366,8 @@ public class Game implements Runnable{
         // If level 1 is started
         if (level1) {
             
-            if (changeLevel) {
-                changeLevel = false;
-                initLevel();
-            }
+            if (changeLevel)
+                initLevel(1);
             
             if (run) {
                 cow.setFinish(false);
@@ -379,9 +391,8 @@ public class Game implements Runnable{
         // If Level 2 is starter
         else if (level2) {
             
-            if (changeLevel) {
-                changeLevel = false;
-            }
+            if (changeLevel)
+                initLevel(2);
             
             if (run) {
                 cow.setFinish(false);
@@ -403,10 +414,8 @@ public class Game implements Runnable{
         // If Level 3 is started
         else if (level3) {
             
-            // change position 
-            if (changeLevel) {
-                changeLevel= false;
-            }
+            if (changeLevel)
+                initLevel(3);
             
             if (run) {
                 cow.setFinish(false);
