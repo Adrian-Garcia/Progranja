@@ -190,9 +190,11 @@ public class Game implements Runnable{
         
         for (int i=0; i<Inst.size(); i++) {
             Inst.set(i, "");
-            Instructions.clear();
+            Ident.set(i,false);
             index = 0;
         }
+        
+        Instructions.clear();
     }
     
     /**
@@ -648,7 +650,7 @@ public class Game implements Runnable{
                              
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
-                    String space = (Ident.get(i)) ? "       " : "" ;
+                    String space = (Ident.get(i)) ? "     " : "" ;
                     
                     g.setColor(Color.white);
                     g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
