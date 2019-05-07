@@ -42,11 +42,11 @@ public class Game implements Runnable{
     private boolean level5;             // to go to level 5
     private boolean changeLevel;        // to make the game know when to change game
     private Thread thread;              // thread to create the game
-    private Player cow;             // to use player 1
-    private Casa farm;             // to use player 2
+    private Player cow;                 // to use player 1
+    private Casa farm;                  // to use player 2
     private LinkedList<String> Inst;    // to show instructions to the user
     private LinkedList<Block> blocks;   // to use blocks
-    private Bar wood;       // to use Bars
+    private Bar wood;                   // to use Bars
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
     private LinkedList<Live> lives;     // to use lives
     private Power fire;                 // to use fireball
@@ -60,6 +60,7 @@ public class Game implements Runnable{
      * @param height to set the hight of the window
      */
     public Game(String title, int width, int height) {
+        
         this.title = title;
         this.width = width;
         this.height = height;
@@ -296,6 +297,31 @@ public class Game implements Runnable{
         return mouseManager;
     }
     
+    private void initLevel(int level) {
+        switch(level) {
+            
+            case 1:     // Level 1
+            break;
+            
+            case 2:     // Level 2
+            break;
+            
+            case 3:     // Level 3
+            break;
+            
+            case 4:     // Level 4
+            break;
+            
+            case 5:     // Level 5
+            break;
+        }
+    }
+    
+    
+    /**
+     * Control actions of items and instances of the game. 
+     * It also control the management of the levels
+     */
     private void tick() {
         
         // collide Blocks
@@ -325,6 +351,11 @@ public class Game implements Runnable{
         
         // If level 1 is started
         if (level1) {
+            
+            if (changeLevel) {
+                changeLevel = false;
+                initLevel();
+            }
             
             if (run) {
                 cow.setFinish(false);
@@ -395,7 +426,10 @@ public class Game implements Runnable{
         }
     }
     
-    
+    /**
+     * Read de instructions that the user gave. This function is used in all the 
+     * levels when thick and read are being used 
+     */
     private void instructions() {
         
         if (display.getNewInstruction()) {

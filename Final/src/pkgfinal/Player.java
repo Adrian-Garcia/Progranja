@@ -20,6 +20,7 @@ public class Player extends Item{
     private Game game;
     private int playerNo;
     private int index;
+    private int smallIndex;
     private int prevX;
     private int prevY;
     private boolean finish;
@@ -48,6 +49,7 @@ public class Player extends Item{
         this.game = game;
         this.playerNo = playerNo;
         this.index = 0;
+        this.smallIndex = 0;
         this.prevX = x;
         this.prevY = y;
         this.counter = 0;
@@ -175,28 +177,28 @@ public class Player extends Item{
 
                         case 0: // Up
                             setPrevY(getY());
-                            setY(getY() - 65);
+                            setY(getY() - 13);
                             setDirection(0);
                             this.animationUp.tick();
                         break;
 
                         case 1: // Down
                             setPrevY(getY());
-                            setY(getY() + 65);
+                            setY(getY() - 13);
                             setDirection(1);
                             this.animationDown.tick();
                         break;
 
                         case 2: // Left
                             setPrevX(getX());
-                            setX(getX() - 50);
+                            setX(getX() - 21);
                             setDirection(2);
                             this.animationLeft.tick();
                         break;
 
                         case 3: // Right
                             setPrevX(getX());
-                            setX(getX() + 50);
+                            setX(getX() + 21);
                             setDirection(3);
                             this.animationRight.tick();
                         break;
@@ -271,8 +273,12 @@ public class Player extends Item{
                             forStart = true;  
                         break;
                     }
-
-                    index++;
+                    
+                    smallIndex++;
+                    if (smallIndex == 4){
+                        index++;
+                        smallIndex = 0;
+                    }
                 }
             }
         }
