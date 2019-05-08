@@ -96,7 +96,7 @@ public class Assets {
         
         win = ImageLoader.loadImage("/images/win.png");
         winWin = ImageLoader.loadImage("/images/winWin.png");
-        lose = ImageLoader.loadImage("/images/winWin.png");
+        lose = ImageLoader.loadImage("/images/lose.png");
         
         fireball = ImageLoader.loadImage("/images/fireball.png");
         shield = ImageLoader.loadImage("/images/shield.png");

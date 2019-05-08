@@ -400,12 +400,7 @@ public class Game implements Runnable{
                 cow.setY(350);
                 
                 farm.setX(700);
-                farm.setY(200);
-                
-                window = windows.get(0);
-                
-                window.setX(50);
-                window.setY(50);
+                farm.setY(200);                
             break;
             
             case 3:     // Level 3
@@ -567,6 +562,9 @@ public class Game implements Runnable{
             
             if (noLives <= 0) {
                 loss = true;
+                window = windows.get(4);
+                window.setX(50);
+                window.setY(50);
             }
         }
         
@@ -575,7 +573,7 @@ public class Game implements Runnable{
             
             if (changeLevel) {
                 initLevel(2);
-                help.setPressed(true);
+//                help.setPressed(true);
             }
             if (run) {
                 cow.setFinish(false);
@@ -900,6 +898,60 @@ public class Game implements Runnable{
                     level2 = false;
                     level3 = false;
                     level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                }
+            }
+            
+            else if (newInst.equals("game.restartLevel()")) {
+                
+                if (level1) {
+                    
+                    level1 = true;
+                    level2 = false;
+                    level3 = false;
+                    level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                } 
+                
+                else if (level2) {
+                    
+                    level1 = false;
+                    level2 = true;
+                    level3 = false;
+                    level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                } 
+                
+                else if (level3) {
+                    
+                    level1 = false;
+                    level2 = false;
+                    level3 = true;
+                    level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                }
+                
+                else  {
+                    level1 = false;
+                    level2 = false;
+                    level3 = false;
+                    level4 = true;
                     level5 = false;
                     changeLevel = true;
                     win = false;
