@@ -597,6 +597,7 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = false;
                 changeLevel = true;
+                win = loss = false;
                 clear();
             } 
             
@@ -607,6 +608,7 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = false;
                 changeLevel = true;
+                win = loss = false;
                 clear();
             } 
             
@@ -617,6 +619,7 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = false;
                 changeLevel = true;
+                win = loss = false;
                 clear();
             } 
             
@@ -627,6 +630,7 @@ public class Game implements Runnable{
                 level4 = true;
                 level5 = false;
                 changeLevel = true;
+                win = loss = false;
                 clear();
             } 
             
@@ -637,6 +641,7 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = true;
                 changeLevel = true;
+                win = loss = false;
                 clear();
             } 
             
