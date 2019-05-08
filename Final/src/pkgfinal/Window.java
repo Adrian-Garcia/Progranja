@@ -19,6 +19,7 @@ public class Window extends Item{
     private Game game;
     private boolean pressed;
     private boolean available;
+    private int type;
     
     /**
      * Box constructor
@@ -28,12 +29,13 @@ public class Window extends Item{
      * @param height
      * @param game 
      */
-    public Window(int x, int y, int width, int height, Game game) {
+    public Window(int x, int y, int width, int height, int type, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
         this.pressed = false;
+        this.type = type;
     }
 
     /**

@@ -49,8 +49,9 @@ public class Game implements Runnable{
     private Bar wood;                   // to use Bars
     private Power fire;                 // to use fireball
     private Button help;                // to display instructions of the game
-    private Window window;              // to display windows
+//    private Window window;              // to display windows
     private Power powerShield;          // to use shield
+    private LinkedList<Window> windows; // to use windows
     private LinkedList<Boolean> Ident;  // to know if it is necesary to ident
     private LinkedList<String> Inst;    // to show instructions to the user
     private LinkedList<Block> blocks;   // to use blocks
@@ -95,6 +96,7 @@ public class Game implements Runnable{
         Inst = new LinkedList<String>();
         Ident = new LinkedList<Boolean>();
         lives = new LinkedList<Live>();
+        windows = new LinkedList<Window>();
     }
     
     /**
@@ -233,9 +235,12 @@ public class Game implements Runnable{
         // Generate Button of information
         help = new Button(0, 200, 25, 100, this);
         
-        // Generate Window with information
-        window = new Window(-1000, -1000, 700, 300, this);
-        
+        // Generate Windows with information
+//        window = new Window(-1000, -1000, 700, 300, this);
+        for (int i=0; i<6; i++) {
+            windows.add(new Window(-500, -500, 700, 300, i, this));
+        }
+
         // Generate lives
         for (int i=0; i<noLives; i++) {
             lives.add(new Live(i*70+55, 30, 60, 65, this));
@@ -371,7 +376,7 @@ public class Game implements Runnable{
                     block.setY(30);
                 }
                 
-                cow.setX(600);
+                cow.setX(50);
                 cow.setY(200);
                 
                 farm.setX(700);
@@ -383,6 +388,55 @@ public class Game implements Runnable{
             break;
             
             case 3:     // Level 3
+                
+                // eje y izquierdo
+                for (; i<5; i++) {
+                    Block block = blocks.get(i);
+                    block.setX(50);
+                    block.setY(i*75+150);
+                }
+                
+                // eje y derecho
+                for (; i<5; i++) {
+                    Block block = blocks.get(i);
+                    block.setX(800);
+                    block.setY(i*75+275);
+                }
+                
+                // eje x arriba
+                for (; i<8; i++) {
+                    Block block = blocks.get(i);
+                    block.setX(i*75+130);
+                    block.setY(150);
+                }
+                
+                //eje x abajo
+                for (; i<8; i++) {
+                    Block block = blocks.get(i);
+                    block.setX(i*75+200);
+                    block.setY(575);
+                }
+                
+                // eje x medio izquierdo
+                for (; i<8; i++) {
+                    Block block = blocks.get(i);
+                    block.setX(i*75+200);
+                    block.setY(575);
+                }
+                
+                // eje x medio derecho
+                for (; i<6; i++) {
+                    Block block = blocks.get(i);
+                    block.setX(i*75+350);
+                    block.setY(300);
+                }
+                
+                cow.setX(105);
+                cow.setY(555);
+                
+                farm.setX(700);
+                farm.setY(50);
+                
             break;
             
             case 4:     // Level 4
@@ -466,12 +520,12 @@ public class Game implements Runnable{
                 }   
             }
             
-            help.tick();
+            Window window = windows.get(0);
             window.tick();
+            
+            help.tick();
             fire.tick();
             powerShield.tick();
-            
-            window.tick();
             
             if (help.getPressed()) {
                 window.setX(300);
@@ -508,6 +562,21 @@ public class Game implements Runnable{
                 }   
             }
             
+            Window window = windows.get(3);
+            window.tick();
+            
+            if (help.getPressed()) {
+                window.setX(300);
+                window.setY(300);
+                window.setPressed(false);
+            }
+            
+            if (window.getPressed()) {
+                window.setX(-1000);
+                window.setY(-1000);
+                help.setPressed(false);
+            }
+            
             if (noLives <= 0) {
                 loss = true;
             }   
@@ -529,6 +598,21 @@ public class Game implements Runnable{
                     clear();
                     noLives--;
                 }   
+            }
+            
+            Window window = windows.get(3);
+            window.tick();
+            
+            if (help.getPressed()) {
+                window.setX(300);
+                window.setY(300);
+                window.setPressed(false);
+            }
+            
+            if (window.getPressed()) {
+                window.setX(-1000);
+                window.setY(-1000);
+                help.setPressed(false);
             }
             
             if (noLives <= 0) {
@@ -555,8 +639,10 @@ public class Game implements Runnable{
                 }   
             }
             
-            help.tick();
+            Window window = windows.get(4);
             window.tick();
+            
+            help.tick();
             wolf.tick();
             
             if (help.getPressed()) {
@@ -880,6 +966,13 @@ public class Game implements Runnable{
                     // Posible instructions of the user
                     if (newInst.equals("play")) {
                         level1 = true;
+                        level2 = false;
+                        level3 = false;
+                        level4 = false;
+                        level5 = false;
+                        changeLevel = true;
+                        win = loss = false;
+                        clear();
                         clear();
                     } else if (newInst.equals("clear")) {
                         clear();
