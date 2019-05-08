@@ -23,6 +23,7 @@ public class Bad extends Item{
     private int prevY;
     private boolean finish;
     private int direction;
+    private int delay;
     private Animation animationUp;
     private Animation animationLeft;
     private Animation animationDown;
@@ -44,6 +45,7 @@ public class Bad extends Item{
         this.prevX = x;
         this.prevY = y;
         this.direction = 2;
+        this.delay = 0;
         this.animationUp = new Animation(Assets.playerUp, 100);
         this.animationLeft = new Animation(Assets.playerLeft, 100);
         this.animationDown = new Animation(Assets.playerDown, 100);
@@ -155,24 +157,30 @@ public class Bad extends Item{
     @Override
     public void tick() {
         
-        // 200 - 700 = -500
-        if (game.getPlayerX() - x < 0) {
-            setX(getX() - 1);
-            setDirection(1);
+        if (delay > 4) {
+            
+            if (game.getPlayerX() - x < 0) {
+                setX(getX() - 1);
+                setDirection(1);
+            } 
+
+            if (game.getPlayerX() - x > 0) {
+                setX(getX() + 1);
+                setDirection(2);
+            }
+
+            if (game.getPlayerY() - y < 0) {
+                setY(getY() - 1);
+            }
+
+            if (game.getPlayerY() - y > 0) {    
+                setY(getY() + 1);
+            }
+            
+            delay = -1;
         } 
         
-        if (game.getPlayerX() - x > 0) {
-            setX(getX() + 1);
-            setDirection(2);
-        }
-        
-        if (game.getPlayerY() - y < 0) {
-            setY(getY() - 1);
-        }
-        
-        if (game.getPlayerY() - y > 0) {    
-            setY(getY() + 1);
-        }
+        delay++;
     }
     
     /**
@@ -190,7 +198,7 @@ public class Bad extends Item{
      */
     public boolean intersecta(Object obj) {
                                                                 //Castea
-        return obj instanceof Block && getPerimetro().intersects(((Player) obj).getPerimetro());
+        return obj instanceof Player && getPerimetro().intersects(((Player) obj).getPerimetro());
     }
     
     /**

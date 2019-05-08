@@ -400,6 +400,9 @@ public class Game implements Runnable{
      * It also control the management of the levels
      */
     private void tick() {
+       
+        if (loss || win)
+            return;
         
         // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
