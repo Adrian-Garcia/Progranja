@@ -56,10 +56,18 @@ public class Window extends Item{
     
     /**
      * Get status of pressed button
-     * @return 
+     * @return a <code>boolean</code> with the Height value
      */
     public boolean getPressed() {
         return pressed;
+    }
+    
+    /**
+     * Get the type of the instruction
+     * @return an <code>integer</code> with the type value
+     */
+    public int getType() {
+        return type;
     }
 
     /**
@@ -110,6 +118,28 @@ public class Window extends Item{
      */
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+        
+        switch (type) {
+            
+            case 1:
+                g.drawImage(Assets.instNivel1, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 2:
+                g.drawImage(Assets.instNivel2, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 3:
+                g.drawImage(Assets.win, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 4:
+                g.drawImage(Assets.winWin, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+            
+            case 5:
+                g.drawImage(Assets.lose, getX(), getY(), getWidth(), getHeight(), null);
+            break;
+        }
     }
 }

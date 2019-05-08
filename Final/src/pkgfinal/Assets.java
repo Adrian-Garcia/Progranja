@@ -24,7 +24,6 @@ public class Assets {
     public static BufferedImage badRight[];
     public static BufferedImage farm; 
     public static BufferedImage wood;
-    public static BufferedImage instrucciones;
     public static BufferedImage background;     // to store background image
     public static BufferedImage pasto;           // to store cian color
     public static BufferedImage clearGray;      // to store gray color
@@ -32,6 +31,14 @@ public class Assets {
     public static BufferedImage button;         // to store button image
     public static BufferedImage block;          // to store button image
 
+    public static BufferedImage instrucciones;
+    public static BufferedImage instNivel1;
+    public static BufferedImage instNivel2;
+    
+    public static BufferedImage win;
+    public static BufferedImage winWin;
+    public static BufferedImage lose;
+    
     public static BufferedImage fireball;       // to store fireball
     public static BufferedImage shield;         // to store shiel
     public static BufferedImage play;           // to store play
@@ -60,8 +67,6 @@ public class Assets {
         badDown = new BufferedImage[4];
         badRight = new BufferedImage[4];
         
-        
-        
         for (int i = 0; i < 4 ; i++){
            playerUp[i] = spritesheet.crop(i * 76, 0, 76, 77);
             playerLeft[i] = spritesheet.crop(i * 76, 77, 76, 77);
@@ -84,7 +89,14 @@ public class Assets {
         bar = ImageLoader.loadImage("/images/cian.jpg");
         block = ImageLoader.loadImage("/images/block.png");
         button = ImageLoader.loadImage("/images/button.png");
-        instrucciones = ImageLoader.loadImage("/images/instrucciones.png");
+        
+        instrucciones = ImageLoader.loadImage("/images/Main Menu.png");
+        instNivel1 = ImageLoader.loadImage("/images/1.png");
+        instNivel2 = ImageLoader.loadImage("/images/2.png");
+        
+        win = ImageLoader.loadImage("/images/win.png");
+        winWin = ImageLoader.loadImage("/images/winWin.png");
+        lose = ImageLoader.loadImage("/images/lose.png");
         
         fireball = ImageLoader.loadImage("/images/fireball.png");
         shield = ImageLoader.loadImage("/images/shield.png");
