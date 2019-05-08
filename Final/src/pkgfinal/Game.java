@@ -849,10 +849,10 @@ public class Game implements Runnable{
                 cow.render(g);
                 farm.render(g);
                 help.render(g);
-                window.render(g);
                 
-                if (getShootFire()) {
-                    fire.render(g);
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
                 }
                 
                 for (int i=0; i<noLives; i++) {
@@ -887,11 +887,104 @@ public class Game implements Runnable{
             }
             
             else if (level2) {
+                g = bs.getDrawGraphics();
+                g.drawImage(Assets.pasto, 0, 0, width, height, null);
                 
+                for (int i=0; i<blocks.size(); i++) {
+                    Block block = blocks.get(i);
+                    block.render(g);
+                }
+                
+                wood.render(g);
+                cow.render(g);
+                farm.render(g);
+                help.render(g);
+                
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
+                }
+                
+                for (int i=0; i<noLives; i++) {
+                    Live live = lives.get(i);
+                    live.render(g);
+                }
+                
+                instructions();
+                
+                if (win) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
+                } 
+                if (loss) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                }
+                             
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    String space = (Ident.get(i)) ? "     " : "" ;
+                    
+                    g.setColor(Color.white);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                    g.drawString(space+instruction, 1054, i*30+100);
+                } 
+                
+                bs.show();
+                g.dispose();
             }
             
             else if (level3) {
                 
+                g = bs.getDrawGraphics();
+                g.drawImage(Assets.pasto, 0, 0, width, height, null);
+                
+                for (int i=0; i<blocks.size(); i++) {
+                    Block block = blocks.get(i);
+                    block.render(g);
+                }
+                
+                wood.render(g);
+                cow.render(g);
+                farm.render(g);
+                help.render(g);
+                
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
+                }
+                
+                for (int i=0; i<noLives; i++) {
+                    Live live = lives.get(i);
+                    live.render(g);
+                }
+                
+                instructions();
+                
+                if (win) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
+                } 
+                if (loss) {
+                    g.setColor(Color.red);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
+                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                }
+                             
+                for (int i=0; i<Inst.size(); i++) {
+                    String instruction = Inst.get(i);
+                    String space = (Ident.get(i)) ? "     " : "" ;
+                    
+                    g.setColor(Color.white);
+                    g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+                    g.drawString(space+instruction, 1054, i*30+100);
+                } 
+                
+                bs.show();
+                g.dispose();
             }
 
             else if (level4) {
@@ -908,8 +1001,13 @@ public class Game implements Runnable{
                 cow.render(g);
                 farm.render(g);
                 help.render(g);
-                window.render(g);
                 wolf.render(g);
+                
+                /////////////////////////////////////
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
+                }
                 
                 if (getShootFire()) {
                     fire.render(g);
@@ -964,7 +1062,7 @@ public class Game implements Runnable{
                     Inst.set(index, newInst);
                     
                     // Posible instructions of the user
-                    if (newInst.equals("play")) {
+                    if (newInst.equals("play") ) {
                         level1 = true;
                         level2 = false;
                         level3 = false;
@@ -974,7 +1072,53 @@ public class Game implements Runnable{
                         win = loss = false;
                         clear();
                         clear();
-                    } else if (newInst.equals("clear")) {
+                    } 
+                    
+                    if (newInst.equals("game.level1()") || newInst.equals("game.restartLevel1()")) {
+                        level1 = true;
+                        level2 = false;
+                        level3 = false;
+                        level4 = false;
+                        level5 = false;
+                        changeLevel = true;
+                        win = loss = false;
+                        clear();
+                    } 
+
+                    else if (newInst.equals("game.level2()") || newInst.equals("game.restartLevel2()")) {
+                        level1 = false;
+                        level2 = true;
+                        level3 = false;
+                        level4 = false;
+                        level5 = false;
+                        changeLevel = true;
+                        win = loss = false;
+                        clear();
+                    } 
+
+                    else if (newInst.equals("game.level3()") || newInst.equals("game.restartLevel3()")) {
+                        level1 = false;
+                        level2 = false;
+                        level3 = true;
+                        level4 = false;
+                        level5 = false;
+                        changeLevel = true;
+                        win = loss = false;
+                        clear();
+                    } 
+
+                    else if (newInst.equals("game.level4()") || newInst.equals("game.restartLevel4()")) {
+                        level1 = false;
+                        level2 = false;
+                        level3 = false;
+                        level4 = true;
+                        level5 = false;
+                        changeLevel = true;
+                        win = loss = false;
+                        clear();
+                    }
+                    
+                    else if (newInst.equals("clear")) {
                         clear();
                     }
                     
