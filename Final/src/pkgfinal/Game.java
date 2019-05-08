@@ -219,6 +219,11 @@ public class Game implements Runnable{
         Instructions.clear();
         win = false;
         loss = false;
+        
+        for (int i=0; i<windows.size(); i++) {
+            Window window = windows.get(i);
+            window.setX(-1000);
+        }
     }
     
     /**
@@ -237,7 +242,7 @@ public class Game implements Runnable{
         help = new Button(0, 200, 25, 100, this);
         
         // Generate Windows with information
-        for (int i=0; i<6; i++) {
+        for (int i=0; i<5; i++) {
             windows.add(new Window(0, -1000, 875, 600, i+1, this));
         }
         
@@ -363,6 +368,8 @@ public class Game implements Runnable{
         wolf.setX(-100);
         farm.setX(-100);
         
+        Window window; 
+        
         int i=0;
         
         switch(level) {
@@ -381,6 +388,11 @@ public class Game implements Runnable{
                 farm.setX(700);
                 farm.setY(200);
                 
+                window = windows.get(0);
+                
+                window.setX(50);
+                window.setY(50);
+                
             break;
             
             case 2:     // Level 2
@@ -390,6 +402,10 @@ public class Game implements Runnable{
                 farm.setX(700);
                 farm.setY(200);
                 
+                window = windows.get(0);
+                
+                window.setX(50);
+                window.setY(50);
             break;
             
             case 3:     // Level 3
@@ -442,6 +458,10 @@ public class Game implements Runnable{
                 farm.setX(700);
                 farm.setY(50);
                 
+                window = windows.get(1);
+                
+                window.setX(50);
+                window.setY(50);
             break;
             
             case 4:     // Level 4
@@ -498,16 +518,13 @@ public class Game implements Runnable{
             }
         }
         
-        // Farm Collide cow
-        if (farm.intersecta(cow)) {
-            win = true;
-        }
-        
         // If level 1 is started
         if (level1) {
             
-            if (changeLevel)
+            if (changeLevel) {
                 initLevel(1);
+                help.setPressed(true);
+            }
             
             if (run) {
                 cow.setFinish(false);
@@ -523,6 +540,7 @@ public class Game implements Runnable{
             }
             
             Window window = windows.get(0);
+            Window winWindow = windows.get(2);
             window.tick();
             
             help.tick();
@@ -540,6 +558,13 @@ public class Game implements Runnable{
                 help.setPressed(false);
             }
             
+            // Farm Collide cow
+            if (farm.intersecta(cow)) {
+                win = true;
+                winWindow.setX(50);
+                winWindow.setY(50);
+            }
+            
             if (noLives <= 0) {
                 loss = true;
             }
@@ -548,9 +573,10 @@ public class Game implements Runnable{
         // If Level 2 is starter
         else if (level2) {
             
-            if (changeLevel)
+            if (changeLevel) {
                 initLevel(2);
-            
+                help.setPressed(true);
+            }
             if (run) {
                 cow.setFinish(false);
                 cow.tick();
@@ -588,9 +614,11 @@ public class Game implements Runnable{
         // If Level 3 is started
         else if (level3) {
             
-            if (changeLevel)
+            if (changeLevel) {
                 initLevel(3);
-            
+                help.setPressed(true);
+            }
+                
             if (run) {
                 cow.setFinish(false);
                 cow.tick();
@@ -646,7 +674,9 @@ public class Game implements Runnable{
             window.tick();
             
             help.tick();
-            wolf.tick();
+            
+            if (!help.getPressed()) 
+                wolf.tick();
             
             if (help.getPressed()) {
                 window.setX(300);

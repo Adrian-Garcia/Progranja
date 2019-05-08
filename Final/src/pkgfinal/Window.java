@@ -130,15 +130,15 @@ public class Window extends Item{
             break;
             
             case 3:
-                g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+                g.drawImage(Assets.win, getX(), getY(), getWidth(), getHeight(), null);
             break;
             
             case 4:
-                g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+                g.drawImage(Assets.winWin, getX(), getY(), getWidth(), getHeight(), null);
             break;
             
             case 5:
-                g.drawImage(Assets.clearGray, getX(), getY(), getWidth(), getHeight(), null);
+                g.drawImage(Assets.lose, getX(), getY(), getWidth(), getHeight(), null);
             break;
         }
     }

@@ -35,6 +35,10 @@ public class Assets {
     public static BufferedImage instNivel1;
     public static BufferedImage instNivel2;
     
+    public static BufferedImage win;
+    public static BufferedImage winWin;
+    public static BufferedImage lose;
+    
     public static BufferedImage fireball;       // to store fireball
     public static BufferedImage shield;         // to store shiel
     public static BufferedImage play;           // to store play
@@ -89,6 +93,10 @@ public class Assets {
         instrucciones = ImageLoader.loadImage("/images/Main Menu.png");
         instNivel1 = ImageLoader.loadImage("/images/1.png");
         instNivel2 = ImageLoader.loadImage("/images/2.png");
+        
+        win = ImageLoader.loadImage("/images/win.png");
+        winWin = ImageLoader.loadImage("/images/winWin.png");
+        lose = ImageLoader.loadImage("/images/winWin.png");
         
         fireball = ImageLoader.loadImage("/images/fireball.png");
         shield = ImageLoader.loadImage("/images/shield.png");
