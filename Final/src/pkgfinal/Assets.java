@@ -17,6 +17,11 @@ public class Assets {
     public static BufferedImage playerLeft[];
     public static BufferedImage playerDown[];
     public static BufferedImage playerRight[];
+    public static BufferedImage Badsprites;
+    public static BufferedImage badUp[];
+    public static BufferedImage badLeft[];
+    public static BufferedImage badDown[];
+    public static BufferedImage badRight[];
     public static BufferedImage farm; 
     public static BufferedImage wood;
     public static BufferedImage instrucciones;
@@ -41,6 +46,7 @@ public class Assets {
     public static void init() {
          
         Playersprites = ImageLoader.loadImage("/images/spritenuevo.png");
+        Badsprites = ImageLoader.loadImage("/images/wolf.png");
         
         SpreadSheet spritesheet = new SpreadSheet(Playersprites);
         playerUp = new BufferedImage[4];
@@ -48,11 +54,26 @@ public class Assets {
         playerDown = new BufferedImage[4];
         playerRight = new BufferedImage[4];
         
+        SpreadSheet spritesheet2 = new SpreadSheet(Badsprites);
+        badUp = new BufferedImage[4];
+        badLeft = new BufferedImage[4];
+        badDown = new BufferedImage[4];
+        badRight = new BufferedImage[4];
+        
+        
+        
         for (int i = 0; i < 4 ; i++){
            playerUp[i] = spritesheet.crop(i * 76, 0, 76, 77);
             playerLeft[i] = spritesheet.crop(i * 76, 77, 76, 77);
             playerDown[i] = spritesheet.crop(i * 76, 154, 76, 77);
             playerRight[i] = spritesheet.crop(i * 76, 231, 76, 77);
+        }
+        
+        for (int i = 0; i < 4 ; i++){
+            badUp[i] = spritesheet2.crop(i * 76, 0, 76, 77);
+            badLeft[i] = spritesheet2.crop(i * 76, 77, 76, 77);
+            badDown[i] = spritesheet2.crop(i * 76, 154, 76, 77);
+            badRight[i] = spritesheet2.crop(i * 76, 231, 76, 77);
         }
         
         farm = ImageLoader.loadImage("/images/farmhouse.png");

@@ -46,10 +46,10 @@ public class Bad extends Item{
         this.prevY = y;
         this.direction = 2;
         this.delay = 0;
-        this.animationUp = new Animation(Assets.playerUp, 100);
-        this.animationLeft = new Animation(Assets.playerLeft, 100);
-        this.animationDown = new Animation(Assets.playerDown, 100);
-        this.animationRight = new Animation(Assets.playerRight, 100);
+        this.animationUp = new Animation(Assets.badUp, 100);
+        this.animationLeft = new Animation(Assets.badLeft, 100);
+        this.animationDown = new Animation(Assets.badDown, 100);
+        this.animationRight = new Animation(Assets.badRight, 100);
         forInstructions = new LinkedList<Integer>();
     }
 
@@ -157,24 +157,30 @@ public class Bad extends Item{
     @Override
     public void tick() {
         
-        if (delay > 4) {
+        if (delay > 3) {
             
             if (game.getPlayerX() - x < 0) {
                 setX(getX() - 1);
                 setDirection(1);
+                this.animationLeft.tick();
             } 
 
             if (game.getPlayerX() - x > 0) {
                 setX(getX() + 1);
                 setDirection(2);
+                this.animationRight.tick();
             }
 
             if (game.getPlayerY() - y < 0) {
                 setY(getY() - 1);
+                setDirection(3);
+                this.animationUp.tick();
             }
 
             if (game.getPlayerY() - y > 0) {    
                 setY(getY() + 1);
+                setDirection(4);
+                this.animationDown.tick();
             }
             
             delay = -1;
@@ -207,7 +213,21 @@ public class Bad extends Item{
      */
     @Override
     public void render(Graphics g) {
-        
-        g.drawImage(Assets.fireball, getX(), getY(), getWidth(), getHeight(), null);
+         if (getDirection() == 3) {
+                    g.drawImage(animationUp.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                if (getDirection() == 4) {
+                    g.drawImage(animationDown.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                if (getDirection() == 1) {
+                    g.drawImage(animationLeft.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
+                if (getDirection() == 2) {
+                    g.drawImage(animationRight.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+
+                }
     }
 }

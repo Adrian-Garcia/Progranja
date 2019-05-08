@@ -277,13 +277,13 @@ public class Game implements Runnable{
         
         // Generate Player
 //        cow = new Player(600, 200, 75, 75, 0 , 1, this);
-        cow = new Player(105, 555, 75, 75, 0 , 1, this);
+        cow = new Player(105, 555, 75, 75, 0 , this);
         
         // Generate Farm
-        farm = new Casa(700, 50, 325, 325, 2, 2, this);
+        farm = new Casa(700, 50, 325, 325, this);
 
         // Generate Enemy
-        wolf = new Bad(400, 555, 75, 75, this);
+        wolf = new Bad(400, 555, 100, 100, this);
         
         // Generate Powers
         fire = new Power(850, 605, 40, 40, this);

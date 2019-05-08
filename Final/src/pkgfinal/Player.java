@@ -19,7 +19,6 @@ public class Player extends Item{
     private int width;
     private int height;
     private Game game;
-    private int playerNo;
     private int index;
     private int smallIndex;
     private int prevX;
@@ -43,12 +42,11 @@ public class Player extends Item{
      * @param height
      * @param game 
      */
-    public Player(int x, int y, int width, int height,int direction, int playerNo, Game game) {
+    public Player(int x, int y, int width, int height,int direction, Game game) {
         super(x, y);
         this.width = width;
         this.height = height;
         this.game = game;
-        this.playerNo = playerNo;
         this.index = 0;
         this.smallIndex = 0;
         this.prevX = x;
@@ -79,13 +77,7 @@ public class Player extends Item{
         return height;
     }
     
-    /**
-     * Get the value of the arrow
-     * @return 
-     */
-    public int getPlayerNo() {
-        return playerNo;
-    }
+    
     
     /**
      * Get the previous value of X position
@@ -320,9 +312,6 @@ public class Player extends Item{
     @Override
     public void render(Graphics g) {
         
-        switch (playerNo) {
-
-            case 1:
                 if (getDirection() == 0) {
                     g.drawImage(animationUp.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
 
@@ -339,11 +328,5 @@ public class Player extends Item{
                     g.drawImage(animationRight.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
 
                 }
-                break;
-
-            case 2:
-                g.drawImage(Assets.farm, getX(), getY(), getWidth(), getHeight(), null);
-                break;
         }
     }
-}
