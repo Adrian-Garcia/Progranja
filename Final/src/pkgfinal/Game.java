@@ -589,7 +589,7 @@ public class Game implements Runnable{
             
             help.tick();
             
-            Window window = windows.get(1);
+            Window window = windows.get(0);
             window.tick();
             
             if (help.getPressed()) {
@@ -668,7 +668,7 @@ public class Game implements Runnable{
                 }   
             }
             
-            Window window = windows.get(4);
+            Window window = windows.get(1);
             window.tick();
             
             help.tick();
@@ -677,8 +677,8 @@ public class Game implements Runnable{
                 wolf.tick();
             
             if (help.getPressed()) {
-                window.setX(300);
-                window.setY(300);
+                window.setX(50);
+                window.setY(50);
                 window.setPressed(false);
             }
             
@@ -689,7 +689,11 @@ public class Game implements Runnable{
             }
             
             if (noLives <= 0 || wolf.intersecta(cow)) {
+                Window loseWindow = windows.get(4);
+                loseWindow.setX(50);
+                loseWindow.setY(50);
                 loss = true;
+                
             }
         }
     }
@@ -918,6 +922,7 @@ public class Game implements Runnable{
                     changeLevel = true;
                     win = false;
                     loss = false;
+                    noLives = 5;
                     clear();
                 } 
                 
@@ -931,6 +936,7 @@ public class Game implements Runnable{
                     changeLevel = true;
                     win = false;
                     loss = false;
+                    noLives = 5;
                     clear();
                 } 
                 
@@ -944,10 +950,11 @@ public class Game implements Runnable{
                     changeLevel = true;
                     win = false;
                     loss = false;
+                    noLives = 5;
                     clear();
                 }
                 
-                else  {
+                else if (level4) {
                     level1 = false;
                     level2 = false;
                     level3 = false;
@@ -956,6 +963,20 @@ public class Game implements Runnable{
                     changeLevel = true;
                     win = false;
                     loss = false;
+                    noLives = 3;
+                    clear();
+                }
+                
+                else {
+                    level1 = false;
+                    level2 = false;
+                    level3 = false;
+                    level4 = false;
+                    level5 = true;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    noLives = 0;
                     clear();
                 }
             }
