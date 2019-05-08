@@ -693,7 +693,10 @@ public class Game implements Runnable{
             if (run) {
                 
                 cow.setFinish(false);
-                cow.tick();
+                
+                if (!win && !loss) {
+                    cow.tick();
+                }
                 
                 if (cow.getFinish()) {
                     run = false;
@@ -722,6 +725,14 @@ public class Game implements Runnable{
                 window.setX(-1000);
                 window.setY(-1000);
                 help.setPressed(false);
+            }
+            
+            // Farm Collide cow
+            if (farm.intersecta(cow)) {
+                win = true;
+                Window winWindow = windows.get(3);
+                winWindow.setX(50);
+                winWindow.setY(50);
             }
             
             if (noLives <= 0 || wolf.intersecta(cow)) {
