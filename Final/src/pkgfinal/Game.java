@@ -376,6 +376,8 @@ public class Game implements Runnable{
             
             case 1:     // Level 1
                 
+                noLives = 5;
+                
                 for (;i<blocks.size(); i++) {
                     Block block = blocks.get(i);
                     block.setX(50);
@@ -396,6 +398,9 @@ public class Game implements Runnable{
             break;
             
             case 2:     // Level 2
+                
+                noLives = 5;
+                
                 cow.setX(50);
                 cow.setY(350);
                 
@@ -404,6 +409,8 @@ public class Game implements Runnable{
             break;
             
             case 3:     // Level 3
+                
+                noLives = 5;
                 
                 // eje y izquierdo
                 for (; i<5; i++) {
@@ -452,14 +459,11 @@ public class Game implements Runnable{
                 
                 farm.setX(700);
                 farm.setY(50);
-                
-//                window = windows.get(1);
-//                
-//                window.setX(50);
-//                window.setY(50);
             break;
             
             case 4:     // Level 4
+                
+                noLives = 3;
                 
                 cow.setX(100);
                 cow.setY(555);
@@ -560,6 +564,7 @@ public class Game implements Runnable{
                 winWindow.setY(50);
             }
             
+            // No more lives
             if (noLives <= 0) {
                 loss = true;
                 window = windows.get(4);
@@ -573,7 +578,6 @@ public class Game implements Runnable{
             
             if (changeLevel) {
                 initLevel(2);
-//                help.setPressed(true);
             }
             if (run) {
                 cow.setFinish(false);
@@ -590,6 +594,7 @@ public class Game implements Runnable{
             help.tick();
             
             Window window = windows.get(0);
+            Window winWindow = windows.get(2);
             window.tick();
             
             if (help.getPressed()) {
@@ -604,8 +609,19 @@ public class Game implements Runnable{
                 help.setPressed(false);
             }
             
+            // Farm Collide cow
+            if (farm.intersecta(cow)) {
+                win = true;
+                winWindow.setX(50);
+                winWindow.setY(50);
+            }
+            
+            // No more lives
             if (noLives <= 0) {
                 loss = true;
+                window = windows.get(4);
+                window.setX(50);
+                window.setY(50);
             }   
         }
         
@@ -629,12 +645,13 @@ public class Game implements Runnable{
                 }   
             }
             
-            Window window = windows.get(2);
+            Window window = windows.get(1);
             window.tick();
+            help.tick();
             
             if (help.getPressed()) {
-                window.setX(300);
-                window.setY(300);
+                window.setX(50);
+                window.setY(50);
                 window.setPressed(false);
             }
             
@@ -646,6 +663,22 @@ public class Game implements Runnable{
             
             if (noLives <= 0) {
                 loss = true;
+            }
+            
+            // Farm Collide cow
+            if (farm.intersecta(cow)) {
+                win = true;
+                Window winWindow = windows.get(2);
+                winWindow.setX(50);
+                winWindow.setY(50);
+            }
+            
+            // No more lives
+            if (noLives <= 0) {
+                loss = true;
+                window = windows.get(4);
+                window.setX(50);
+                window.setY(50);
             }
         }
         
