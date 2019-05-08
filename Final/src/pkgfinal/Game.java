@@ -459,6 +459,11 @@ public class Game implements Runnable{
                 
                 farm.setX(700);
                 farm.setY(50);
+                
+                window = windows.get(1);
+                window.setX(50);
+                window.setY(50);
+                
             break;
             
             case 4:     // Level 4
@@ -588,6 +593,7 @@ public class Game implements Runnable{
                     cow.setFinish(true);
                     clear();
                     noLives--;
+                    Assets.moo.play();
                 }   
             }
             
@@ -642,6 +648,7 @@ public class Game implements Runnable{
                     cow.setFinish(true);
                     clear();
                     noLives--;
+                    Assets.moo.play();
                 }   
             }
             
@@ -659,10 +666,6 @@ public class Game implements Runnable{
                 window.setX(-1000);
                 window.setY(-1000);
                 help.setPressed(false);
-            }
-            
-            if (noLives <= 0) {
-                loss = true;
             }
             
             // Farm Collide cow
@@ -701,7 +704,7 @@ public class Game implements Runnable{
                 }   
             }
             
-            Window window = windows.get(1);
+            Window window = windows.get(3);
             window.tick();
             
             help.tick();
