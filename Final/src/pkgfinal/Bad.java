@@ -155,6 +155,24 @@ public class Bad extends Item{
     @Override
     public void tick() {
         
+        // 200 - 700 = -500
+        if (game.getPlayerX() - x < 0) {
+            setX(getX() - 1);
+            setDirection(1);
+        } 
+        
+        if (game.getPlayerX() - x > 0) {
+            setX(getX() + 1);
+            setDirection(2);
+        }
+        
+        if (game.getPlayerY() - y < 0) {
+            setY(getY() - 1);
+        }
+        
+        if (game.getPlayerY() - y > 0) {    
+            setY(getY() + 1);
+        }
     }
     
     /**

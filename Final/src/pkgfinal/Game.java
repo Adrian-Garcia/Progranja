@@ -187,6 +187,22 @@ public class Game implements Runnable{
     }
     
     /**
+     * Get the position value of X of the cow
+     * @return cow.x
+     */
+    public int getPlayerX() {
+        return cow.getX();
+    }
+    
+    /**
+     * Get the position value of Y of the cow
+     * @return cow.y
+     */
+    public int getPlayerY() {
+        return cow.getY();
+    }
+    
+    /**
      * Restart the instructions, clear the screen
      */
     public void clear() {
@@ -323,6 +339,15 @@ public class Game implements Runnable{
     
     private void initLevel(int level) {
         
+        for (int i=0; i<blocks.size(); i++) {
+            Block block = blocks.get(i);
+            block.setX(-100);
+        }
+        
+        cow.setX(-100);
+        wolf.setX(-100);
+        farm.setX(-100);
+        
         int i=0;
         
         switch(level) {
@@ -338,6 +363,9 @@ public class Game implements Runnable{
                 cow.setX(600);
                 cow.setY(200);
                 
+                farm.setX(700);
+                farm.setY(50);
+                
             break;
             
             case 2:     // Level 2
@@ -351,8 +379,11 @@ public class Game implements Runnable{
                 cow.setX(100);
                 cow.setY(555);
                 
-                wolf.setX(400);
+                wolf.setX(800);
                 wolf.setY(555);
+                
+                farm.setX(700);
+                farm.setY(50);
             
             break;
             
@@ -505,6 +536,7 @@ public class Game implements Runnable{
             
             help.tick();
             window.tick();
+            wolf.tick();
             
             if (help.getPressed()) {
                 window.setX(300);
@@ -696,13 +728,12 @@ public class Game implements Runnable{
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.pasto, 0, 0, width, height, null);
                 
-                wood.render(g);
-                
                 for (int i=0; i<blocks.size(); i++) {
                     Block block = blocks.get(i);
                     block.render(g);
                 }
                 
+                wood.render(g);
                 cow.render(g);
                 farm.render(g);
                 help.render(g);
@@ -752,20 +783,21 @@ public class Game implements Runnable{
             }
 
             else if (level4) {
+                
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.pasto, 0, 0, width, height, null);
-                
-                wood.render(g);
                 
                 for (int i=0; i<blocks.size(); i++) {
                     Block block = blocks.get(i);
                     block.render(g);
                 }
                 
+                wood.render(g);
                 cow.render(g);
                 farm.render(g);
                 help.render(g);
                 window.render(g);
+                wolf.render(g);
                 
                 if (getShootFire()) {
                     fire.render(g);
