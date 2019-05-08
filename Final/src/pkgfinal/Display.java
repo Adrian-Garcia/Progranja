@@ -70,7 +70,6 @@ public class Display {
      * @param enter 
      */
     public void setEnter(boolean enter) {
-        System.out.print("2 ");
         this.enter = enter;
     }
     
@@ -115,12 +114,9 @@ public class Display {
     }
     
     public void tick() {
-        System.out.print("3 ");
         
         if (this.enter) {
-            System.out.println("4");
             enter = false;
-            System.out.println("ENTER");
         }
     }
     
@@ -177,7 +173,7 @@ public class Display {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 instruction = textField.getText();
-                textField.setText("");
+                textField.setText("");  
                 newInstruction = true;
             }
         });

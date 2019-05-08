@@ -416,7 +416,6 @@ public class Game implements Runnable{
         display.tick();
         
         if (this.getKeyManager().enter) {
-            System.out.print("1 ");
             display.setEnter(true);
         } 
         
