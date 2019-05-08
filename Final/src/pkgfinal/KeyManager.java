@@ -19,6 +19,7 @@ public class KeyManager implements KeyListener {
     public boolean left;    // flag to move left the player
     public boolean right;   // flag to move right the player
     public boolean p;       // flag to pause the game
+    public boolean enter;   // flag to know if user type enter
 
     private boolean keys[];  // to store all the flags for every key
     
@@ -51,5 +52,6 @@ public class KeyManager implements KeyListener {
         left = keys[KeyEvent.VK_LEFT];
         right = keys[KeyEvent.VK_RIGHT];
         p = keys[KeyEvent.VK_P];
+        enter = keys[KeyEvent.VK_ENTER];
     }
 }

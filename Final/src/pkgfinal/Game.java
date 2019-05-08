@@ -56,6 +56,7 @@ public class Game implements Runnable{
     private LinkedList<Block> blocks;   // to use blocks
     private LinkedList<Integer> Instructions;// to use Instructions as numbers
     private LinkedList<Live> lives;     // to use lives
+    private KeyManager keyManager;      // to manage the keyboard
     private MouseManager mouseManager;  // to manage the mouse
     
     /**
@@ -88,6 +89,7 @@ public class Game implements Runnable{
         this.level5 = false;
         this.loop = false;
         mouseManager = new MouseManager();
+        keyManager = new KeyManager();
         blocks = new LinkedList<Block>();
         Instructions = new LinkedList<Integer>();
         Inst = new LinkedList<String>();
@@ -287,7 +289,8 @@ public class Game implements Runnable{
         fire = new Power(850, 605, 40, 40, this);
         powerShield = new Power(850, 605, 40, 40, this);
         
-        //Mouse methods
+        //Key and Mouse methods
+        display.getJframe().addKeyListener(keyManager);
         display.getJframe().addMouseListener(mouseManager);
         display.getJframe().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
@@ -327,6 +330,14 @@ public class Game implements Runnable{
             }
         }
         stop();
+    }
+    
+    /**
+     * Used to control keys
+     * @return keyManager
+     */
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
     
     /**
@@ -401,6 +412,14 @@ public class Game implements Runnable{
      */
     private void tick() {
        
+        keyManager.tick();
+        display.tick();
+        
+        if (this.getKeyManager().enter) {
+            System.out.print("1 ");
+            display.setEnter(true);
+        } 
+        
         if (loss || win)
             return;
         

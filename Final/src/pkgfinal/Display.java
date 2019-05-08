@@ -27,6 +27,7 @@ public class Display {
     private int height;                 // height of the window
     private boolean start;              // To know if game has start
     private boolean newInstruction;     // Let the game know that there is a new instruction
+    private boolean enter;              // To insert data
     public JTextField t1;               // To put a textfield at the game
     private boolean buttonPressed;      // To press the button
     private String instruction;          // Information of the JTextField
@@ -44,6 +45,7 @@ public class Display {
         this.start = false;  
         this.buttonPressed = false;
         this.instruction = "";
+        this.enter = false;
         createDisplay();
     }
     
@@ -61,6 +63,15 @@ public class Display {
      */
     public boolean getStart() {
         return start;
+    }
+    
+    /**
+     * To know if game have enter
+     * @param enter 
+     */
+    public void setEnter(boolean enter) {
+        System.out.print("2 ");
+        this.enter = enter;
     }
     
     /**
@@ -101,6 +112,16 @@ public class Display {
             }
         }
         this.start = start;
+    }
+    
+    public void tick() {
+        System.out.print("3 ");
+        
+        if (this.enter) {
+            System.out.println("4");
+            enter = false;
+            System.out.println("ENTER");
+        }
     }
     
     /**
