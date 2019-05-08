@@ -49,7 +49,6 @@ public class Game implements Runnable{
     private Bar wood;                   // to use Bars
     private Power fire;                 // to use fireball
     private Button help;                // to display instructions of the game
-//    private Window window;              // to display windows
     private Power powerShield;          // to use shield
     private LinkedList<Window> windows; // to use windows
     private LinkedList<Boolean> Ident;  // to know if it is necesary to ident
@@ -218,6 +217,8 @@ public class Game implements Runnable{
         }
         
         Instructions.clear();
+        win = false;
+        loss = false;
     }
     
     /**
@@ -236,11 +237,10 @@ public class Game implements Runnable{
         help = new Button(0, 200, 25, 100, this);
         
         // Generate Windows with information
-//        window = new Window(-1000, -1000, 700, 300, this);
         for (int i=0; i<6; i++) {
-            windows.add(new Window(-500, -500, 700, 300, i, this));
+            windows.add(new Window(0, -1000, 875, 600, i+1, this));
         }
-
+        
         // Generate lives
         for (int i=0; i<noLives; i++) {
             lives.add(new Live(i*70+55, 30, 60, 65, this));
@@ -281,7 +281,6 @@ public class Game implements Runnable{
         }
         
         // Generate Player
-//        cow = new Player(600, 200, 75, 75, 0 , 1, this);
         cow = new Player(105, 555, 75, 75, 0 , this);
         
         // Generate Farm
@@ -302,7 +301,7 @@ public class Game implements Runnable{
         display.getCanvas().addMouseMotionListener(mouseManager);
         
         //Start music
-//        Assets.music.play();
+        Assets.music.play();
     }
     
     @Override
@@ -377,14 +376,20 @@ public class Game implements Runnable{
                 }
                 
                 cow.setX(50);
-                cow.setY(200);
+                cow.setY(350);
                 
                 farm.setX(700);
-                farm.setY(50);
+                farm.setY(200);
                 
             break;
             
             case 2:     // Level 2
+                cow.setX(50);
+                cow.setY(350);
+                
+                farm.setX(700);
+                farm.setY(200);
+                
             break;
             
             case 3:     // Level 3
@@ -471,10 +476,7 @@ public class Game implements Runnable{
         
         if (this.getKeyManager().enter) {
             display.setEnter(true);
-        } 
-        
-        if (loss || win)
-            return;
+        }
         
         // collide Blocks
         for (int i=0; i<blocks.size(); i++) {
@@ -524,12 +526,11 @@ public class Game implements Runnable{
             window.tick();
             
             help.tick();
-            fire.tick();
-            powerShield.tick();
             
             if (help.getPressed()) {
-                window.setX(300);
-                window.setY(300);
+                window.setX(50);
+                window.setY(50);
+                
                 window.setPressed(false);
             }
             
@@ -541,7 +542,7 @@ public class Game implements Runnable{
             
             if (noLives <= 0) {
                 loss = true;
-            }   
+            }
         }
         
         // If Level 2 is starter
@@ -562,12 +563,14 @@ public class Game implements Runnable{
                 }   
             }
             
-            Window window = windows.get(3);
+            help.tick();
+            
+            Window window = windows.get(1);
             window.tick();
             
             if (help.getPressed()) {
-                window.setX(300);
-                window.setY(300);
+                window.setX(50);
+                window.setY(50);
                 window.setPressed(false);
             }
             
@@ -600,7 +603,7 @@ public class Game implements Runnable{
                 }   
             }
             
-            Window window = windows.get(3);
+            Window window = windows.get(2);
             window.tick();
             
             if (help.getPressed()) {
@@ -683,6 +686,7 @@ public class Game implements Runnable{
                 level5 = false;
                 changeLevel = true;
                 win = loss = false;
+                noLives = 5;
                 clear();
             } 
             
@@ -693,7 +697,9 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = false;
                 changeLevel = true;
-                win = loss = false;
+                win = false;
+                loss = false;
+                noLives = 5;
                 clear();
             } 
             
@@ -704,7 +710,9 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = false;
                 changeLevel = true;
-                win = loss = false;
+                win = false;
+                loss = false;
+                noLives = 3;
                 clear();
             } 
             
@@ -715,7 +723,9 @@ public class Game implements Runnable{
                 level4 = true;
                 level5 = false;
                 changeLevel = true;
-                win = loss = false;
+                win = false;
+                loss = false;
+                noLives = 3;
                 clear();
             } 
             
@@ -726,7 +736,8 @@ public class Game implements Runnable{
                 level4 = false;
                 level5 = true;
                 changeLevel = true;
-                win = loss = false;
+                win = false;
+                loss = false;
                 clear();
             } 
             
@@ -813,6 +824,60 @@ public class Game implements Runnable{
                 loop = false;
             }
             
+            else if (newInst.equals("game.nextLevel()")) {
+                
+                if (level1) {
+                    
+                    level1 = false;
+                    level2 = true;
+                    level3 = false;
+                    level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                } 
+                
+                else if (level2) {
+                    
+                    level1 = false;
+                    level2 = false;
+                    level3 = true;
+                    level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                } 
+                
+                else if (level3) {
+                    
+                    level1 = false;
+                    level2 = false;
+                    level3 = false;
+                    level4 = true;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                }
+                
+                else  {
+                    level1 = true;
+                    level2 = false;
+                    level3 = false;
+                    level4 = false;
+                    level5 = false;
+                    changeLevel = true;
+                    win = false;
+                    loss = false;
+                    clear();
+                }
+            }
+            
             else {
                 if (loop) Ident.set(index, true);
             }
@@ -850,28 +915,12 @@ public class Game implements Runnable{
                 farm.render(g);
                 help.render(g);
                 
-                for (int i=0; i<windows.size(); i++) {
-                    Window window = windows.get(i);
-                    window.render(g);
-                }
-                
                 for (int i=0; i<noLives; i++) {
                     Live live = lives.get(i);
                     live.render(g);
                 }
                 
                 instructions();
-                
-                if (win) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
-                } 
-                if (loss) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
-                }
                              
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
@@ -880,7 +929,12 @@ public class Game implements Runnable{
                     g.setColor(Color.white);
                     g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
                     g.drawString(space+instruction, 1054, i*30+100);
-                } 
+                }
+                
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
+                }
                 
                 bs.show();
                 g.dispose();
@@ -900,28 +954,17 @@ public class Game implements Runnable{
                 farm.render(g);
                 help.render(g);
                 
-                for (int i=0; i<windows.size(); i++) {
-                    Window window = windows.get(i);
-                    window.render(g);
-                }
-                
                 for (int i=0; i<noLives; i++) {
                     Live live = lives.get(i);
                     live.render(g);
                 }
                 
-                instructions();
-                
-                if (win) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
-                } 
-                if (loss) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
                 }
+                
+                instructions();
                              
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
@@ -951,28 +994,17 @@ public class Game implements Runnable{
                 farm.render(g);
                 help.render(g);
                 
-                for (int i=0; i<windows.size(); i++) {
-                    Window window = windows.get(i);
-                    window.render(g);
-                }
-                
                 for (int i=0; i<noLives; i++) {
                     Live live = lives.get(i);
                     live.render(g);
                 }
                 
-                instructions();
-                
-                if (win) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
-                } 
-                if (loss) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
                 }
+                
+                instructions();
                              
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
@@ -1003,12 +1035,6 @@ public class Game implements Runnable{
                 help.render(g);
                 wolf.render(g);
                 
-                /////////////////////////////////////
-                for (int i=0; i<windows.size(); i++) {
-                    Window window = windows.get(i);
-                    window.render(g);
-                }
-                
                 if (getShootFire()) {
                     fire.render(g);
                 }
@@ -1018,18 +1044,12 @@ public class Game implements Runnable{
                     live.render(g);
                 }
                 
-                instructions();
-                
-                if (win) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("YOU WIN!", getWidth() / 2 - 175, getHeight() / 2);
-                } 
-                if (loss) {
-                    g.setColor(Color.red);
-                    g.setFont(new Font("TimesRoman", Font.PLAIN, 100));
-                    g.drawString("GAME OVER", getWidth() / 2 - 175, getHeight() / 2);
+                for (int i=0; i<windows.size(); i++) {
+                    Window window = windows.get(i);
+                    window.render(g);
                 }
+                
+                instructions();
                              
                 for (int i=0; i<Inst.size(); i++) {
                     String instruction = Inst.get(i);
@@ -1052,7 +1072,7 @@ public class Game implements Runnable{
                 
                 g = bs.getDrawGraphics();
                 g.drawImage(Assets.pasto, 0, 0, width, height, null);
-                g.drawImage(Assets.instrucciones, 0, 0, 900, 750, null);
+                g.drawImage(Assets.instrucciones, 50, 50, 875, 600, null);
                 
                 wood.render(g);
                 
@@ -1069,8 +1089,8 @@ public class Game implements Runnable{
                         level4 = false;
                         level5 = false;
                         changeLevel = true;
-                        win = loss = false;
-                        clear();
+                        win = false;
+                        loss = false;
                         clear();
                     } 
                     
@@ -1081,7 +1101,8 @@ public class Game implements Runnable{
                         level4 = false;
                         level5 = false;
                         changeLevel = true;
-                        win = loss = false;
+                        win = false;
+                        loss = false;
                         clear();
                     } 
 
@@ -1092,7 +1113,8 @@ public class Game implements Runnable{
                         level4 = false;
                         level5 = false;
                         changeLevel = true;
-                        win = loss = false;
+                        win = false;
+                        loss = false;
                         clear();
                     } 
 
@@ -1103,7 +1125,8 @@ public class Game implements Runnable{
                         level4 = false;
                         level5 = false;
                         changeLevel = true;
-                        win = loss = false;
+                        win = false;
+                        loss = false;
                         clear();
                     } 
 
@@ -1112,6 +1135,18 @@ public class Game implements Runnable{
                         level2 = false;
                         level3 = false;
                         level4 = true;
+                        level5 = false;
+                        changeLevel = true;
+                        win = false;
+                        loss = false;
+                        clear();
+                    }
+                    
+                    else if (newInst.equals("game.nextLevel()")) {
+                        level1 = true;
+                        level2 = false;
+                        level3 = false;
+                        level4 = false;
                         level5 = false;
                         changeLevel = true;
                         win = loss = false;
