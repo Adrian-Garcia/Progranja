@@ -453,10 +453,10 @@ public class Game implements Runnable{
                 farm.setX(700);
                 farm.setY(50);
                 
-                window = windows.get(1);
-                
-                window.setX(50);
-                window.setY(50);
+//                window = windows.get(1);
+//                
+//                window.setX(50);
+//                window.setY(50);
             break;
             
             case 4:     // Level 4
